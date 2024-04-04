@@ -2,6 +2,7 @@ package routers
 
 import (
 	"CourseSystem/controllers"
+
 	beego "github.com/beego/beego/v2/server/web"
 )
 
