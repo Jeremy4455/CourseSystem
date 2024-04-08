@@ -7,3 +7,7 @@ import (
 type BaseController struct {
 	beego.Controller
 }
+
+func (this *BaseController) Get() {
+	this.TplName = "index.tpl"
+}
