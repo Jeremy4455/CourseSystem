@@ -1,6 +1,9 @@
 package controllers
 
 import (
+	"CourseSystem/models"
+	"errors"
+	"github.com/astaxie/beego/orm"
 	beego "github.com/beego/beego/v2/server/web"
 )
 
@@ -12,20 +15,32 @@ func (this *LoginController) Get() {
 	this.TplName = "login.tpl"
 }
 
-func (c *LoginController) Post() {
-	username := c.GetString("username")
-	password := c.GetString("password")
+func (this *LoginController) Post() {
+	username := this.GetString("username")
+	password := this.GetString("password")
+	o := orm.NewOrm()
+	user := models.User{Username: username}
 
-	// 假设这里有一个验证用户名密码的逻辑
-	if username == "admin" && password == "password123" {
-		//// 登录成功，将用户信息存储到 Session 中
-		//c.SetSession("username", username)
-
-		// 重定向到登录成功后的页面
-		c.Redirect("/", 302)
+	err := o.Read(&user, "Username")
+	if err != nil {
+		this.Redirect("/login", 302)
+		errors.New(
+			"不存在该用户")
 		return
 	}
-
-	// 登录失败，重新回到登录页面
-	c.Redirect("/login", 302)
+	if user.Password != password {
+		this.Redirect("/login", 302)
+		errors.New(
+			"密码错误")
+		return
+	}
+	//role := user.Role
+	//switch role {
+	//case "admin":
+	//	this.Redirect("/admin", 302)
+	//case "student":
+	//	this.Redirect("/student", 302)
+	//case "teacher":
+	//	this.Redirect("/teacher", 302)
+	//}
 }

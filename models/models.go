@@ -18,6 +18,6 @@ func RegisterDB() {
 	orm.RegisterDataBase("default", "mysql", mysqluser+":"+mysqlpass+"@tcp("+mysqlurls+")/"+mysqldb+"?charset=utf8")
 }
 func init() {
-	orm.RegisterModel(new(Teacher), new(Student), new(Course), new(Admin))
+	orm.RegisterModel(new(Teacher), new(Student), new(Course), new(Admin), new(User))
 	RegisterDB()
 }
