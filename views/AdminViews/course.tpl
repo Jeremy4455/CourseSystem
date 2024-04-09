@@ -1,97 +1,100 @@
-<!-- course.tpl -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Management</title>
+    <!-- 引入Bulma CSS文件 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <style>
-        /* 设置左侧栏样式 */
+        /* 添加额外的自定义样式 */
+        body, html {
+            height: 100%;
+        }
+        .container-full-height {
+            height: 100%;
+        }
         .sidebar {
-            float: left;
-            width: 15%;
-            height: 100vh; 
             background-color: #f1f1f1;
-            padding: 20px;
         }
-
-        /* 右侧内容样式 */
         .content {
-            float: left;
-            width: 85%;
             padding: 20px;
-        }
-
-        /* 设置按钮样式 */
-        .sidebar-button {
-            display: block;
-            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
-    <h1>Course Management System</h1>
-    <!-- 左侧栏 -->
-    <div class="sidebar">
-        <a href="/CourseManagement" class="sidebar-button">课程管理</a>
-        <a href="/TeacherManagement" class="sidebar-button">教师管理</a>
-        <a href="/StudentManagement" class="sidebar-button">学生管理</a>
+    <div class="container-full-height columns is-gapless">
+        <!-- 左侧栏 -->
+        <aside class="column is-one-fifth sidebar">
+            <p class="menu-label">菜单</p>
+            <ul class="menu-list">
+                <li><a href="/CourseManagement">课程管理</a></li>
+                <li><a href="/TeacherManagement">教师管理</a></li>
+                <li><a href="/StudentManagement">学生管理</a></li>
+            </ul>
+        </aside>
+
+        <!-- 右侧内容 -->
+        <main class="column">
+            <h1 class="title" style="text-align: center">Course Management System</h1>
+            <!-- 表单 -->
+            <form action="/CourseList" method="post">
+                <!-- 表单项 -->
+                <div class="field">
+                    <label class="label" for="courseNo">课程号：</label>
+                    <div class="control">
+                        <input class="input" type="text" id="courseNo" name="courseNo">
+                    </div>
+                </div>
+
+                <!-- 其他表单项... -->
+
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">查询课程</button>
+                    </div>
+                    <div class="control">
+                        <button class="button is-link" type="submit">新建课程</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- 表格 -->
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>课程号</th>
+                        <th>课程名</th>
+                        <th>课程时间</th>
+                        <th>学分</th>
+                        <th>上课地点</th>
+                        <th>任课教师</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 表行 -->
+                    <tr>
+                        <td>{{.CourseNo}}</td>
+                        <td>{{.CourseName}}</td>
+                        <td>{{.CourseTime}}</td>
+                        <td>{{.Credit}}</td>
+                        <td>{{.Classroom}}</td>
+                        <td>{{.Teacher}}</td>
+                        <td>
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <form action="/CourseDelete" method="post">
+                                        <input type="hidden" name="courseId" value="{{.ID}}">
+                                        <button class="button is-danger" type="submit">删除</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </main>
     </div>
-    
-    <!-- 右侧内容 -->
-    <div class="content">
-        <h1>Course Management System</h1>
-
-        <!-- 原有表单和表格部分，请根据需要保留或调整 -->
-        <form action="/CourseList" method="post">
-            <label>课程号：</label>
-            <input type="text" name="courseNo"><br><br>
-
-            <label>课程名：</label>
-            <input type="text" name="courseName"><br><br>
-
-            <label>任课教师：</label>
-            <input type="text" name="courseTeacher"><br><br>
-
-            <label>课程时间：</label>
-            <input type="text" name="courseTime"><br><br>
-
-            <label>学分：</label>
-            <input type="text" name="credit"><br><br>
-
-            <label>上课地点：</label>
-            <input type="text" name="classroom"><br><br>
-
-            <button type="submit">查询课程</button>
-            <button type="submit">新建课程</button>
-        </form>
-
-        <table>
-            <tr>
-                <th>课程号</th>
-                <th>课程名</th>
-                <th>课程时间</th>
-                <th>学分</th>
-                <th>上课地点</th>
-                <th>任课教师</th>
-                <th>操作</th>
-            </tr>
-            {{range .Courses}}
-            <tr>
-                <td>{{.CourseNo}}</td>
-                <td>{{.CourseName}}</td>
-                <td>{{.CourseTime}}</td>
-                <td>{{.Credit}}</td>
-                <td>{{.Classroom}}</td>
-                <td>{{.Teacher}}</td>
-                <td>
-                    <form action="/CourseDelete" method="post">
-                        <input type="hidden" name="courseId" value="{{.ID}}">
-                        <button type="submit">删除</button>
-                    </form>
-                </td>
-            </tr>
-            {{end}}
-        </table>
-    </div>
-    
 </body>
 </html>

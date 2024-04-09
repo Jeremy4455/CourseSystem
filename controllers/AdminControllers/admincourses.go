@@ -4,7 +4,6 @@ import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
 	"fmt"
-
 	"github.com/astaxie/beego/orm"
 )
 
