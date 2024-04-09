@@ -3,6 +3,7 @@ package controllers
 import (
 	"CourseSystem/models"
 	"errors"
+
 	"github.com/astaxie/beego/orm"
 	beego "github.com/beego/beego/v2/server/web"
 )
@@ -34,13 +35,13 @@ func (this *LoginController) Post() {
 			"密码错误")
 		return
 	}
-	//role := user.Role
-	//switch role {
-	//case "admin":
-	//	this.Redirect("/admin", 302)
-	//case "student":
-	//	this.Redirect("/student", 302)
-	//case "teacher":
-	//	this.Redirect("/teacher", 302)
-	//}
+	role := user.Role
+	switch role {
+	case "admin":
+		this.Redirect("/admin", 302)
+	case "student":
+		this.Redirect("/student", 302)
+	case "teacher":
+		this.Redirect("/teacher", 302)
+	}
 }
