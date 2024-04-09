@@ -10,15 +10,34 @@
         /* 添加额外的自定义样式 */
         body, html {
             height: 100%;
+            font-family: Arial, sans-serif;
         }
         .container-full-height {
             height: 100%;
         }
         .sidebar {
             background-color: #f1f1f1;
-        }
-        .content {
             padding: 20px;
+        }
+        .menu-label{
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        main {
+            padding: 20px;
+            position: relative; /* 使得按钮的定位相对于 main 元素 */
+        }
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 36px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        table {
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -26,7 +45,7 @@
     <div class="container-full-height columns is-gapless">
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
-            <p class="menu-label">菜单</p>
+            <h6 class="menu-label">菜单</h6>
             <ul class="menu-list">
                 <li><a href="/CourseManagement">课程管理</a></li>
                 <li><a href="/TeacherManagement">教师管理</a></li>
@@ -36,25 +55,60 @@
 
         <!-- 右侧内容 -->
         <main class="column">
-            <h1 class="title" style="text-align: center">Course Management System</h1>
+            <h1 class="title">课程管理</h1>
             <!-- 表单 -->
             <form action="/CourseList" method="post">
                 <!-- 表单项 -->
-                <div class="field">
-                    <label class="label" for="courseNo">课程号：</label>
-                    <div class="control">
-                        <input class="input" type="text" id="courseNo" name="courseNo">
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="courseNo">课程号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="courseNo" name="courseNo">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="teacherId">教师号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="teacherId" name="teacherId">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <!-- 其他表单项... -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="courseName">课程名：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="courseName" name="courseName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="teacherName">教师名：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="teacherName" name="teacherName">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                <div class="field is-grouped">
+                <!-- 按钮 -->
+                <div class="field is-grouped" style="float: right">
                     <div class="control">
                         <button class="button is-primary" type="submit">查询课程</button>
-                    </div>
-                    <div class="control">
-                        <button class="button is-link" type="submit">新建课程</button>
                     </div>
                 </div>
             </form>
@@ -69,6 +123,7 @@
                         <th>学分</th>
                         <th>上课地点</th>
                         <th>任课教师</th>
+                        <th>教师号</th>
                         <th>操作</th>
                     </tr>
                 </thead>
@@ -81,6 +136,7 @@
                         <td>{{.Credit}}</td>
                         <td>{{.Classroom}}</td>
                         <td>{{.Teacher}}</td>
+                        <td>{{.TeacherId}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
