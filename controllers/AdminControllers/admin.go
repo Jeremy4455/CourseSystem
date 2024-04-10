@@ -4,8 +4,10 @@ import "CourseSystem/controllers"
 
 type AdminController struct {
 	controllers.BaseController
+	viewpath string
 }
 
 func (c *AdminController) Get() {
-	c.TplName = "index.tpl"
+	c.viewpath = "AdminViews/direct.tpl"
+	c.TplName = c.viewpath
 }

@@ -3,6 +3,7 @@ package routers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/controllers/AdminControllers"
+	"CourseSystem/controllers/AdminControllers/AdminCourseControllers"
 	"CourseSystem/controllers/StudentControllers"
 	"CourseSystem/controllers/TeacherControllers"
 
@@ -20,8 +21,14 @@ func init() {
 
 	beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
 	beego.Router("/", &controllers.BaseController{})
+	beego.Router("/login", &controllers.LoginController{})
+
+	beego.Router("/admin", &AdminControllers.AdminController{})
+	beego.Router("/admin/courseadd", &AdminCourseControllers.AdminCourseControllerAdd{})
+	beego.Router("/admin/coursedelete", &AdminCourseControllers.AdminCourseControllerDelete{})
+	beego.Router("/admin/coursesearch", &AdminCourseControllers.AdminCourseControllerSearch{})
+	beego.Router("/admin/courseset", &AdminCourseControllers.AdminCourseControllerSet{})
+
 	beego.Router("/stu/:stuid", &StudentControllers.StudentController{})
 	beego.Router("/tea/:teaid", &TeacherControllers.TeacherController{})
-	beego.Router("/admin", &AdminControllers.AdminController{})
-	beego.Router("/login", &controllers.LoginController{})
 }

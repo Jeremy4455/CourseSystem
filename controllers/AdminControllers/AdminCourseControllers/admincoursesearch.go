@@ -1,24 +1,31 @@
-package AdminControllers
+package AdminCourseControllers
 
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
 	"fmt"
-	"github.com/astaxie/beego/orm"
+
+	"github.com/beego/beego/orm"
 )
 
-type AdminCourseController struct {
+type AdminCourseControllerSearch struct {
 	controllers.BaseController
+	viewpath string
 }
 
-func (this *AdminCourseController) CourseList() {
-	this.TplName = "AdminViews/course.tpl"
-	courseNo := this.GetString("courseNo")
-	courseName := this.GetString("courseName")
-	courseTeacher := this.GetString("courseTeacher")
-	courseTime := this.GetString("courseTime")
-	credit := this.GetString("credit")
-	classroom := this.GetString("classroom")
+func (c *AdminCourseControllerSearch) Get() {
+	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
+	c.TplName = c.viewpath
+}
+func (c *AdminCourseControllerSearch) Post() {
+	c.TplName = c.viewpath
+
+	courseNo := c.GetString("courseNo")
+	courseName := c.GetString("courseName")
+	courseTeacher := c.GetString("courseTeacher")
+	courseTime := c.GetString("courseTime")
+	credit := c.GetString("credit")
+	classroom := c.GetString("classroom")
 
 	o := orm.NewOrm()
 	q := o.QueryTable("course")
@@ -48,6 +55,5 @@ func (this *AdminCourseController) CourseList() {
 		// 处理错误
 		fmt.Println("Error querying courses from database:", err)
 	}
-	this.Data["Courses"] = courses
-	this.TplName = "AdminViews/course.tpl"
+	c.Data["Courses"] = courses
 }
