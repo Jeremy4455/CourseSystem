@@ -5,7 +5,3 @@ type Admin struct {
 	Username string `orm:"size(16);unique"`
 	Password string `orm:"size(32)"`
 }
-
-func (this *Admin) Login() {
-	return
-}
