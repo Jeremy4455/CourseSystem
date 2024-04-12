@@ -24,6 +24,7 @@ func GetTeacher(teacherId string) (*Teacher, error) {
 
 	return teacher, nil
 }
+
 func AddTeacher(teacherId, name, mobile, email string) error {
 	teacher, err := GetTeacher(teacherId)
 	if teacher != nil {
@@ -32,7 +33,12 @@ func AddTeacher(teacherId, name, mobile, email string) error {
 
 	o := orm.NewOrm()
 	teacher = &Teacher{TeacherId: teacherId, Name: name, Mobile: mobile, Email: email}
-	o.Insert(teacher)
+	_, err = o.Insert(teacher)
+	if err != nil {
+		return err
+	}
+
+	AddUser(teacherId, name, "teacher123", "teacher")
 	return nil
 }
 
@@ -44,6 +50,11 @@ func DeleteTeacher(teacherId string) error {
 	if err != nil {
 		return err
 	}
-	o.Delete(teacher)
+	_, err = o.Delete(teacher)
+	if err != nil {
+		return err
+	}
+
+	DeleteUser(teacherId)
 	return nil
 }

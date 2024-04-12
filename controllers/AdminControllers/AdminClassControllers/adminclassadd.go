@@ -34,7 +34,7 @@ func (c *AdminClassControllerAdd) Post() {
 	}
 
 	course, _ := models.GetCourse(courseCode, courseName)
-	if course == nil {
+	if course == nil || len(course) > 1 {
 		return
 	}
 
@@ -43,7 +43,7 @@ func (c *AdminClassControllerAdd) Post() {
 		return
 	}
 
-	if models.ExistClass(course, teacher, courseSemester) == true {
+	if models.ExistClass(course[0], teacher, courseSemester) == true {
 		return
 	}
 
@@ -58,7 +58,7 @@ func (c *AdminClassControllerAdd) Post() {
 	cap, _ := strconv.Atoi(capacity)
 	class := &models.Class{
 		Id:        lastRecord.Id + 1,
-		Course:    course,
+		Course:    course[0],
 		Teacher:   teacher,
 		Semester:  courseSemester,
 		ClassTime: courseTime,

@@ -24,6 +24,6 @@ func (c *AdminClassControllerSearch) Post() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
-	classes, _ := models.SearchClasses(courseCode, courseName, courseTeacherId, courseSemester, courseTime, classroom)
+	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseSemester, courseTime, classroom)
 	c.Data["Classes"] = classes
 }

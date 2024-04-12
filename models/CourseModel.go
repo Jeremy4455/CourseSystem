@@ -1,6 +1,10 @@
 package models
 
-import "github.com/beego/beego/orm"
+import (
+	"strconv"
+
+	"github.com/beego/beego/orm"
+)
 
 // Course 课程模型
 type Course struct {
@@ -11,37 +15,42 @@ type Course struct {
 	Classes    []*Class `orm:"reverse(many)"`
 }
 
-func GetCourse(courseCode, name string) (*Course, error) {
+func GetCourse(courseCode, name string) ([]*Course, error) {
 	if courseCode == "" && name == "" {
 		return nil, nil
 	}
 
 	o := orm.NewOrm()
-	var course *Course
-	if courseCode == "" {
-		course = &Course{Name: name}
-	} else if name == "" {
-		course = &Course{CourseCode: courseCode}
+	q := o.QueryTable("course")
+	var courses []*Course
+
+	if courseCode != "" {
+		_, err := q.Filter("CourseCode", courseCode).All(&courses)
+		if err != nil {
+			return nil, err
+		}
 	} else {
-		course = &Course{CourseCode: courseCode, Name: name}
+		_, err := q.Filter("Name__contains", name).All(&courses)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	err := o.Read(course)
-	if err != nil {
-		// 处理错误
-		return nil, err
-	}
-	return course, nil
+	return courses, nil
 }
-func AddCourse(courseCode, name, college string, credit int) error {
-	course, err := GetCourse(courseCode, name)
+
+func AddCourse(courseCode, name, college, credit string) error {
+	course, err := GetCourse(courseCode, "")
 	if course != nil {
 		return err
 	}
-
+	c, err := strconv.Atoi(credit)
+	if err != nil {
+		return err
+	}
 	o := orm.NewOrm()
-	course = &Course{CourseCode: courseCode, Name: name, College: college, Credit: credit}
-	o.Insert(course)
+	newcourse := &Course{CourseCode: courseCode, Name: name, College: college, Credit: c}
+	o.Insert(newcourse)
 	return nil
 }
 

@@ -1,6 +1,9 @@
 package AdminTeacherControllers
 
-import "CourseSystem/controllers"
+import (
+	"CourseSystem/controllers"
+	"CourseSystem/models"
+)
 
 type AdminTeacherControllerAdd struct {
 	controllers.BaseController
@@ -8,6 +11,18 @@ type AdminTeacherControllerAdd struct {
 }
 
 func (c *AdminTeacherControllerAdd) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
+	c.viewpath = "AdminViews/AdminTeacherViews/addstudent.tpl"
 	c.TplName = c.viewpath
+}
+func (c *AdminTeacherControllerAdd) Post() {
+	c.TplName = c.viewpath
+	teacherId := c.GetString("TeacherId")
+	name := c.GetString("Name")
+	mobile := c.GetString("Mobile")
+	email := c.GetString("Email")
+
+	err := models.AddTeacher(teacherId, name, mobile, email)
+	if err != nil {
+		return
+	}
 }

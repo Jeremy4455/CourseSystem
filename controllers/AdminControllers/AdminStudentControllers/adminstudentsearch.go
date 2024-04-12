@@ -1,6 +1,9 @@
 package AdminStudentControllers
 
-import "CourseSystem/controllers"
+import (
+	"CourseSystem/controllers"
+	"CourseSystem/models"
+)
 
 type AdminStudentControllerSearch struct {
 	controllers.BaseController
@@ -10,4 +13,15 @@ type AdminStudentControllerSearch struct {
 func (c *AdminStudentControllerSearch) Get() {
 	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
 	c.TplName = c.viewpath
+}
+
+func (c *AdminStudentControllerSearch) Post() {
+	c.TplName = c.viewpath
+
+	studentId := c.GetString("StudentId")
+	student, _ := models.GetStudent(studentId)
+	if student != nil {
+		return
+	}
+	c.Data["Student"] = student
 }

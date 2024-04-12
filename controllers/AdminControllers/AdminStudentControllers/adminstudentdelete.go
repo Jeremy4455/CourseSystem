@@ -1,6 +1,9 @@
 package AdminStudentControllers
 
-import "CourseSystem/controllers"
+import (
+	"CourseSystem/controllers"
+	"CourseSystem/models"
+)
 
 type AdminStudentControllerDelete struct {
 	controllers.BaseController
@@ -10,4 +13,14 @@ type AdminStudentControllerDelete struct {
 func (c *AdminStudentControllerDelete) Get() {
 	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
 	c.TplName = c.viewpath
+}
+
+func (c *AdminStudentControllerDelete) Post() {
+	c.TplName = c.viewpath
+	studentId := c.GetString("StudentId")
+
+	err := models.DeleteStudent(studentId)
+	if err != nil {
+		return
+	}
 }

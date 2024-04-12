@@ -5,24 +5,24 @@ import (
 	"CourseSystem/models"
 )
 
-type AdminStudentControllerAdd struct {
+type AdminCourseControllerAdd struct {
 	controllers.BaseController
 	viewpath string
 }
 
-func (c *AdminStudentControllerAdd) Get() {
+func (c *AdminCourseControllerAdd) Get() {
 	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
 	c.TplName = c.viewpath
 }
 
-func (c *AdminStudentControllerAdd) Post() {
+func (c *AdminCourseControllerAdd) Post() {
 	c.TplName = c.viewpath
-	studentId := c.GetString("StudentId")
+	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
-	class := c.GetString("Class")
-	grade := c.GetString("Grade")
+	college := c.GetString("College")
+	credit := c.GetString("Credit")
 
-	err := models.AddStudent(studentId, name, class, grade)
+	err := models.AddCourse(courseCode, name, college, credit)
 	if err != nil {
 		return
 	}
