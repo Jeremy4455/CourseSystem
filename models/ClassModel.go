@@ -15,7 +15,6 @@ type Class struct {
 	ClassTime string
 	Capacity  int
 	Location  string
-	Students  []*Student `orm:"rel(m2m)"`
 }
 
 // 多字段唯一键

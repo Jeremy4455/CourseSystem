@@ -58,3 +58,5 @@ func DeleteTeacher(teacherId string) error {
 	DeleteUser(teacherId)
 	return nil
 }
+
+func ReviseTeacher() {}

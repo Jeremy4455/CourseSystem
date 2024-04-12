@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	Id       string `orm:"pk;size(20);auto;column(id)"`
+	Id       string `orm:"pk;size(20);column(id)"`
 	Username string `orm:"unique;size(20)"`
 	Password string `orm:"size(32);column(Password)"`
 	Role     string `orm:"size(32);column(Role)"`
@@ -30,3 +30,5 @@ func DeleteUser(id string) bool {
 	o.Delete(user)
 	return true
 }
+
+func ReviseUser() {}

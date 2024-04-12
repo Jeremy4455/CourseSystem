@@ -8,11 +8,11 @@ import (
 
 // Student 学生模型
 type Student struct {
-	StudentId string   `orm:"unique;size(20);pk"`
-	Name      string   `orm:"size(100)"`
-	Class     string   `orm:"size(50)"`
-	Grade     float64  `orm:"size(20)"`
-	Classes   []*Class `orm:"rel(m2m)"`
+	StudentId string          `orm:"unique;size(20);pk"`
+	Name      string          `orm:"size(100)"`
+	Class     string          `orm:"size(50)"`
+	Grade     float64         `orm:"size(20)"`
+	Classes   []*ClassStudent `orm:"rel(m2m);on_delete(cascade)"`
 }
 
 func GetStudent(studentId string) (*Student, error) {
@@ -67,3 +67,5 @@ func DeleteStudent(studentId string) error {
 	DeleteUser(studentId)
 	return nil
 }
+
+func ReviseStudent() {}
