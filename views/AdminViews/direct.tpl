@@ -51,6 +51,12 @@
                 <li><a href="/admin/teacher">教师管理</a></li>
                 <li><a href="/admin/student">学生管理</a></li>
             </ul>
+            <!-- 登出按钮 -->
+            <div class="field" style="margin-top: 20px;">
+                <div class="control">
+                    <a class="button is-danger is-small" href="/logout">登出</a>
+                </div>
+            </div>
         </aside>
     </div>
 </body>

@@ -11,7 +11,7 @@ type AdminTeacherControllerDelete struct {
 }
 
 func (c *AdminTeacherControllerDelete) Get() {
-	c.viewpath = "AdminViews/AdminTeacherViews/addstudent.tpl"
+	c.viewpath = "AdminViews/AdminTeacherViews/deleteteacher.tpl"
 	c.TplName = c.viewpath
 }
 

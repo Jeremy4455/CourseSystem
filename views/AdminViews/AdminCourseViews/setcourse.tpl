@@ -47,16 +47,21 @@
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
             <ul class="menu-list">
-                <li><a href="/admin/course/search">查询课程</a></li>
+                <li><a href="/admin/course/retrieve">查询课程</a></li>
                 <li><a href="/admin/course/create">增加课程</a></li>
                 <li><a href="/admin/course/update">更改课程</a></li>
                 <li><a href="/admin/course/delete">删除课程</a></li>
             </ul>
             <!-- 返回上级目录按钮 -->
-            <!-- 返回上级目录按钮 -->
             <div class="field is-grouped" style="margin-top: 20px;">
                 <div class="control">
                     <a class="button is-info is-small" href="/admin">返回上级目录</a>
+                </div>
+            </div>
+            <!-- 登出按钮 -->
+            <div class="field" style="margin-top: 20px;">
+                <div class="control">
+                    <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
             </div>
         </aside>
