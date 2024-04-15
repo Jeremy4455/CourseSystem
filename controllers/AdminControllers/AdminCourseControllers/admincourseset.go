@@ -10,6 +10,6 @@ type AdminCourseControllerSet struct {
 }
 
 func (c *AdminCourseControllerSet) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
+	c.viewpath = "AdminViews/AdminCourseViews/setcourse.tpl"
 	c.TplName = c.viewpath
 }

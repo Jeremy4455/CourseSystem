@@ -47,9 +47,9 @@
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
             <ul class="menu-list">
-                <li><a href="/coursesearch">课程管理</a></li>
-                <li><a href="/teacher">教师管理</a></li>
-                <li><a href="/student">学生管理</a></li>
+                <li><a href="/admin/course">课程管理</a></li>
+                <li><a href="/admin/teacher">教师管理</a></li>
+                <li><a href="/admin/student">学生管理</a></li>
             </ul>
         </aside>
     </div>

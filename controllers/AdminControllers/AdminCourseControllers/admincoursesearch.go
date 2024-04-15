@@ -11,7 +11,7 @@ type AdminCourseControllerSearch struct {
 }
 
 func (c *AdminCourseControllerSearch) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/addstudent.tpl"
+	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
 	c.TplName = c.viewpath
 }
 
