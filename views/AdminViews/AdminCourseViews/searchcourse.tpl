@@ -70,7 +70,7 @@
         <main class="column">
             <h1 class="title">课程管理</h1>
             <!-- 表单 -->
-            <form action="/CourseList" method="post">
+            <form action="/admin/course/retrieve" method="post">
                 <!-- 表单项 -->
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
@@ -143,7 +143,7 @@
                 <tbody>
                     <!-- 表行 -->
                     <tr>
-                        <td>{{.CourseNo}}</td>
+                        <td>{{.CourseCode}}</td>
                         <td>{{.CourseName}}</td>
                         <td>{{.CourseTime}}</td>
                         <td>{{.Credit}}</td>
@@ -153,8 +153,8 @@
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <form action="/CourseDelete" method="post">
-                                        <input type="hidden" name="courseId" value="{{.ID}}">
+                                    <form action="/admin/course/delete" method="post">
+                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>

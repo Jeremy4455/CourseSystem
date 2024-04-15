@@ -16,6 +16,7 @@ func (c *AdminCourseControllerSearch) Get() {
 }
 
 func (c *AdminCourseControllerSearch) Post() {
+	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
 	c.TplName = c.viewpath
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
