@@ -39,21 +39,29 @@
         table {
             margin-top: 20px;
         }
+        .container-button {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container-full-height columns is-gapless">
+    <div class="container-full-height columns">
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
-            <ul class="menu-list">
+            <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/admin/course">课程管理</a></li>
                 <li><a href="/admin/teacher">教师管理</a></li>
                 <li><a href="/admin/student">学生管理</a></li>
             </ul>
             <!-- 登出按钮 -->
-            <div class="field" style="margin-top: 20px;">
-                <div class="control">
+            <div class="container-button">
+                <div class="control" style="padding: 8px">
                     <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
             </div>

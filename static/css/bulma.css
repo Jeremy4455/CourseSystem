@@ -1744,7 +1744,7 @@ fieldset[disabled] .button.is-danger.is-inverted.is-outlined {
 }
 
 .button.is-small {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
 }
 
 .button.is-small:not(.is-rounded) {

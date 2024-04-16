@@ -26,7 +26,8 @@
         }
         main {
             padding: 20px;
-            position: relative; /* 使得按钮的定位相对于 main 元素 */
+            position: relative;
+            margin-top: 20px;
         }
         .title {
             text-align: center;
@@ -39,34 +40,109 @@
         table {
             margin-top: 20px;
         }
+        .container-button {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container-full-height columns is-gapless">
+    <div class="container-full-height columns">
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
-            <ul class="menu-list">
+            <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/admin/course/retrieve">查询课程</a></li>
                 <li><a href="/admin/course/create">增加课程</a></li>
                 <li><a href="/admin/course/update">更改课程</a></li>
                 <li><a href="/admin/course/delete">删除课程</a></li>
             </ul>
-            <!-- 返回上级目录按钮 -->
-            <div class="field is-grouped" style="margin-top: 20px;">
-                <div class="control">
-                    <a class="button is-info is-small" href="/admin">返回上级目录</a>
+            <!-- 返回上级目录和登出按钮 -->
+            <div class="container-button">
+                <div class="control" style="padding: 8px">
+                    <a class="button is-info is-small"  href="/admin">返回</a>
                 </div>
-            </div>
-            <!-- 登出按钮 -->
-            <div class="field" style="margin-top: 20px;">
-                <div class="control">
+                <div></div>
+                <div class="control" style="padding: 8px">
                     <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
             </div>
         </aside>
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">删除课程</h1>
+            <!-- 表单 -->
+            <form action="/admin/course/delete" method="post">
+                <!-- 表单项 -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="CourseCode">课程号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Name">课程名：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Name" name="Name">
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-
+                <!-- 按钮 -->
+                <div class="field is-grouped" style="float: right">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">搜索课程</button>
+                    </div>
+                </div>
+            </form>
+            <!-- 表格 -->
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th class="has-text-centered has-text-left">课程号</th>
+                        <th class="has-text-centered has-text-left">课程名</th>
+                        <th class="has-text-centered has-text-left">学院</th>
+                        <th class="has-text-centered has-text-left">学分</th>
+                        <th class="has-text-centered has-text-left">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 表行 -->
+                    <!-- 使用range指令遍历所有课程 -->
+                    {{range .Courses}}
+                    <tr>
+                        <td>{{.CourseCode}}</td>
+                        <td>{{.Name}}</td>
+                        <td>{{.College}}</td>
+                        <td>{{.Credit}}</td>
+                        <td>
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <form action="/admin/course/delete" method="post">
+                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
+                                        <button class="button is-danger" type="submit">删除</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </main>
     </div>
 </body>
 </html>

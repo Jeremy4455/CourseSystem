@@ -26,7 +26,8 @@
         }
         main {
             padding: 20px;
-            position: relative; /* 使得按钮的定位相对于 main 元素 */
+            position: relative;
+            margin-top: 20px;
         }
         .title {
             text-align: center;
@@ -39,36 +40,41 @@
         table {
             margin-top: 20px;
         }
+        .container-button {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            justify-content: center;
+            padding: 20px;
+        }
     </style>
 </head>
 <body>
-    <div class="container-full-height columns is-gapless">
+    <div class="container-full-height columns">
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
-            <ul class="menu-list">
+            <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/admin/course/retrieve">查询课程</a></li>
                 <li><a href="/admin/course/create">增加课程</a></li>
                 <li><a href="/admin/course/update">更改课程</a></li>
                 <li><a href="/admin/course/delete">删除课程</a></li>
             </ul>
-            <!-- 返回上级目录按钮 -->
-            <div class="field is-grouped" style="margin-top: 20px;">
-                <div class="control">
-                    <a class="button is-info is-small" href="/admin">返回上级目录</a>
+            <!-- 返回上级目录和登出按钮 -->
+            <div class="container-button">
+                <div class="control" style="padding: 8px">
+                    <a class="button is-info is-small"  href="/admin">返回</a>
                 </div>
-            </div>
-            <!-- 登出按钮 -->
-            <div class="field" style="margin-top: 20px;">
-                <div class="control">
+                <div></div>
+                <div class="control" style="padding: 8px">
                     <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
             </div>
         </aside>
-
         <!-- 右侧内容 -->
-        <main class="column">
-            <h1 class="title">课程管理</h1>
+        <main class="column is-four-fifths">
+            <h1 class="title">查询课程</h1>
             <!-- 表单 -->
             <form action="/admin/course/retrieve" method="post">
                 <!-- 表单项 -->
@@ -102,7 +108,6 @@
                     </div>
                 </div>
             </form>
-
             <!-- 表格 -->
             <table class="table is-fullwidth is-hoverable">
                 <thead>
@@ -143,7 +148,7 @@
                 {{end}}
                 </tbody>
             </table>
-            <!-- 在表格之后添加分页按钮的容器 -->
+            <!-- 分页按钮 -->
             <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
                 <div class="field is-grouped">
                     <div class="control">
@@ -154,10 +159,8 @@
                     </div>
                 </div>
             </div>
-
             <!-- 翻页功能 -->
             <script src="../../../static/js/Page.js"></script>
-
         </main>
     </div>
 </body>

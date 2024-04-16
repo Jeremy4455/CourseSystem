@@ -20,7 +20,6 @@ func (c *AdminCourseControllerAdd) Post() {
 	name := c.GetString("Name")
 	college := c.GetString("College")
 	creditStr := c.GetString("Credit")
-
 	// 添加课程到数据库
 	err := models.AddCourse(courseCode, name, college, creditStr)
 	if err != nil {
