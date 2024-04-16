@@ -131,12 +131,33 @@
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>
+                                <div class="control">
+                                    <form action="/admin/course/update" method="post">
+                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
+                                        <button class="button is-info" type="submit">更改</button>
+                                    </form>
+                                </div>
                             </div>
                         </td>
                     </tr>
                 {{end}}
                 </tbody>
             </table>
+            <!-- 在表格之后添加分页按钮的容器 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <script src="../../../static/js/Page.js"></script>
+
         </main>
     </div>
 </body>

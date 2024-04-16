@@ -7,23 +7,20 @@ import (
 
 type AdminCourseControllerSearch struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminCourseControllerSearch) Get() {
-	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminCourseViews/searchcourse.tpl"
+
 }
 
 func (c *AdminCourseControllerSearch) Post() {
-	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
-	c.TplName = c.viewpath
-
+	c.TplName = "AdminViews/AdminCourseViews/searchcourse.tpl"
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
-	course, _ := models.GetCourse(courseCode, name)
-	if course == nil {
+	courses, _ := models.GetCourse(courseCode, name)
+	if courses == nil {
 		return
 	}
-	c.Data["Courses"] = course
+	c.Data["Courses"] = courses
 }
