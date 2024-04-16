@@ -1,13 +1,15 @@
 package models
 
 import (
+	"strconv"
+
 	"github.com/astaxie/beego/orm"
 )
 
 type ClassStudent struct {
 	Id          int
 	Class       *Class   `orm:"rel(fk);on_delete(cascade)"`
-	Student     *Student `orm:"rel(fk);on_delete(cascade)"`
+	Student     *Student `orm:"rel(fk)"`
 	Performance float64
 	Score       float64
 }
@@ -52,6 +54,7 @@ func PickClass(s *Student, c *Class) bool {
 	o.Insert(newclassstudent)
 	return true
 }
+
 func DropClass(s *Student, c *Class) bool {
 	if s == nil || c == nil {
 		return false
@@ -66,4 +69,30 @@ func DropClass(s *Student, c *Class) bool {
 	o.Delete(classstudent)
 	return true
 }
-func UpdateClass() {}
+
+func UpdateClass(s *Student, c *Class, performance, score string) bool {
+	if c == nil || s == nil || performance == "" && score == "" {
+		return false
+	}
+	o := orm.NewOrm()
+	classstudent := &ClassStudent{Class: c, Student: s}
+	o.Read(classstudent)
+
+	if performance != "" {
+		perform, err := strconv.ParseFloat(performance, 64)
+		if err != nil {
+			return false
+		}
+		classstudent.Performance = perform
+	}
+
+	if score != "" {
+		sco, err := strconv.ParseFloat(score, 64)
+		if err != nil {
+			return false
+		}
+		classstudent.Score = sco
+	}
+
+	return true
+}

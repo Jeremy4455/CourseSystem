@@ -83,7 +83,7 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 	}
 
 	course, _ := GetCourse(courseCode, courseName)
-	if course == nil || len(course) > 1 {
+	if len(course) != 1 {
 		return false
 	}
 
@@ -111,7 +111,6 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 		Location:  classroom,
 	}
 	o.Insert(class)
-
 	return true
 }
 

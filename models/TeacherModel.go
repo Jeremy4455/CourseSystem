@@ -8,7 +8,7 @@ type Teacher struct {
 	Name      string   `orm:"size(100)"`
 	Mobile    string   `orm:"size(100)"`
 	Email     string   `orm:"size(100)"`
-	Classes   []*Class `orm:"reverse(many)"`
+	Classes   []*Class `orm:"reverse(many);on_delete(cascade)"`
 }
 
 func GetTeacher(teacherId string) (*Teacher, error) {

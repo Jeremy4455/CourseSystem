@@ -25,8 +25,11 @@ func AddUser(id, username, password, role string) bool {
 
 func DeleteUser(id string) bool {
 	o := orm.NewOrm()
-
-	user := o.Read(&User{Id: id})
+	user := &User{Id: id}
+	err := o.Read(user)
+	if err != nil {
+		return false
+	}
 	o.Delete(user)
 	return true
 }
