@@ -65,3 +65,23 @@ func DeleteCourse(courseCode string) error {
 	o.Delete(course)
 	return nil
 }
+
+func ReviseCourse(c *Course, name, college, credit string) bool {
+	if c == nil {
+		return false
+	}
+	if name != "" {
+		c.Name = name
+	}
+	if college != "" {
+		c.College = college
+	}
+	if credit != "" {
+		cre, err := strconv.Atoi(credit)
+		if err != nil {
+			return false
+		}
+		c.Credit = cre
+	}
+	return true
+}

@@ -3,8 +3,9 @@ package AdminCourseControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"github.com/astaxie/beego/orm"
 	"strconv"
+
+	"github.com/beego/beego/orm"
 )
 
 type AdminClassControllerAdd struct {

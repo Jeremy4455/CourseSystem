@@ -68,4 +68,16 @@ func DeleteStudent(studentId string) error {
 	return nil
 }
 
-func ReviseStudent() {}
+func ReviseStudent(s *Student, name, class string) bool {
+	if s == nil {
+		return false
+	}
+	if name != "" {
+		s.Name = name
+	}
+	if class != "" {
+		s.Class = class
+	}
+
+	return true
+}

@@ -9,6 +9,10 @@ type ClassStudent struct {
 	Grade       string
 }
 
-func PickClass()   {}
-func DropClass()   {}
+func PickClass(s *Student, c *Class) bool {
+	return true
+}
+func DropClass(s *Student, c *Class) bool {
+	return true
+}
 func UpdateClass() {}

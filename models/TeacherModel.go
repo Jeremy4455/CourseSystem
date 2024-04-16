@@ -59,4 +59,18 @@ func DeleteTeacher(teacherId string) error {
 	return nil
 }
 
-func ReviseTeacher() {}
+func ReviseTeacher(t *Teacher, name, mobile, email string) bool {
+	if t == nil {
+		return false
+	}
+	if name != "" {
+		t.Name = name
+	}
+	if mobile != "" {
+		t.Mobile = mobile
+	}
+	if email != "" {
+		t.Email = email
+	}
+	return true
+}
