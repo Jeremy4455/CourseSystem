@@ -18,11 +18,12 @@ func (c *AdminCourseControllerSearch) Get() {
 func (c *AdminCourseControllerSearch) Post() {
 	c.viewpath = "AdminViews/AdminCourseViews/searchcourse.tpl"
 	c.TplName = c.viewpath
+
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 	course, _ := models.GetCourse(courseCode, name)
 	if course == nil {
 		return
 	}
-	c.Data["Course"] = course
+	c.Data["Courses"] = course
 }

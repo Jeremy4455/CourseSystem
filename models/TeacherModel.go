@@ -1,6 +1,6 @@
 package models
 
-import "github.com/beego/beego/orm"
+import "github.com/astaxie/beego/orm"
 
 // Teacher 老师模型
 type Teacher struct {
