@@ -22,6 +22,7 @@ func (c *LoginController) Post() {
 		c.Redirect("/login", 302)
 		return
 	}
+
 	role := user.Role
 	switch role {
 	case "admin":
