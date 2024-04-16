@@ -5,7 +5,7 @@ import (
 	"CourseSystem/models"
 	"strconv"
 
-	"github.com/beego/beego/orm"
+	"github.com/astaxie/beego/orm"
 )
 
 type AdminClassControllerAdd struct {

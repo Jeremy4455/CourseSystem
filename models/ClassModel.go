@@ -31,7 +31,7 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	return exist
 }
 
-func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, courseTime, classroom string) ([]*Class, error) {
+func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, nil
 	}
@@ -55,8 +55,8 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, courseT
 		q = q.Filter("Teacher", teacher)
 	}
 
-	if courseTime != "" {
-		q = q.Filter("ClassTime__contains", courseTime)
+	if classTime != "" {
+		q = q.Filter("ClassTime__contains", classTime)
 	}
 
 	if classroom != "" {
@@ -73,8 +73,8 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, courseT
 	return classes, nil
 }
 
-func AddClass(courseCode, courseName, courseTeacherId, courseSemester, courseTime, capacity, classroom string) bool {
-	if courseCode == "" || courseTeacherId == "" || courseSemester == "" || courseTime == "" || classroom == "" || capacity == "" {
+func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom string) bool {
+	if courseCode == "" || courseTeacherId == "" || courseSemester == "" || classTime == "" || classroom == "" || capacity == "" {
 		return false
 	}
 
@@ -100,13 +100,16 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, courseTim
 		return false
 	}
 
-	cap, _ := strconv.Atoi(capacity)
+	cap, err := strconv.Atoi(capacity)
+	if err != nil {
+		return false
+	}
 	class := &Class{
 		Id:        lastRecord.Id + 1,
 		Course:    course[0],
 		Teacher:   teacher,
 		Semester:  courseSemester,
-		ClassTime: courseTime,
+		ClassTime: classTime,
 		Capacity:  cap,
 		Location:  classroom,
 	}
@@ -127,6 +130,33 @@ func DeleteClass(courseCode, courseTeacherId, courseSemester string) bool {
 	_, err := o.Delete(class[0])
 	if err != nil {
 		return false
+	}
+	return true
+}
+
+func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom string) bool {
+	if c == nil {
+		return false
+	}
+	if courseTeacherId != "" {
+		teacher, err := GetTeacher(courseTeacherId)
+		if err != nil {
+			return false
+		}
+		c.Teacher = teacher
+	}
+	if classTime != "" {
+		c.ClassTime = classTime
+	}
+	if capacity != "" {
+		cap, err := strconv.Atoi(capacity)
+		if err != nil {
+			return false
+		}
+		c.Capacity = cap
+	}
+	if classroom != "" {
+		c.Location = classroom
 	}
 	return true
 }
