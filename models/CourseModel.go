@@ -41,7 +41,7 @@ func GetCourse(courseCode, name string) ([]*Course, error) {
 
 func AddCourse(courseCode, name, college, credit string) error {
 	course, err := GetCourse(courseCode, "")
-	if course != nil {
+	if len(course) != 0 {
 		return err
 	}
 	c, err := strconv.Atoi(credit)
@@ -50,7 +50,10 @@ func AddCourse(courseCode, name, college, credit string) error {
 	}
 	o := orm.NewOrm()
 	newcourse := &Course{CourseCode: courseCode, Name: name, College: college, Credit: c}
-	o.Insert(newcourse)
+	_, err = o.Insert(newcourse)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
