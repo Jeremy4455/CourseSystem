@@ -7,6 +7,9 @@ const itemsPerPage = 5;
 // 获取分页按钮
 const prevPageBtn = document.getElementById('prev-page-btn');
 const nextPageBtn = document.getElementById('next-page-btn');
+// 检查是否已经在最后一页
+const totalRows = document.querySelectorAll('tbody tr').length;
+const totalPages = Math.ceil(totalRows / itemsPerPage);
 
 // 上一页按钮点击事件处理函数
 prevPageBtn.addEventListener('click', () => {
@@ -18,8 +21,10 @@ prevPageBtn.addEventListener('click', () => {
 
 // 下一页按钮点击事件处理函数
 nextPageBtn.addEventListener('click', () => {
-    currentPage++;
-    updatePage();
+    if (currentPage < totalPages) {
+        currentPage++;
+        updatePage();
+    }
 });
 
 // 更新页面内容
@@ -37,9 +42,10 @@ function updatePage() {
             row.style.display = 'none';
         }
     });
-
     // 更新分页按钮状态
     prevPageBtn.disabled = currentPage === 1;
+    // 检查是否已经在最后一页，并禁用下一页按钮
+    nextPageBtn.disabled = currentPage === totalPages;
 }
 
 // 初始化页面

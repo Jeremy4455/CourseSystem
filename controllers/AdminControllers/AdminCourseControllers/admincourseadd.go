@@ -11,18 +11,18 @@ type AdminCourseControllerAdd struct {
 }
 
 func (c *AdminCourseControllerAdd) Get() {
-	c.viewpath = "AdminViews/AdminCourseViews/addcourse.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminCourseViews/addcourse.tpl"
 }
 
 func (c *AdminCourseControllerAdd) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminCourseViews/addcourse.tpl"
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 	college := c.GetString("College")
-	credit := c.GetString("Credit")
+	creditStr := c.GetString("Credit")
 
-	err := models.AddCourse(courseCode, name, college, credit)
+	// 添加课程到数据库
+	err := models.AddCourse(courseCode, name, college, creditStr)
 	if err != nil {
 		return
 	}

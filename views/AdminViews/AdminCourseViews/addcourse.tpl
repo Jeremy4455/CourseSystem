@@ -39,6 +39,21 @@
         table {
             margin-top: 20px;
         }
+        .center-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .error-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            z-index: 1000;
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -66,7 +81,93 @@
             </div>
         </aside>
 
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <div class="container">
+                <div class="content center-box"> <!-- 修改这里 -->
+                    <div style="width: 100%;"> <!-- 新增一个盒子 -->
+                        <h1 class="title">添加课程</h1>
+                        <!-- 表单 -->
+                        <form action="/admin/course/create" method="post">
+                            <!-- 表单项 -->
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" for="CourseCode">课程号：</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-small" type="text" id="CourseCode" name="CourseCode" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-label is-normal">
+                                    <label class="label" for="Name">课程名：</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-small" type="text" id="Name" name="Name" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="field is-horizontal">
+                                <div class="field-label is-normal">
+                                    <label class="label" for="College">学院：</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-small" type="text" id="College" name="College" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field-label is-normal">
+                                    <label class="label" for="Credit">学分：</label>
+                                </div>
+                                <div class="field-body">
+                                    <div class="field">
+                                        <div class="control">
+                                            <input class="input is-small" type="text" id="Credit" name="Credit" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
+                            <!-- 按钮 -->
+                            <div class="field is-grouped" style="float: right">
+                                <div class="control">
+                                    <button class="button is-primary" type="submit">添加课程</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <script>
+                        document.getElementById('courseForm').addEventListener('submit', function(event) {
+                            var courseCode = document.getElementById('CourseCode').value;
+                            var name = document.getElementById('Name').value;
+                            var college = document.getElementById('College').value;
+                            var credit = document.getElementById('Credit').value;
+
+                            // 简单验证，确保所有字段都填写了
+                            if (!courseCode || !name || !college || !credit) {
+                                alert('所有字段都必须填写');
+                                event.preventDefault(); // 阻止表单提交
+                                return;
+                            }
+
+                            // 验证学分是否为数字
+                            if (isNaN(credit)) {
+                                alert('学分必须是一个数字');
+                                event.preventDefault(); // 阻止表单提交
+                                return;
+                            }
+                        });
+                    </script>
+                </div>
+            </div>
+        </main>
     </div>
 </body>
 </html>
