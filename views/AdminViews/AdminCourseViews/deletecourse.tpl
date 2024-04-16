@@ -76,7 +76,7 @@
         <main class="column is-four-fifths">
             <h1 class="title">删除课程</h1>
             <!-- 表单 -->
-            <form action="/admin/course/delete" method="post">
+            <form action="/admin/course/delete" method="get">
                 <!-- 表单项 -->
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
@@ -132,7 +132,7 @@
                             <div class="field is-grouped">
                                 <div class="control">
                                     <form action="/admin/course/delete" method="post">
-                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
+                                        <input type="hidden" name="CourseCode" value="{{.CourseCode}}">
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>
@@ -142,6 +142,19 @@
                 {{end}}
                 </tbody>
             </table>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/Page.js"></script>
         </main>
     </div>
 </body>

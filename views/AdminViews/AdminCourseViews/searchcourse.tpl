@@ -110,7 +110,7 @@
             </form>
             <!-- 表格 -->
             <table class="table is-fullwidth is-hoverable">
-                <thead>
+                <thead style="position: sticky; top: 0; z-index: 1;">
                     <tr>
                         <th class="has-text-centered has-text-left">课程号</th>
                         <th class="has-text-centered has-text-left">课程名</th>
@@ -131,14 +131,8 @@
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <form action="/admin/course/delete" method="post">
-                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
-                                        <button class="button is-danger" type="submit">删除</button>
-                                    </form>
-                                </div>
-                                <div class="control">
-                                    <form action="/admin/course/update" method="post">
-                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
+                                    <form action="/admin/course/update" method="get">
+                                        <input type="hidden" name="CourseCode" value="{{.CourseCode}}">
                                         <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>
