@@ -84,35 +84,12 @@
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label" for="teacherId">教师号：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-small" type="text" id="teacherId" name="teacherId">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
                         <label class="label" for="courseName">课程名：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
                                 <input class="input is-small" type="text" id="courseName" name="courseName">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field-label is-normal">
-                        <label class="label" for="teacherName">教师名：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-small" type="text" id="teacherName" name="teacherName">
                             </div>
                         </div>
                     </div>
@@ -132,29 +109,23 @@
                     <tr>
                         <th>课程号</th>
                         <th>课程名</th>
-                        <th>课程时间</th>
+                        <th>学院</th>
                         <th>学分</th>
-                        <th>上课地点</th>
-                        <th>任课教师</th>
-                        <th>教师号</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- 表行 -->
                     <tr>
-                        <td>{{.CourseCode}}</td>
-                        <td>{{.CourseName}}</td>
-                        <td>{{.CourseTime}}</td>
-                        <td>{{.Credit}}</td>
-                        <td>{{.Classroom}}</td>
-                        <td>{{.Teacher}}</td>
-                        <td>{{.TeacherId}}</td>
+                        <td>{{.Course.CourseCode}}</td>
+                        <td>{{.Course.CourseName}}</td>
+                        <td>{{.Course.College}}</td>
+                        <td>{{.Course.Credit}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
                                     <form action="/admin/course/delete" method="post">
-                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
+                                        <input type="hidden" name="courseId" value="{{.Course.CourseCode}}">
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>
