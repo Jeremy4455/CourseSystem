@@ -33,7 +33,7 @@ func (c *AdminClassControllerAdd) Post() {
 		return
 	}
 
-	course, _ := models.GetCourse(courseCode, courseName)
+	course, _ := models.GetCourses(courseCode, courseName)
 	if course == nil || len(course) > 1 {
 		return
 	}

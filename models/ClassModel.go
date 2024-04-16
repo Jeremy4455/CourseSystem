@@ -44,7 +44,7 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, classTi
 	q := o.QueryTable("class").Filter("Semester", courseSemester)
 
 	if courseCode != "" || courseName != "" {
-		courses, err := GetCourse(courseCode, courseName)
+		courses, err := GetCourses(courseCode, courseName)
 		if err != nil {
 			return nil, nil
 		}
@@ -82,7 +82,7 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 		return false
 	}
 
-	course, _ := GetCourse(courseCode, courseName)
+	course, _ := GetCourses(courseCode, courseName)
 	if len(course) != 1 {
 		return false
 	}

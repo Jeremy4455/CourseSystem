@@ -15,7 +15,7 @@ type Course struct {
 	Classes    []*Class `orm:"reverse(many)"`
 }
 
-func GetCourse(courseCode, name string) ([]*Course, error) {
+func GetCourses(courseCode, name string) ([]*Course, error) {
 	if courseCode == "" && name == "" {
 		return nil, nil
 	}
@@ -40,7 +40,7 @@ func GetCourse(courseCode, name string) ([]*Course, error) {
 }
 
 func AddCourse(courseCode, name, college, credit string) error {
-	course, err := GetCourse(courseCode, "")
+	course, err := GetCourses(courseCode, "")
 	if len(course) != 0 {
 		return err
 	}
@@ -67,24 +67,4 @@ func DeleteCourse(courseCode string) error {
 	}
 	o.Delete(course)
 	return nil
-}
-
-func ReviseCourse(c *Course, name, college, credit string) bool {
-	if c == nil {
-		return false
-	}
-	if name != "" {
-		c.Name = name
-	}
-	if college != "" {
-		c.College = college
-	}
-	if credit != "" {
-		cre, err := strconv.Atoi(credit)
-		if err != nil {
-			return false
-		}
-		c.Credit = cre
-	}
-	return true
 }

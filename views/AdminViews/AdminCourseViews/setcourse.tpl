@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management</title>
+    <title>更改课程</title>
     <!-- 引入Bulma CSS文件 -->
     <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
@@ -72,7 +72,50 @@
                 </div>
             </div>
         </aside>
-
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">更改课程</h1>
+            <!-- 表格 -->
+            <form action="/admin/course/update" method="post">
+                <table class="table is-fullwidth is-hoverable">
+                    <thead style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th class="has-text-centered has-text-left">课程号</th>
+                            <th class="has-text-centered has-text-left">课程名</th>
+                            <th class="has-text-centered has-text-left">学院</th>
+                            <th class="has-text-centered has-text-left">学分</th>
+                            <th class="has-text-centered has-text-left">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 表行 -->
+                        <!-- 使用range指令遍历所有课程 -->
+                        {{range .Courses}}
+                        <tr>
+                            <td>{{.CourseCode}}</td>
+                            <td>
+                                <input type="hidden" name="CourseCode" value="{{.CourseCode}}">
+                                <input class="input is-small" type="text" name="Name" value="{{.Name}}">
+                            </td>
+                            <td>
+                                <input class="input is-small" type="text" name="College" value="{{.College}}">
+                            </td>
+                            <td>
+                                <input class="input is-small" type="text" name="Credit" value="{{.Credit}}">
+                            </td>
+                            <td>
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-info is-small" type="submit">保存更改</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </form>
+        </main>
     </div>
 </body>
 </html>
