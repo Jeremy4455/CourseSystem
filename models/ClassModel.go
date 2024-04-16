@@ -8,16 +8,20 @@ import (
 )
 
 type Class struct {
-	Id        int      `orm:"pk"`
-	Course    *Course  `orm:"rel(fk);index"` // Course作为外键
-	Teacher   *Teacher `orm:"rel(fk);index"` // Teacher作为外键
-	Semester  string   `orm:"index"`
+	Id        int
+	Course    *Course  `orm:"rel(fk)"` // Course作为外键
+	Teacher   *Teacher `orm:"rel(fk)"` // Teacher作为外键
+	Semester  string
 	ClassTime string
 	Capacity  int
 	Location  string
 }
 
-// 多字段唯一键
+func (c *Class) TableIndex() [][]string {
+	return [][]string{
+		{"Course", "Teacher", "Semester"},
+	}
+}
 func (c *Class) TableUnique() [][]string {
 	return [][]string{
 		{"Course", "Teacher", "Semester"},
@@ -93,19 +97,12 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 	}
 
 	o := orm.NewOrm()
-	var lastRecord Class
-
-	err := o.QueryTable("class").OrderBy("-id").Limit(1).One(&lastRecord)
-	if err != nil {
-		return false
-	}
 
 	cap, err := strconv.Atoi(capacity)
 	if err != nil {
 		return false
 	}
 	class := &Class{
-		Id:        lastRecord.Id + 1,
 		Course:    course[0],
 		Teacher:   teacher,
 		Semester:  courseSemester,

@@ -6,7 +6,7 @@ import (
 
 type User struct {
 	Id       string `orm:"pk;size(20);column(id)"`
-	Username string `orm:"unique;size(20)"`
+	Username string `orm:"size(20)"`
 	Password string `orm:"size(32);column(Password)"`
 	Role     string `orm:"size(32);column(Role)"`
 }
@@ -31,4 +31,15 @@ func DeleteUser(id string) bool {
 	return true
 }
 
-func ReviseUser() {}
+func ReviseUser(u *User, username, password string) bool {
+	if u == nil {
+		return false
+	}
+	if username != "" {
+		u.Username = username
+	}
+	if password != "" {
+		u.Password = password
+	}
+	return true
+}

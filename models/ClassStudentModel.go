@@ -1,18 +1,69 @@
 package models
 
+import (
+	"github.com/astaxie/beego/orm"
+)
+
 type ClassStudent struct {
-	Id          string   `orm:"pk"`
+	Id          int
 	Class       *Class   `orm:"rel(fk);on_delete(cascade)"`
-	Student     *Student `orm:"rel(fk)"`
+	Student     *Student `orm:"rel(fk);on_delete(cascade)"`
 	Performance float64
 	Score       float64
-	Grade       string
+}
+
+func (c *ClassStudent) TableIndex() [][]string {
+	return [][]string{
+		[]string{"Class", "Student"},
+	}
+}
+func (c *ClassStudent) TableUnique() [][]string {
+	return [][]string{
+		[]string{"Class", "Student"},
+	}
+}
+func (c *ClassStudent) TableName() string {
+	return "class_student"
 }
 
 func PickClass(s *Student, c *Class) bool {
+	if s == nil || c == nil {
+		return false
+	}
+	o := orm.NewOrm()
+	var classstuent []*ClassStudent
+	_, err := o.QueryTable("class_student").All(&classstuent)
+	if err != nil {
+		return false
+	}
+	if len(classstuent) >= c.Capacity {
+		return false
+	}
+	if StudentTimeConfict(s, c) == false {
+		return false
+	}
+
+	newclassstudent := &ClassStudent{
+		Class:       c,
+		Student:     s,
+		Performance: 0,
+		Score:       0,
+	}
+	o.Insert(newclassstudent)
 	return true
 }
 func DropClass(s *Student, c *Class) bool {
+	if s == nil || c == nil {
+		return false
+	}
+	o := orm.NewOrm()
+
+	classstudent := &ClassStudent{Class: c, Student: s}
+	err := o.Read(classstudent)
+	if err != nil {
+		return false
+	}
+	o.Delete(classstudent)
 	return true
 }
 func UpdateClass() {}
