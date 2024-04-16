@@ -3,7 +3,6 @@ package AdminStudentControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type AdminCourseControllerAdd struct {
@@ -24,7 +23,6 @@ func (c *AdminCourseControllerAdd) Post() {
 
 	// 添加课程到数据库
 	err := models.AddCourse(courseCode, name, college, creditStr)
-	fmt.Println(err)
 	if err != nil {
 		return
 	}
