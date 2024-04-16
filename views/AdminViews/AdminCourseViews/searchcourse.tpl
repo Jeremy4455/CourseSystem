@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Management</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -74,22 +74,22 @@
                 <!-- 表单项 -->
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="courseNo">课程号：</label>
+                        <label class="label" for="CourseCode">课程号：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseNo" name="courseNo">
+                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode">
                             </div>
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label" for="courseName">课程名：</label>
+                        <label class="label" for="Name">课程名：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseName" name="courseName">
+                                <input class="input is-small" type="text" id="Name" name="Name">
                             </div>
                         </div>
                     </div>
@@ -107,31 +107,34 @@
             <table class="table is-fullwidth is-hoverable">
                 <thead>
                     <tr>
-                        <th>课程号</th>
-                        <th>课程名</th>
-                        <th>学院</th>
-                        <th>学分</th>
-                        <th>操作</th>
+                        <th class="has-text-centered has-text-left">课程号</th>
+                        <th class="has-text-centered has-text-left">课程名</th>
+                        <th class="has-text-centered has-text-left">学院</th>
+                        <th class="has-text-centered has-text-left">学分</th>
+                        <th class="has-text-centered has-text-left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- 表行 -->
+                    <!-- 使用range指令遍历所有课程 -->
+                    {{range .Courses}}
                     <tr>
-                        <td>{{.Course.CourseCode}}</td>
-                        <td>{{.Course.CourseName}}</td>
-                        <td>{{.Course.College}}</td>
-                        <td>{{.Course.Credit}}</td>
+                        <td>{{.CourseCode}}</td>
+                        <td>{{.Name}}</td>
+                        <td>{{.College}}</td>
+                        <td>{{.Credit}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
                                     <form action="/admin/course/delete" method="post">
-                                        <input type="hidden" name="courseId" value="{{.Course.CourseCode}}">
+                                        <input type="hidden" name="courseId" value="{{.CourseCode}}">
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                {{end}}
                 </tbody>
             </table>
         </main>

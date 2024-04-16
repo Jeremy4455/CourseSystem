@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Login</title>
-    <link rel="stylesheet" href="../static/css/bluma.css">
+    <link rel="stylesheet" href="../static/css/bulma.css">
     <style>
         .center-box {
             position: absolute;

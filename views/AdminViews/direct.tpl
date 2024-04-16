@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Management</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Management</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -131,20 +131,20 @@
             <table class="table is-fullwidth is-hoverable">
                 <thead>
                     <tr>
-                        <th>教师号</th>
-                        <th>教师名</th>
-                        <th>手机号</th>
-                        <th>邮箱</th>
-                        <th>操作</th>
+                        <th class="has-text-centered has-text-left">教师号</th>
+                        <th class="has-text-centered has-text-left">教师名</th>
+                        <th class="has-text-centered has-text-left">手机号</th>
+                        <th class="has-text-centered has-text-left">邮箱</th>
+                        <th class="has-text-centered has-text-left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- 表行 -->
                     <tr>
-                        <td>{{.TeacherId}}</td>
-                        <td>{{.TeacherName}}</td>
-                        <td>{{.PhoneNumber}}</td>
-                        <td>{{.Email}}</td>
+                        <td>{{.Teacher.TeacherId}}</td>
+                        <td>{{.Teacher.Name}}</td>
+                        <td>{{.Teacher.Mobile}}</td>
+                        <td>{{.Teacher.Email}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
