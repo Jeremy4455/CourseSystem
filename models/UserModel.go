@@ -11,6 +11,16 @@ type User struct {
 	Role     string `orm:"size(32);column(Role)"`
 }
 
+func Login(id, password string) *User {
+	user := &User{Id: id, Password: password}
+	o := orm.NewOrm()
+	err := o.Read(user)
+	if err != nil {
+		return nil
+	}
+	return user
+}
+
 func GetUser(id string) bool {
 	return true
 }

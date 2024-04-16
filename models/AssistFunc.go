@@ -1,5 +1,7 @@
 package models
 
+import "github.com/astaxie/beego/orm"
+
 func CheckTime(busytime, classtime string) bool {
 
 	return true
@@ -29,4 +31,36 @@ func TeacherTimeConfict(t *Teacher, c *Class) bool {
 		}
 	}
 	return true
+}
+
+func Syncronize() {
+	o := orm.NewOrm()
+
+	var students []*Student
+	_, err := o.QueryTable("student").All(&students)
+	if err != nil {
+		return
+	}
+
+	for _, student := range students {
+		err := o.Read(&User{Id: student.StudentId})
+		if err == nil {
+			continue
+		}
+		AddUser(student.StudentId, student.Name, "123456", "student")
+	}
+
+	var teachers []*Teacher
+	_, err = o.QueryTable("teacher").All(&teachers)
+	if err == nil {
+		return
+	}
+
+	for _, teacher := range teachers {
+		err := o.Read(&User{Id: teacher.TeacherId})
+		if err != nil {
+			continue
+		}
+		AddUser(teacher.TeacherId, teacher.Name, "teacher123", "teacher")
+	}
 }

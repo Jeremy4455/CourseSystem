@@ -3,7 +3,6 @@ package controllers
 import (
 	"CourseSystem/models"
 
-	"github.com/astaxie/beego/orm"
 	beego "github.com/beego/beego/v2/server/web"
 )
 
@@ -16,20 +15,11 @@ func (c *LoginController) Get() {
 }
 
 func (c *LoginController) Post() {
-	username := c.GetString("username")
+	id := c.GetString("username")
 	password := c.GetString("password")
-	o := orm.NewOrm()
-	user := models.User{Username: username}
-
-	err := o.Read(&user, "Username")
-	if err != nil {
+	user := models.Login(id, password)
+	if user == nil {
 		c.Redirect("/login", 302)
-		//errors.New("不存在该用户")
-		return
-	}
-	if user.Password != password {
-		c.Redirect("/login", 302)
-		//errors.New("密码错误")
 		return
 	}
 	role := user.Role
