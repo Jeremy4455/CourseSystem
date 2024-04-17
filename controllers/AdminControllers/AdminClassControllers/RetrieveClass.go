@@ -20,10 +20,11 @@ func (c *AdminClassControllerRetrieve) Post() {
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
+	courseTeacherName := c.GetString("CourseTeacherName")
 	courseSemester := c.GetString("courseSemester")
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
-	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseSemester, courseTime, classroom)
+	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	c.Data["Classes"] = classes
 }

@@ -21,4 +21,13 @@ func (c *AdminStudentControllerUpdate) Get() {
 
 func (c *AdminStudentControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminStudentViews/UpdateStudent.tpl"
+
+	studentId := c.GetString("StudentId")
+	name := c.GetString("Name")
+	class := c.GetString("Class")
+	s, err := models.GetStudent(studentId)
+	if err != nil {
+		return
+	}
+	models.ReviseStudent(s, name, class)
 }

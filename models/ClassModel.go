@@ -35,7 +35,7 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	return exist
 }
 
-func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, classTime, classroom string) ([]*Class, error) {
+func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, nil
 	}
@@ -51,8 +51,8 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseSemester, classTi
 		q = q.Filter("Course", courses)
 	}
 
-	if courseTeacherId != "" {
-		teacher, err := GetTeacher(courseTeacherId)
+	if courseTeacherId != "" || courseTeacherName != "" {
+		teacher, err := GetTeacher(courseTeacherId, courseTeacherName, "", "")
 		if err != nil {
 			return nil, nil
 		}
@@ -87,12 +87,12 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 		return false
 	}
 
-	teacher, _ := GetTeacher(courseTeacherId)
+	teacher, _ := GetTeacher(courseTeacherId, "", "", "")
 	if teacher == nil {
 		return false
 	}
 
-	if ExistClass(course[0], teacher, courseSemester) == true {
+	if ExistClass(course[0], teacher[0], courseSemester) == true {
 		return false
 	}
 
@@ -104,7 +104,7 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 	}
 	class := &Class{
 		Course:    course[0],
-		Teacher:   teacher,
+		Teacher:   teacher[0],
 		Semester:  courseSemester,
 		ClassTime: classTime,
 		Capacity:  cap,
@@ -118,7 +118,7 @@ func DeleteClass(courseCode, courseTeacherId, courseSemester string) bool {
 	if courseCode == "" || courseTeacherId == "" || courseSemester == "" {
 		return false
 	}
-	class, _ := GetClasses(courseCode, "", courseTeacherId, courseSemester, "", "")
+	class, _ := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "")
 	if class == nil {
 		return false
 	}
@@ -135,11 +135,11 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 		return false
 	}
 	if courseTeacherId != "" {
-		teacher, err := GetTeacher(courseTeacherId)
+		teacher, err := GetTeacher(courseTeacherId, "", "", "")
 		if err != nil {
 			return false
 		}
-		c.Teacher = teacher
+		c.Teacher = teacher[0]
 	}
 	if classTime != "" {
 		c.ClassTime = classTime
@@ -153,6 +153,11 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 	}
 	if classroom != "" {
 		c.Location = classroom
+	}
+
+	_, err := orm.NewOrm().Update(c)
+	if err != nil {
+		return false
 	}
 	return true
 }

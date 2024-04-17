@@ -1,6 +1,9 @@
 package AdminTeacherControllers
 
-import "CourseSystem/controllers"
+import (
+	"CourseSystem/controllers"
+	"CourseSystem/models"
+)
 
 type AdminTeacherControllerUpdate struct {
 	controllers.BaseController
@@ -8,6 +11,19 @@ type AdminTeacherControllerUpdate struct {
 }
 
 func (c *AdminTeacherControllerUpdate) Get() {
-	c.viewpath = "AdminViews/AdminTeacherViews/UpdateTeacher.tpl"
+	c.TplName = "AdminViews/AdminTeacherViews/UpdateTeacher.tpl"
+}
+
+func (c *AdminTeacherControllerUpdate) Post() {
 	c.TplName = c.viewpath
+
+	teacherId := c.GetString("TeacherId")
+	teacherName := c.GetString("TeacherName")
+	mobile := c.GetString("Mobile")
+	email := c.GetString("Email")
+	teacher, _ := models.GetTeacher(teacherId, teacherName, mobile, email)
+	if teacher != nil {
+		return
+	}
+	c.Data["Teacher"] = teacher
 }

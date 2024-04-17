@@ -11,28 +11,47 @@ type Teacher struct {
 	Classes   []*Class `orm:"reverse(many);on_delete(cascade)"`
 }
 
-func GetTeacher(teacherId string) (*Teacher, error) {
+func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 	o := orm.NewOrm()
+	q := o.QueryTable("teacher")
 
-	teacher := &Teacher{TeacherId: teacherId}
-
-	err := o.Read(teacher)
-	if err != nil {
-		// 处理错误
-		return nil, err
+	var teacher []*Teacher
+	if teacherId != "" {
+		_, err := q.Filter(teacherId).All(&teacher)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if name != "" {
+		_, err := q.Filter(name).All(&teacher)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if mobile != "" {
+		_, err := q.Filter(mobile).All(&teacher)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if email != "" {
+		_, err := q.Filter(email).All(&teacher)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	return teacher, nil
 }
 
 func AddTeacher(teacherId, name, mobile, email string) error {
-	teacher, err := GetTeacher(teacherId)
-	if teacher != nil {
+	teachers, err := GetTeacher(teacherId, "", "", "")
+	if len(teachers) != 0 {
 		return err
 	}
 
 	o := orm.NewOrm()
-	teacher = &Teacher{TeacherId: teacherId, Name: name, Mobile: mobile, Email: email}
+	teacher := &Teacher{TeacherId: teacherId, Name: name, Mobile: mobile, Email: email}
 	_, err = o.Insert(teacher)
 	if err != nil {
 		return err
@@ -71,6 +90,10 @@ func ReviseTeacher(t *Teacher, name, mobile, email string) bool {
 	}
 	if email != "" {
 		t.Email = email
+	}
+	_, err := orm.NewOrm().Update(t)
+	if err != nil {
+		return false
 	}
 	return true
 }

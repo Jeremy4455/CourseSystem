@@ -11,16 +11,21 @@ type AdminTeacherControllerRetrieve struct {
 }
 
 func (c *AdminTeacherControllerRetrieve) Get() {
-	c.viewpath = "AdminViews/AdminTeacherViews/RetrieveTeacher.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminTeacherViews/RetrieveTeacher.tpl"
 }
 func (c *AdminTeacherControllerRetrieve) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminTeacherViews/RetrieveTeacher.tpl"
 
 	teacherId := c.GetString("TeacherId")
-	teacher, _ := models.GetTeacher(teacherId)
-	if teacher != nil {
+	teacherName := c.GetString("TeacherName")
+	mobile := c.GetString("Mobile")
+	email := c.GetString("Email")
+	teacher, _ := models.GetTeacher(teacherId, "", "", "")
+	if len(teacher) != 1 {
 		return
 	}
-	c.Data["Teacher"] = teacher
+	err := models.ReviseTeacher(teacher[0], teacherName, mobile, email)
+	if err == false {
+		return
+	}
 }

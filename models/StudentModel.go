@@ -101,6 +101,9 @@ func ReviseStudent(s *Student, name, class string) bool {
 	if class != "" {
 		s.Class = class
 	}
-
+	_, err := orm.NewOrm().Update(s)
+	if err != nil {
+		return false
+	}
 	return true
 }
