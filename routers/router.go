@@ -8,18 +8,22 @@ import (
 	AdminTeacherControllers "CourseSystem/controllers/AdminControllers/AdminTeacherControllers"
 	"CourseSystem/controllers/StudentControllers"
 	"CourseSystem/controllers/TeacherControllers"
+
+	"github.com/beego/beego/v2/server/web"
 	beego "github.com/beego/beego/v2/server/web"
+	"github.com/beego/beego/v2/server/web/context"
 )
 
+func FilterUser(ctx *context.Context) {
+	userID := ctx.Input.Session("userID")
+	if userID == nil && ctx.Request.RequestURI != "/login" {
+		ctx.Redirect(302, "/login")
+		return
+	}
+}
 func init() {
-	//在 Beego 中注册过滤器
-	//var FilterUser = func(ctx *context.Context) {
-	//	if ctx.Request.RequestURI != "/login" {
-	//		ctx.Redirect(302, "/login")
-	//	}
-	//}
-	//
-	//beego.InsertFilter("/*", beego.BeforeRouter, FilterUser)
+	web.InsertFilter("/*", web.BeforeRouter, FilterUser)
+
 	beego.Router("/", &controllers.BaseController{})
 	beego.Router("/login", &controllers.LoginController{})
 	beego.Router("/logout", &controllers.LogoutController{})

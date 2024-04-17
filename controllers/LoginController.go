@@ -24,6 +24,8 @@ func (c *LoginController) Post() {
 	}
 
 	role := user.Role
+	c.SetSession("userID", user.Id)
+
 	switch role {
 	case "admin":
 		c.Redirect("/admin", 302)
