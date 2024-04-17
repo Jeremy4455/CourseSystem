@@ -5,7 +5,7 @@ func CheckTime(busytime, classtime string) bool {
 	return true
 }
 
-func StudentTimeConfict(s *Student, c *Class) bool {
+func StudentTimeConflict(s *Student, c *Class) bool {
 	if s == nil || c == nil {
 		return false
 	}
@@ -18,7 +18,7 @@ func StudentTimeConfict(s *Student, c *Class) bool {
 	return true
 }
 
-func TeacherTimeConfict(t *Teacher, c *Class) bool {
+func TeacherTimeConflict(t *Teacher, c *Class) bool {
 	if t == nil || c == nil {
 		return false
 	}

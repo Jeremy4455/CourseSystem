@@ -41,7 +41,7 @@ func PickClass(s *Student, c *Class) bool {
 	if len(classstuent) >= c.Capacity {
 		return false
 	}
-	if StudentTimeConfict(s, c) == false {
+	if StudentTimeConflict(s, c) == false {
 		return false
 	}
 

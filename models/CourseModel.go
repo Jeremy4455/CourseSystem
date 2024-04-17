@@ -39,7 +39,7 @@ func GetCourses(courseCode, name string) ([]*Course, error) {
 	return courses, nil
 }
 
-func AddCourse(courseCode, name, college, credit string) error {
+func CreateCourse(courseCode, name, college, credit string) error {
 	course, err := GetCourses(courseCode, "")
 	if len(course) != 0 {
 		return err
