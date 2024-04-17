@@ -19,5 +19,6 @@ func RegisterDB() {
 }
 func init() {
 	RegisterDB()
-	orm.RegisterModel(new(Teacher), new(Student), new(Course), new(Admin), new(User), new(Class), new(ClassStudent))
+	orm.RegisterModel(new(User), new(Teacher), new(Student), new(Course), new(Admin), new(Class), new(ClassStudent))
+	Syncronize()
 }
