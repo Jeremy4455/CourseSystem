@@ -29,7 +29,7 @@ func GetStudent(studentId string) (*Student, error) {
 	return student, nil
 }
 
-func AddStudent(studentId, name, class, grade string) error {
+func CreateStudent(studentId, name, class, grade string) error {
 	student, err := GetStudent(studentId)
 	if student != nil {
 		return err
@@ -66,6 +66,29 @@ func DeleteStudent(studentId string) error {
 
 	DeleteUser(studentId)
 	return nil
+}
+
+func GetStudents(studentId, name, class string) ([]*Student, error) {
+	// 获取 ORM 对象
+	o := orm.NewOrm()
+
+	// 创建查询对象
+	var students []*Student
+
+	// 构建查询条件
+	qs := o.QueryTable("student")
+	if studentId != "" {
+		qs = qs.Filter("StudentId", studentId)
+	}
+	if name != "" {
+		qs = qs.Filter("Name__contains", name)
+	}
+	if class != "" {
+		qs = qs.Filter("Class__contains", class)
+	}
+	// 执行查询
+	_, err := qs.All(&students)
+	return students, err
 }
 
 func ReviseStudent(s *Student, name, class string) bool {

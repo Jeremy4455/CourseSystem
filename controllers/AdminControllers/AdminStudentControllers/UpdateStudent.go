@@ -1,13 +1,24 @@
 package AdminStudentControllers
 
-import "CourseSystem/controllers"
+import (
+	"CourseSystem/controllers"
+	"CourseSystem/models"
+)
 
 type AdminStudentControllerUpdate struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminStudentControllerUpdate) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/CreateStudent.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminStudentViews/UpdateStudent.tpl"
+	studentId := c.GetString("StudentId")
+	students, _ := models.GetStudents(studentId, "", "")
+	if students == nil {
+		return
+	}
+	c.Data["Students"] = students
+}
+
+func (c *AdminStudentControllerUpdate) Post() {
+	c.TplName = "AdminViews/AdminStudentViews/UpdateStudent.tpl"
 }

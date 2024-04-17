@@ -72,7 +72,48 @@
                 </div>
             </div>
         </aside>
-
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">更改学生</h1>
+            <!-- 表格 -->
+            <form action="/admin/student/update" method="post">
+                <table class="table is-fullwidth is-hoverable">
+                    <thead style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th class="has-text-centered has-text-left">学号</th>
+                            <th class="has-text-centered has-text-left">姓名</th>
+                            <th class="has-text-centered has-text-left">班级</th>
+                            <th class="has-text-centered has-text-left">绩点</th>
+                            <th class="has-text-centered has-text-left">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 表行 -->
+                        <!-- 使用range指令遍历所有课程 -->
+                        {{range .Students}}
+                        <tr>
+                            <td>{{.StudentId}}</td>
+                            <td>
+                                <input type="hidden" name="StudentId" value="{{.StudentId}}">
+                                <input class="input is-small" type="text" name="Name" value="{{.Name}}">
+                            </td>
+                            <td>
+                                <input class="input is-small" type="text" name="Class" value="{{.Class}}">
+                            </td>
+                            <td>{{.Grade}}</td>
+                            <td>
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-info is-small" type="submit">保存更改</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </form>
+        </main>
 
     </div>
 </body>
