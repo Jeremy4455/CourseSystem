@@ -17,7 +17,7 @@ func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 
 	var teacher []*Teacher
 	if teacherId != "" {
-		_, err := q.Filter(teacherId).All(&teacher)
+		_, err := q.Filter("teacherId", teacherId).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
@@ -42,6 +42,43 @@ func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 	}
 
 	return teacher, nil
+}
+
+func GetAllTeachers() ([]*Teacher, error) {
+	o := orm.NewOrm()
+	q := o.QueryTable("teacher")
+	var teachers []*Teacher
+	_, err := q.All(&teachers)
+	return teachers, err
+}
+
+func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
+	if teacherId == "" && name == "" && mobile == "" && email == "" {
+		return nil, nil
+	}
+	// 获取 ORM 对象
+	o := orm.NewOrm()
+
+	// 创建查询对象
+	var teachers []*Teacher
+
+	// 构建查询条件
+	qs := o.QueryTable("teacher")
+	if teacherId != "" {
+		qs = qs.Filter("TeacherId", teacherId)
+	}
+	if name != "" {
+		qs = qs.Filter("Name__contains", name)
+	}
+	if mobile != "" {
+		qs = qs.Filter("mobile", mobile)
+	}
+	if email != "" {
+		qs = qs.Filter("email", email)
+	}
+	// 执行查询
+	_, err := qs.All(&teachers)
+	return teachers, err
 }
 
 func AddTeacher(teacherId, name, mobile, email string) error {

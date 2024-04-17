@@ -17,15 +17,9 @@ func (c *AdminTeacherControllerRetrieve) Post() {
 	c.TplName = "AdminViews/AdminTeacherViews/RetrieveTeacher.tpl"
 
 	teacherId := c.GetString("TeacherId")
-	teacherName := c.GetString("TeacherName")
+	teacherName := c.GetString("Name")
 	mobile := c.GetString("Mobile")
 	email := c.GetString("Email")
-	teacher, _ := models.GetTeacher(teacherId, "", "", "")
-	if len(teacher) != 1 {
-		return
-	}
-	err := models.ReviseTeacher(teacher[0], teacherName, mobile, email)
-	if err == false {
-		return
-	}
+	teachers, _ := models.GetTeachers(teacherId, teacherName, mobile, email)
+	c.Data["Teachers"] = teachers
 }

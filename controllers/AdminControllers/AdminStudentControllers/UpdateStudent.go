@@ -12,11 +12,13 @@ type AdminStudentControllerUpdate struct {
 func (c *AdminStudentControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminStudentViews/UpdateStudent.tpl"
 	studentId := c.GetString("StudentId")
-	students, _ := models.GetStudents(studentId, "", "")
-	if students == nil {
-		return
+	if studentId == "" {
+		students, _ := models.GetAllStudents()
+		c.Data["Students"] = students
+	} else {
+		students, _ := models.GetStudents(studentId, "", "")
+		c.Data["Students"] = students
 	}
-	c.Data["Students"] = students
 }
 
 func (c *AdminStudentControllerUpdate) Post() {

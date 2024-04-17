@@ -101,7 +101,7 @@
                                 <input class="input is-small" type="text" name="College" value="{{.College}}">
                             </td>
                             <td>
-                                <input class="input is-small" type="text" name="Credit" value="{{.Credit}}">
+                                <input class="input is-small" type="number" name="Credit" value="{{.Credit}}" min="1" max="5" step="1">
                             </td>
                             <td>
                                 <div class="field is-grouped">
@@ -115,6 +115,19 @@
                     </tbody>
                 </table>
             </form>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/UpdatePage.js"></script>
         </main>
     </div>
 </body>

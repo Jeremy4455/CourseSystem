@@ -72,7 +72,64 @@
                 </div>
             </div>
         </aside>
-
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">增加教师</h1>
+            <!-- 表单 -->
+            <form action="/admin/teacher/create" method="post">
+                <!-- 表单项 -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="TeacherId">教师号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="TeacherId" name="TeacherId" required pattern="[0-9]{6}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Name">教师名：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Name" name="Name" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="Mobile">手机号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="tel" id="Mobile" name="Mobile" required pattern="[0-9]{11}">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Email">邮箱：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="email" id="Email" name="Email" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 按钮 -->
+                <div class="field is-grouped" style="float: right">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">添加教师</button>
+                    </div>
+                </div>
+            </form>
+        </main>
 
     </div>
 </body>

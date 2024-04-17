@@ -165,7 +165,7 @@
                 </div>
             </div>
             <!-- 翻页功能 -->
-            <script src="../../../static/js/Page.js"></script>
+            <script src="../../../static/js/RetrievePage.js"></script>
         </main>
 
     </div>

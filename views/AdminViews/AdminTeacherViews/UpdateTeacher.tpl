@@ -72,7 +72,63 @@
                 </div>
             </div>
         </aside>
-
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">更改教师</h1>
+            <!-- 表格 -->
+            <form action="/admin/teacher/update" method="post">
+                <table class="table is-fullwidth is-hoverable">
+                    <thead style="position: sticky; top: 0; z-index: 1;">
+                        <tr>
+                            <th class="has-text-centered has-text-left">教师号</th>
+                            <th class="has-text-centered has-text-left">教师名</th>
+                            <th class="has-text-centered has-text-left">手机号</th>
+                            <th class="has-text-centered has-text-left">邮箱</th>
+                            <th class="has-text-centered has-text-left">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 表行 -->
+                        <!-- 使用range指令遍历所有课程 -->
+                        {{range .Teachers}}
+                        <tr>
+                            <td>{{.TeacherId}}</td>
+                            <td>
+                                <input type="hidden" name="TeacherId" value="{{.TeacherId}}">
+                                <input class="input is-small" type="text" name="Name" value="{{.Name}}">
+                            </td>
+                            <td>
+                                <input class="input is-small" type="text" name="Mobile" value="{{.Mobile}}" pattern="[0-9]{11}">
+                            </td>
+                            <td>
+                                <input class="input is-small" type="email" name="Email" value="{{.Email}}">
+                            </td>
+                            <td>
+                                <div class="field is-grouped">
+                                    <div class="control">
+                                        <button class="button is-info is-small" type="submit">保存更改</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+            </form>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/UpdatePage.js"></script>
+        </main>
 
     </div>
 </body>

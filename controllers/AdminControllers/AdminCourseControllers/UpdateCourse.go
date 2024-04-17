@@ -14,11 +14,13 @@ type AdminCourseControllerUpdate struct {
 func (c *AdminCourseControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminCourseViews/UpdateCourse.tpl"
 	courseCode := c.GetString("CourseCode")
-	courses, _ := models.GetCourses(courseCode, "")
-	if courses == nil {
-		return
+	if courseCode == "" {
+		courses, _ := models.GetAllCourses()
+		c.Data["Courses"] = courses
+	} else {
+		courses, _ := models.GetCourses(courseCode, "")
+		c.Data["Courses"] = courses
 	}
-	c.Data["Courses"] = courses
 }
 
 func (c *AdminCourseControllerUpdate) Post() {

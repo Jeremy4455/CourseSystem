@@ -72,8 +72,64 @@
                 </div>
             </div>
         </aside>
-
-
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">添加学生</h1>
+            <!-- 表单 -->
+            <form action="/admin/student/create" method="post">
+                <!-- 表单项 -->
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="StudentId">学号：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="StudentId" pattern="[0-9]{8}" name="StudentId" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Name">姓名：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Name" name="Name" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="field is-horizontal">
+                    <div class="field-label is-normal">
+                        <label class="label" for="Class">班级：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Class" name="Class" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Grade">绩点：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="number" id="Grade" name="Grade" min="0" max="4" step="0.01" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 按钮 -->
+                <div class="field is-grouped" style="float: right">
+                    <div class="control">
+                        <button class="button is-primary" type="submit">添加学生</button>
+                    </div>
+                </div>
+            </form>
+        </main>
     </div>
 </body>
 </html>

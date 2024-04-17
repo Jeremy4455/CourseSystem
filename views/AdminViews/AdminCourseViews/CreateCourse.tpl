@@ -86,7 +86,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode" required>
+                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode" required pattern="[0-9]{6}">
                             </div>
                         </div>
                     </div>
@@ -118,7 +118,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="Credit" name="Credit" required>
+                                <input class="input is-small" type="text" id="Credit" name="Credit" required min="1" max="5" step="1">
                             </div>
                         </div>
                     </div>
@@ -130,28 +130,6 @@
                     </div>
                 </div>
             </form>
-            <script>
-                document.getElementById('courseForm').addEventListener('submit', function(event) {
-                    var courseCode = document.getElementById('CourseCode').value;
-                    var name = document.getElementById('Name').value;
-                    var college = document.getElementById('College').value;
-                    var credit = document.getElementById('Credit').value;
-
-                    // 简单验证，确保所有字段都填写了
-                    if (!courseCode || !name || !college || !credit) {
-                        alert('所有字段都必须填写');
-                        event.preventDefault(); // 阻止表单提交
-                        return;
-                    }
-
-                    // 验证学分是否为数字
-                    if (isNaN(credit)) {
-                        alert('学分必须是一个数字');
-                        event.preventDefault(); // 阻止表单提交
-                        return;
-                    }
-                });
-            </script>
         </main>
     </div>
 </body>

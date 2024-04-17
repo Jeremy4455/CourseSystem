@@ -72,55 +72,52 @@
                 </div>
             </div>
         </aside>
-
-
         <!-- 右侧内容 -->
-        <main class="column">
-            <h1 class="title">教师管理</h1>
+        <main class="column is-four-fifths">
+            <h1 class="title">查询教师</h1>
             <!-- 表单 -->
-            <form action="/TeacherList" method="post">
+            <form action="/admin/teacher/retrieve" method="post">
                 <!-- 表单项 -->
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="teacherId">教师号：</label>
+                        <label class="label" for="TeacherId">教师号：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="teacherId" name="teacherId">
+                                <input class="input is-small" type="text" id="TeacherId" name="TeacherId">
                             </div>
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label" for="teacherName">教师名：</label>
+                        <label class="label" for="Name">教师名：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="teacherName" name="teacherName">
+                                <input class="input is-small" type="text" id="Name" name="Name">
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="phoneNumber">手机号：</label>
+                        <label class="label" for="Mobile">手机号：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="phoneNumber" name="phoneNumber">
+                                <input class="input is-small" type="tel" id="Mobile" name="Mobile" pattern="[0-9]{11}">
                             </div>
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label" for="email">邮箱：</label>
+                        <label class="label" for="Email">邮箱：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="email" id="email" name="email">
+                                <input class="input is-small" type="email" id="Email" name="Email">
                             </div>
                         </div>
                     </div>
@@ -133,10 +130,9 @@
                     </div>
                 </div>
             </form>
-
             <!-- 表格 -->
             <table class="table is-fullwidth is-hoverable">
-                <thead>
+                <thead style="position: sticky; top: 0; z-index: 1;">
                     <tr>
                         <th class="has-text-centered has-text-left">教师号</th>
                         <th class="has-text-centered has-text-left">教师名</th>
@@ -147,24 +143,40 @@
                 </thead>
                 <tbody>
                     <!-- 表行 -->
+                    <!-- 使用range指令遍历所有课程 -->
+                    {{range .Teachers}}
                     <tr>
-                        <td>{{.Teacher.TeacherId}}</td>
-                        <td>{{.Teacher.Name}}</td>
-                        <td>{{.Teacher.Mobile}}</td>
-                        <td>{{.Teacher.Email}}</td>
+                        <td>{{.TeacherId}}</td>
+                        <td>{{.Name}}</td>
+                        <td>{{.Mobile}}</td>
+                        <td>{{.Email}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <form action="/TeacherDelete" method="post">
-                                        <input type="hidden" name="teacherId" value="{{.ID}}">
-                                        <button class="button is-danger" type="submit">删除</button>
+                                    <form action="/admin/teacher/update" method="get">
+                                        <input type="hidden" name="TeacherId" value="{{.TeacherId}}">
+                                        <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                {{end}}
                 </tbody>
             </table>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/RetrievePage.js"></script>
         </main>
 
     </div>

@@ -68,7 +68,18 @@ func DeleteStudent(studentId string) error {
 	return nil
 }
 
+func GetAllStudents() ([]*Student, error) {
+	o := orm.NewOrm()
+	q := o.QueryTable("student")
+	var students []*Student
+	_, err := q.All(&students)
+	return students, err
+}
+
 func GetStudents(studentId, name, class string) ([]*Student, error) {
+	if studentId == "" && name == "" && class == "" {
+		return nil, nil
+	}
 	// 获取 ORM 对象
 	o := orm.NewOrm()
 

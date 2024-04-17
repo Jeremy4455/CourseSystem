@@ -113,6 +113,19 @@
                     </tbody>
                 </table>
             </form>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/UpdatePage.js"></script>
         </main>
 
     </div>

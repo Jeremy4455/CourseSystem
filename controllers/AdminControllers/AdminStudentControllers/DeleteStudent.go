@@ -11,12 +11,22 @@ type AdminStudentControllerDelete struct {
 }
 
 func (c *AdminStudentControllerDelete) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/CreateStudent.tpl"
-	c.TplName = c.viewpath
+	c.SearchStudent()
+	c.TplName = "AdminViews/AdminStudentViews/DeleteStudent.tpl"
+}
+func (c *AdminStudentControllerDelete) SearchStudent() {
+	studentId := c.GetString("StudentId")
+	name := c.GetString("Name")
+	class := c.GetString("Class")
+	students, _ := models.GetStudents(studentId, name, class)
+	if students == nil {
+		return
+	}
+	c.Data["Students"] = students
 }
 
 func (c *AdminStudentControllerDelete) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminStudentViews/DeleteStudent.tpl"
 	studentId := c.GetString("StudentId")
 
 	err := models.DeleteStudent(studentId)

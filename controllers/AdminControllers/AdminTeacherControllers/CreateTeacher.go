@@ -11,11 +11,11 @@ type AdminTeacherControllerCreate struct {
 }
 
 func (c *AdminTeacherControllerCreate) Get() {
-	c.viewpath = "AdminViews/AdminTeacherViews/CreateTeacher.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminTeacherViews/CreateTeacher.tpl"
 }
+
 func (c *AdminTeacherControllerCreate) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminTeacherViews/CreateTeacher.tpl"
 	teacherId := c.GetString("TeacherId")
 	name := c.GetString("Name")
 	mobile := c.GetString("Mobile")

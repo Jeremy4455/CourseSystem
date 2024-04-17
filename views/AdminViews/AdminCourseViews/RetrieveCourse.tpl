@@ -85,7 +85,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode">
+                                <input class="input is-small" type="text" id="CourseCode" name="CourseCode" pattern="[0-9]{5}">
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                 </div>
             </div>
             <!-- 翻页功能 -->
-            <script src="../../../static/js/Page.js"></script>
+            <script src="../../../static/js/RetrievePage.js"></script>
         </main>
     </div>
 </body>

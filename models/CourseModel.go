@@ -25,18 +25,14 @@ func GetCourses(courseCode, name string) ([]*Course, error) {
 	var courses []*Course
 
 	if courseCode != "" {
-		_, err := q.Filter("CourseCode", courseCode).All(&courses)
-		if err != nil {
-			return nil, err
-		}
-	} else {
-		_, err := q.Filter("Name__contains", name).All(&courses)
-		if err != nil {
-			return nil, err
-		}
-	}
+		q = q.Filter("CourseCode", courseCode)
 
-	return courses, nil
+	} else {
+		q = q.Filter("Name__contains", name)
+	}
+	_, err := q.All(&courses)
+
+	return courses, err
 }
 
 func CreateCourse(courseCode, name, college, credit string) error {
@@ -67,4 +63,12 @@ func DeleteCourse(courseCode string) error {
 	}
 	o.Delete(course)
 	return nil
+}
+
+func GetAllCourses() ([]*Course, error) {
+	o := orm.NewOrm()
+	q := o.QueryTable("course")
+	var courses []*Course
+	_, err := q.All(&courses)
+	return courses, err
 }
