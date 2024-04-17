@@ -11,17 +11,15 @@ type AdminStudentControllerRetrieve struct {
 }
 
 func (c *AdminStudentControllerRetrieve) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/RetrieveStudent.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminStudentViews/RetrieveStudent.tpl"
 }
 
 func (c *AdminStudentControllerRetrieve) Post() {
-	c.TplName = c.viewpath
-
+	c.TplName = "AdminViews/AdminStudentViews/RetrieveStudent.tpl"
+	// 获取请求参数
 	studentId := c.GetString("StudentId")
-	student, _ := models.GetStudent(studentId)
-	if student != nil {
-		return
-	}
-	c.Data["Student"] = student
+	name := c.GetString("Name")
+	class := c.GetString("Class")
+	students, _ := models.GetStudents(studentId, name, class)
+	c.Data["Students"] = students
 }

@@ -73,46 +73,44 @@
             </div>
         </aside>
         <!-- 右侧内容 -->
-        <main class="column">
-            <h1 class="title">学生管理</h1>
+        <main class="column is-four-fifths">
+            <h1 class="title">查询学生</h1>
             <!-- 表单 -->
-            <form action="/StudentList" method="post">
+            <form action="/admin/student/retrieve" method="post">
                 <!-- 表单项 -->
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
-                        <label class="label" for="studentId">学生号：</label>
+                        <label class="label" for="StudentId">学号：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="studentId" name="studentId">
+                                <input class="input is-small" type="text" id="StudentId" name="StudentId">
                             </div>
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label" for="studentName">学生名：</label>
+                        <label class="label" for="Name">姓名：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="studentName" name="studentName">
+                                <input class="input is-small" type="text" id="Name" name="Name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="field-label is-normal">
+                        <label class="label" for="Class">班级：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Class" name="Class">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="field is-horizontal">
-                    <div class="field-label is-normal">
-                        <label class="label" for="class">班级：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-small" type="text" id="class" name="class">
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
                 <!-- 按钮 -->
                 <div class="field is-grouped" style="float: right">
@@ -121,36 +119,53 @@
                     </div>
                 </div>
             </form>
-
             <!-- 表格 -->
             <table class="table is-fullwidth is-hoverable">
-                <thead>
+                <thead style="position: sticky; top: 0; z-index: 1;">
                     <tr>
-                        <th>学生号</th>
-                        <th>学生名</th>
-                        <th>班级</th>
-                        <th>操作</th>
+                        <th class="has-text-centered has-text-left">学号</th>
+                        <th class="has-text-centered has-text-left">姓名</th>
+                        <th class="has-text-centered has-text-left">班级</th>
+                        <th class="has-text-centered has-text-left">绩点</th>
+                        <th class="has-text-centered has-text-left">操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <!-- 表行 -->
+                    <!-- 使用range指令遍历所有课程 -->
+                    {{range .Students}}
                     <tr>
                         <td>{{.StudentId}}</td>
-                        <td>{{.StudentName}}</td>
+                        <td>{{.Name}}</td>
                         <td>{{.Class}}</td>
+                        <td>{{.Grade}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
-                                    <form action="/StudentDelete" method="post">
-                                        <input type="hidden" name="studentId" value="{{.ID}}">
-                                        <button class="button is-danger" type="submit">删除</button>
+                                    <form action="/admin/student/update" method="get">
+                                        <input type="hidden" name="StudentId" value="{{.StudentId}}">
+                                        <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                {{end}}
                 </tbody>
             </table>
+            <!-- 分页按钮 -->
+            <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
+                <div class="field is-grouped">
+                    <div class="control">
+                        <button id="prev-page-btn" class="button is-primary" disabled>上一页</button>
+                    </div>
+                    <div class="control">
+                        <button id="next-page-btn" class="button is-primary">下一页</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 翻页功能 -->
+            <script src="../../../static/js/Page.js"></script>
         </main>
 
     </div>

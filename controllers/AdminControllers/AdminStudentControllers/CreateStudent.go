@@ -11,18 +11,17 @@ type AdminStudentControllerCreate struct {
 }
 
 func (c *AdminStudentControllerCreate) Get() {
-	c.viewpath = "AdminViews/AdminStudentViews/CreateStudent.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminStudentViews/CreateStudent.tpl"
 }
 
 func (c *AdminStudentControllerCreate) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminStudentViews/CreateStudent.tpl"
 	studentId := c.GetString("StudentId")
 	name := c.GetString("Name")
 	class := c.GetString("Class")
 	grade := c.GetString("Grade")
 
-	err := models.AddStudent(studentId, name, class, grade)
+	err := models.CreateStudent(studentId, name, class, grade)
 	if err != nil {
 		return
 	}
