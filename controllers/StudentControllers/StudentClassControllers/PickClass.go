@@ -39,5 +39,7 @@ func (c *StudentClassControllerPick) Post() {
 	if err != nil {
 		return
 	}
+
+	models.StudentTimeConflict(student, class[0])
 	models.PickClass(student, class[0])
 }
