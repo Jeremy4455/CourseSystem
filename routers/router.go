@@ -8,6 +8,8 @@ import (
 	AdminTeacherControllers "CourseSystem/controllers/AdminControllers/AdminTeacherControllers"
 	"CourseSystem/controllers/StudentControllers"
 	"CourseSystem/controllers/TeacherControllers"
+	"fmt"
+	"strings"
 
 	"github.com/beego/beego/v2/server/web"
 	beego "github.com/beego/beego/v2/server/web"
@@ -15,9 +17,27 @@ import (
 )
 
 func FilterUser(ctx *context.Context) {
-	userID := ctx.Input.Session("userID")
-	if userID == nil && ctx.Request.RequestURI != "/login" {
+	userId := ctx.Input.Session("userId")
+	if userId == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
+		return
+	}
+	if userId == nil || ctx.Request.RequestURI == "/logout" {
+		return
+	}
+
+	role := userId.(string)[0]
+	fmt.Println(role)
+	if role == '0' && !strings.HasPrefix(ctx.Request.RequestURI, "/admin") {
+		ctx.Redirect(302, "/admin")
+		return
+	}
+	if role == '1' && !strings.HasPrefix(ctx.Request.RequestURI, "/student") {
+		ctx.Redirect(302, "/student")
+		return
+	}
+	if role == '2' && !strings.HasPrefix(ctx.Request.RequestURI, "/teacher") {
+		ctx.Redirect(302, "/teacher")
 		return
 	}
 }

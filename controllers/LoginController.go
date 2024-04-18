@@ -24,14 +24,16 @@ func (c *LoginController) Post() {
 	}
 
 	role := user.Role
-	c.SetSession("userID", user.Id)
 
 	switch role {
 	case "admin":
+		c.SetSession("userId", "0"+id)
 		c.Redirect("/admin", 302)
 	case "student":
+		c.SetSession("userId", "1"+id)
 		c.Redirect("/student", 302)
 	case "teacher":
+		c.SetSession("userId", "2"+id)
 		c.Redirect("/teacher", 302)
 	}
 }
