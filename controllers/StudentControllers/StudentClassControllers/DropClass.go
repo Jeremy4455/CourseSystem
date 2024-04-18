@@ -2,6 +2,7 @@ package StudentClassControllers
 
 import (
 	"CourseSystem/controllers"
+	"CourseSystem/models"
 )
 
 type StudentClassControllerDrop struct {
@@ -10,18 +11,35 @@ type StudentClassControllerDrop struct {
 
 func (c *StudentClassControllerDrop) Get() {
 	c.TplName = "StudentViews/StudentClassViews/"
+	c.showClass()
 }
+func (c *StudentClassControllerDrop) showClass() {
+	studentId := c.GetSession("userId").(string)[1:]
 
-// func (c *StudentClassControllerDrop) Post() {
-// 	c.TplName = "StudentViews/StudentClassViews/"
+	student, err := models.GetStudent(studentId)
+	if err != nil {
+		return
+	}
 
-// 	courseCode := c.GetString("courseCode")
-// 	courseName := c.GetString("courseName")
-// 	courseTeacherId := c.GetString("courseTeacherId")
-// 	courseTeacherName := c.GetString("CourseTeacherName")
-// 	courseSemester := c.GetString("courseSemester")
-// 	courseTime := c.GetString("courseTime")
-// 	classroom := c.GetString("classroom")
+	var classes []*models.Class
+	for _, class := range student.Classes {
+		classes = append(classes, class.Class)
+	}
 
-// 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
-// }
+	c.Data["Classes"] = classes
+}
+func (c *StudentClassControllerDrop) Post() {
+	c.TplName = "StudentViews/StudentClassViews/"
+
+	courseCode := c.GetString("courseCode")
+
+	class, _ := models.GetClasses(courseCode, "", "", "", "", "", "")
+
+	studentId := c.GetSession("userId").(string)[1:]
+
+	student, err := models.GetStudent(studentId)
+	if err != nil {
+		return
+	}
+	models.DropClass(student, class[0])
+}

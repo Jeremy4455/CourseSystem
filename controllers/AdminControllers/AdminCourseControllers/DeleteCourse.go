@@ -12,11 +12,11 @@ type AdminCourseControllerDelete struct {
 }
 
 func (c *AdminCourseControllerDelete) Get() {
-	c.SearchCourse()
+	c.searchCourse()
 	c.TplName = "AdminViews/AdminCourseViews/DeleteCourse.tpl"
 }
 
-func (c *AdminCourseControllerDelete) SearchCourse() {
+func (c *AdminCourseControllerDelete) searchCourse() {
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 	courses, _ := models.GetCourses(courseCode, name)
