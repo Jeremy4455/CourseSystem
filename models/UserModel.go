@@ -12,10 +12,13 @@ type User struct {
 }
 
 func Login(id, password string) *User {
-	user := &User{Id: id, Password: password}
+	user := &User{Id: id}
 	o := orm.NewOrm()
 	err := o.Read(user)
 	if err != nil {
+		return nil
+	}
+	if user.Password != password {
 		return nil
 	}
 	return user
