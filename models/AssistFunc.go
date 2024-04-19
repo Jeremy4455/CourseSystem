@@ -1,9 +1,61 @@
 package models
 
-import "github.com/astaxie/beego/orm"
+import (
+	"strconv"
+
+	"github.com/astaxie/beego/orm"
+)
 
 func CheckTime(busytime, classtime string) bool {
+	var split = func(str string) ([]string, [][2]int) {
+		var day []string
+		var time [][2]int
+		for i, n := 0, len(str); i < n; i++ {
+			start := i
+			for i < n && (str[i] < '0' || str[i] > '9') {
+				i++
+			}
+			day = append(day, str[start:i])
 
+			var t [2]int
+			start = i
+			for i < n && str[i] != '-' {
+				i++
+			}
+			s := str[start:i]
+			num, _ := strconv.Atoi(s)
+
+			t[0] = num
+			i++
+
+			start = i
+			for i < n && '0' <= str[i] && str[i] <= '9' {
+				i++
+			}
+			s = str[start:i]
+			num, _ = strconv.Atoi(s)
+			t[1] = num
+			time = append(time, t)
+
+			for i < n && str[i] != ' ' {
+				i++
+			}
+		}
+		return day, time
+	}
+	d1, t1 := split(busytime)
+	d2, t2 := split(classtime)
+	for i, x := range d1 {
+		for j, y := range d2 {
+			if x != y {
+				continue
+			}
+			if t2[j][1] < t1[i][0] || t1[i][1] < t2[j][0] {
+				continue
+			}
+			return false
+		}
+	}
 	return true
 }
 
