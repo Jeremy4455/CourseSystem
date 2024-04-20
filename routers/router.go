@@ -8,7 +8,6 @@ import (
 	AdminTeacherControllers "CourseSystem/controllers/AdminControllers/AdminTeacherControllers"
 	"CourseSystem/controllers/StudentControllers"
 	"CourseSystem/controllers/TeacherControllers"
-	"fmt"
 	"strings"
 
 	"github.com/beego/beego/v2/server/web"
@@ -27,7 +26,7 @@ func FilterUser(ctx *context.Context) {
 	}
 
 	role := userId.(string)[0]
-	fmt.Println(role)
+
 	if role == '0' && !strings.HasPrefix(ctx.Request.RequestURI, "/admin") {
 		ctx.Redirect(302, "/admin")
 		return

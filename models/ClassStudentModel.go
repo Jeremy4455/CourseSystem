@@ -28,6 +28,16 @@ func (c *ClassStudent) TableName() string {
 	return "class_student"
 }
 
+func GetClassStudent(c *Class) ([]*ClassStudent, error) {
+	var class_student []*ClassStudent
+	o := orm.NewOrm()
+	_, err := o.QueryTable("class_student").Filter("class_id", c.Id).All(&class_student)
+	if err != nil {
+		return nil, err
+	}
+	return class_student, nil
+}
+
 func PickClass(s *Student, c *Class) bool {
 	if s == nil || c == nil {
 		return false

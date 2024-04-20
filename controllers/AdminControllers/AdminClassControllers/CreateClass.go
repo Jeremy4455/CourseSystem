@@ -7,16 +7,14 @@ import (
 
 type AdminClassControllerCreate struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminClassControllerCreate) Get() {
-	c.viewpath = "AdminViews/AdminCourseViews/CreateCourse.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminCourseViews/CreateCourse.tpl"
 }
 
 func (c *AdminClassControllerCreate) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminCourseViews/CreateCourse.tpl"
 
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")

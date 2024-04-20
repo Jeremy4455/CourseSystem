@@ -17,25 +17,25 @@ func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 
 	var teacher []*Teacher
 	if teacherId != "" {
-		_, err := q.Filter("teacherId", teacherId).All(&teacher)
+		_, err := q.Filter("TeacherId", teacherId).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if name != "" {
-		_, err := q.Filter(name).All(&teacher)
+		_, err := q.Filter("Name", name).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if mobile != "" {
-		_, err := q.Filter(mobile).All(&teacher)
+		_, err := q.Filter("Mobile", mobile).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
 	}
 	if email != "" {
-		_, err := q.Filter(email).All(&teacher)
+		_, err := q.Filter("Email", email).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
@@ -71,10 +71,10 @@ func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
 		qs = qs.Filter("Name__contains", name)
 	}
 	if mobile != "" {
-		qs = qs.Filter("mobile", mobile)
+		qs = qs.Filter("Mobile", mobile)
 	}
 	if email != "" {
-		qs = qs.Filter("email", email)
+		qs = qs.Filter("Email", email)
 	}
 	// 执行查询
 	_, err := qs.All(&teachers)

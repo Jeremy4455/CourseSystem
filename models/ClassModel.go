@@ -96,8 +96,6 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 		return false
 	}
 
-	o := orm.NewOrm()
-
 	cap, err := strconv.Atoi(capacity)
 	if err != nil {
 		return false
@@ -110,6 +108,23 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 		Capacity:  cap,
 		Location:  classroom,
 	}
+
+	o := orm.NewOrm()
+
+	var existedClass []*Class
+	_, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
+	if err != nil {
+		return false
+	}
+	for _, c := range existedClass {
+		if ClassConflict(class, c) == false {
+			return false
+		}
+	}
+	if TeacherTimeConflict(teacher[0], class) == false {
+		return false
+	}
+
 	o.Insert(class)
 	return true
 }

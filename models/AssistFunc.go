@@ -85,6 +85,13 @@ func TeacherTimeConflict(t *Teacher, c *Class) bool {
 	return true
 }
 
+func ClassConflict(c1, c2 *Class) bool {
+	if c1.Location != c2.Location {
+		return true
+	}
+	return CheckTime(c1.ClassTime, c2.ClassTime)
+}
+
 func Syncronize() {
 	o := orm.NewOrm()
 
