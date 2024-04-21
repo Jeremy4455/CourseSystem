@@ -28,12 +28,27 @@ func (c *ClassStudent) TableName() string {
 	return "class_student"
 }
 
-func GetClassStudent(c *Class) ([]*ClassStudent, error) {
+func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStudent, error) {
 	var class_student []*ClassStudent
 	o := orm.NewOrm()
-	_, err := o.QueryTable("class_student").Filter("class_id", c.Id).All(&class_student)
-	if err != nil {
-		return nil, err
+	if s == nil {
+		_, err := o.QueryTable("class_student").Filter("class_id", c.Id).All(&class_student)
+		if err != nil {
+			return nil, err
+		}
+	}
+	if c == nil {
+		var temp []*ClassStudent
+		_, err := o.QueryTable("class_student").Filter("student_id", s.StudentId).All(&temp)
+		if err != nil {
+			return nil, err
+		}
+		for _, t := range temp {
+			if t.Class.Semester != courseSemester {
+				continue
+			}
+			class_student = append(class_student, t)
+		}
 	}
 	return class_student, nil
 }

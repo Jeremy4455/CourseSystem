@@ -34,7 +34,7 @@ func (c *TeacherClassControllerSet) Post() {
 	if err != nil {
 		return
 	}
-	class_student, err := models.GetClassStudent(class[0])
+	class_student, err := models.GetClassStudent(nil, "", class[0])
 	if err != nil {
 		return
 	}
