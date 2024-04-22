@@ -14,6 +14,8 @@ func (c *AdminClassControllerUpdate) Get() {
 	courseCode := c.GetString("courseCode")
 	TeacherId := c.GetString("TeacherId")
 	semester := c.GetString("semester")
+	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+	c.Data["Semesters"] = semesters
 	if courseCode == "" || TeacherId == "" || semester == "" {
 		classes, err := models.GetAllClasses()
 		if err != nil {
@@ -39,7 +41,8 @@ func (c *AdminClassControllerUpdate) Post() {
 	classTime := c.GetString("courseTime")
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("classroom")
-
+	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+	c.Data["Semesters"] = semesters
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom)
 	if len(class) != 1 {
 		return

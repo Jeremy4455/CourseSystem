@@ -102,22 +102,15 @@
                                 <input type="hidden" name="courseTeacherId" value="{{.Teacher.TeacherId}}">
                                 {{.Teacher.Name}}
                             </td>
+                            <td>{{.Semester}}</td>
                             <td>
-                                <select name="CourseSemester" required>
-                                    <option value="{{.semester}}">{{.semester}}</option>
-                                    {{range .Semesters}}
-                                    <option value="{{.Semester}}">{{.Semester}}</option>
-                                    {{end}}
-                                </select>
+                                <input class="input is-small" type="text" name="courseTime" value="{{.ClassTime}}">
                             </td>
                             <td>
-                                <input class="input is-small" type="text" name="courseTime" value="{{.classTime}}">
+                                <input class="input is-small" type="text" name="Capacity" value="{{.Capacity}}">
                             </td>
                             <td>
-                                <input class="input is-small" type="text" name="Capacity" value="{{.capacity}}">
-                            </td>
-                            <td>
-                                <input class="input is-small" type="text" name="classroom" value="{{.location}}">
+                                <input class="input is-small" type="text" name="classroom" value="{{.Location}}">
                             </td>
                             <td>
                                 <div class="field is-grouped">

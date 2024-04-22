@@ -130,7 +130,7 @@
                         <div class="field">
                             <div class="control">
                                 <div class="select is-small">
-                                    <select name="CourseSemester" required>
+                                    <select name="CourseSemester">
                                         <option value="">请选择学期</option>
                                         {{range .Semesters}}
                                         <option value="{{.}}">{{.}}</option>
