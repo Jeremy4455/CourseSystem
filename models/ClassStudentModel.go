@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/astaxie/beego/orm"
@@ -53,51 +54,56 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 	return class_student, nil
 }
 
-func PickClass(s *Student, c *Class) bool {
+func PickClass(s *Student, c *Class) error {
 	if s == nil || c == nil {
-		return false
+		return errors.New("不存在该课程")
 	}
 	o := orm.NewOrm()
 	var classstuent []*ClassStudent
 	_, err := o.QueryTable("class_student").All(&classstuent)
 	if err != nil {
-		return false
+		return err
 	}
 	if len(classstuent) >= c.Capacity {
-		return false
+		return errors.New("该课程人数已满")
 	}
-	if StudentTimeConflict(s, c) == false {
-		return false
+	if !StudentTimeConflict(s, c) {
+		return errors.New("该课程与已选课程冲突")
 	}
 
+	id, err := GetId("ClassStudent")
+	if err != nil {
+		return err
+	}
 	newclassstudent := &ClassStudent{
+		Id:          id + 1,
 		Class:       c,
 		Student:     s,
 		Performance: 0,
 		Score:       0,
 	}
 	o.Insert(newclassstudent)
-	return true
+	return nil
 }
 
-func DropClass(s *Student, c *Class) bool {
+func DropClass(s *Student, c *Class) error {
 	if s == nil || c == nil {
-		return false
+		return errors.New("不存在该课程")
 	}
 	o := orm.NewOrm()
 
 	classstudent := &ClassStudent{Class: c, Student: s}
 	err := o.Read(classstudent)
 	if err != nil {
-		return false
+		return err
 	}
 	o.Delete(classstudent)
-	return true
+	return nil
 }
 
-func UpdateClass(s *Student, c *Class, performance, score string) bool {
+func UpdateClass(s *Student, c *Class, performance, score string) error {
 	if c == nil || s == nil || performance == "" && score == "" {
-		return false
+		return errors.New("")
 	}
 	o := orm.NewOrm()
 	classstudent := &ClassStudent{Class: c, Student: s}
@@ -106,7 +112,7 @@ func UpdateClass(s *Student, c *Class, performance, score string) bool {
 	if performance != "" {
 		perform, err := strconv.ParseFloat(performance, 64)
 		if err != nil {
-			return false
+			return err
 		}
 		classstudent.Performance = perform
 	}
@@ -114,10 +120,10 @@ func UpdateClass(s *Student, c *Class, performance, score string) bool {
 	if score != "" {
 		sco, err := strconv.ParseFloat(score, 64)
 		if err != nil {
-			return false
+			return err
 		}
 		classstudent.Score = sco
 	}
 
-	return true
+	return nil
 }

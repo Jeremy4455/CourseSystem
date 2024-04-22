@@ -47,7 +47,10 @@ func CreateStudent(studentId, name, class, grade string) error {
 		return err
 	}
 
-	AddUser(studentId, name, "123456", "student")
+	err = AddUser(studentId, name, "123456", "student")
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
@@ -64,7 +67,10 @@ func DeleteStudent(studentId string) error {
 		return err
 	}
 
-	DeleteUser(studentId)
+	err = DeleteUser(studentId)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
