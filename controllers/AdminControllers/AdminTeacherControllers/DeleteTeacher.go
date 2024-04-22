@@ -7,11 +7,14 @@ import (
 
 type AdminTeacherControllerDelete struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminTeacherControllerDelete) Get() {
 	c.TplName = "AdminViews/AdminTeacherViews/DeleteTeacher.tpl"
+	c.searchTeacher()
+}
+
+func (c *AdminTeacherControllerDelete) searchTeacher() {
 	teacherId := c.GetString("TeacherId")
 	teacherName := c.GetString("Name")
 	mobile := c.GetString("Mobile")
@@ -23,8 +26,11 @@ func (c *AdminTeacherControllerDelete) Get() {
 func (c *AdminTeacherControllerDelete) Post() {
 	c.TplName = "AdminViews/AdminTeacherViews/DeleteTeacher.tpl"
 	teacherId := c.GetString("TeacherId")
+
 	err := models.DeleteTeacher(teacherId)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "教师删除成功"}
 	}
 }

@@ -3,17 +3,15 @@ package AdminCourseControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type AdminCourseControllerDelete struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminCourseControllerDelete) Get() {
-	c.searchCourse()
 	c.TplName = "AdminViews/AdminCourseViews/DeleteCourse.tpl"
+	c.searchCourse()
 }
 
 func (c *AdminCourseControllerDelete) searchCourse() {
@@ -29,9 +27,11 @@ func (c *AdminCourseControllerDelete) searchCourse() {
 func (c *AdminCourseControllerDelete) Post() {
 	c.TplName = "AdminViews/AdminCourseViews/DeleteCourse.tpl"
 	courseCode := c.GetString("CourseCode")
-	fmt.Println(courseCode)
+
 	err := models.DeleteCourse(courseCode)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "课程删除成功"}
 	}
 }

@@ -102,19 +102,21 @@ func GetStudents(studentId, name, class string) ([]*Student, error) {
 	return students, err
 }
 
-func ReviseStudent(s *Student, name, class string) bool {
-	if s == nil {
-		return false
+func ReviseStudent(studentId, name, class string) error {
+	students, err := GetStudents(studentId, "", "")
+	if err != nil {
+		return err
 	}
+	s := students[0]
 	if name != "" {
 		s.Name = name
 	}
 	if class != "" {
 		s.Class = class
 	}
-	_, err := orm.NewOrm().Update(s)
+	_, err = orm.NewOrm().Update(s)
 	if err != nil {
-		return false
+		return err
 	}
-	return true
+	return nil
 }

@@ -14,7 +14,6 @@ func (c *AdminClassControllerRetrieve) Get() {
 }
 func (c *AdminClassControllerRetrieve) Post() {
 	c.TplName = "AdminViews/AdminClassViews/RetrieveClass.tpl"
-
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")

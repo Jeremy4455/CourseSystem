@@ -11,10 +11,29 @@ type AdminClassControllerUpdate struct {
 
 func (c *AdminClassControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
+	c.searchClass()
 }
+func (c *AdminClassControllerUpdate) searchClass() {
+	courseCode := c.GetString("CourseCode")
+	teacherId := c.GetString("TeacherId")
+	semester := c.GetString("Semester")
+	if courseCode == "" && teacherId == "" && semester == "" {
+		courses, err := models.GetAllClasses()
+		if err != nil {
+			return
+		}
+		c.Data["Classes"] = courses
+	} else {
+		courses, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
+		if err != nil {
+			return
+		}
+		c.Data["Classes"] = courses
+	}
+}
+
 func (c *AdminClassControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
-
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
@@ -29,7 +48,7 @@ func (c *AdminClassControllerUpdate) Post() {
 		return
 	}
 	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
-	if err == false {
+	if err != nil {
 		return
 	}
 }

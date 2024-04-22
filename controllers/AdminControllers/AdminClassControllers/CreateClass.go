@@ -11,18 +11,29 @@ type AdminClassControllerCreate struct {
 
 func (c *AdminClassControllerCreate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
+	c.searchCourse()
+}
+
+func (c *AdminClassControllerCreate) searchCourse() {
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
-	courses, _ := models.GetCourses(courseCode, courseName)
-	if courses == nil {
-		return
+	if courseCode == "" && courseName == "" {
+		courses, err := models.GetAllCourses()
+		if err != nil {
+			return
+		}
+		c.Data["Courses"] = courses
+	} else {
+		courses, err := models.GetCourses(courseCode, courseName)
+		if err != nil {
+			return
+		}
+		c.Data["Courses"] = courses
 	}
-	c.Data["Courses"] = courses
 }
 
 func (c *AdminClassControllerCreate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
-
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")
 	courseTeacherId := c.GetString("CourseTeacherId")
@@ -31,8 +42,8 @@ func (c *AdminClassControllerCreate) Post() {
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
 
-	err := models.AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
-	if err == false {
+	err := models.CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
+	if err != nil {
 		return
 	}
 }

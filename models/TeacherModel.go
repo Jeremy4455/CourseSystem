@@ -11,7 +11,7 @@ type Teacher struct {
 	Classes   []*Class `orm:"reverse(many);on_delete(cascade)"`
 }
 
-func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
+func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
 	o := orm.NewOrm()
 	q := o.QueryTable("teacher")
 
@@ -23,7 +23,7 @@ func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 		}
 	}
 	if name != "" {
-		_, err := q.Filter("Name", name).All(&teacher)
+		_, err := q.Filter("Name__contains", name).All(&teacher)
 		if err != nil {
 			return nil, err
 		}
@@ -44,45 +44,8 @@ func GetTeacher(teacherId, name, mobile, email string) ([]*Teacher, error) {
 	return teacher, nil
 }
 
-func GetAllTeachers() ([]*Teacher, error) {
-	o := orm.NewOrm()
-	q := o.QueryTable("teacher")
-	var teachers []*Teacher
-	_, err := q.All(&teachers)
-	return teachers, err
-}
-
-func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
-	if teacherId == "" && name == "" && mobile == "" && email == "" {
-		return nil, nil
-	}
-	// 获取 ORM 对象
-	o := orm.NewOrm()
-
-	// 创建查询对象
-	var teachers []*Teacher
-
-	// 构建查询条件
-	qs := o.QueryTable("teacher")
-	if teacherId != "" {
-		qs = qs.Filter("TeacherId", teacherId)
-	}
-	if name != "" {
-		qs = qs.Filter("Name__contains", name)
-	}
-	if mobile != "" {
-		qs = qs.Filter("Mobile", mobile)
-	}
-	if email != "" {
-		qs = qs.Filter("Email", email)
-	}
-	// 执行查询
-	_, err := qs.All(&teachers)
-	return teachers, err
-}
-
-func AddTeacher(teacherId, name, mobile, email string) error {
-	teachers, err := GetTeacher(teacherId, "", "", "")
+func CreateTeacher(teacherId, name, mobile, email string) error {
+	teachers, err := GetTeachers(teacherId, "", "", "")
 	if len(teachers) != 0 {
 		return err
 	}
@@ -115,10 +78,13 @@ func DeleteTeacher(teacherId string) error {
 	return nil
 }
 
-func ReviseTeacher(t *Teacher, name, mobile, email string) bool {
-	if t == nil {
-		return false
+func ReviseTeacher(teacherId, name, mobile, email string) error {
+	teachers, err := GetTeachers(teacherId, "", "", "")
+	if err != nil {
+		return err
 	}
+
+	t := teachers[0]
 	if name != "" {
 		t.Name = name
 	}
@@ -128,9 +94,18 @@ func ReviseTeacher(t *Teacher, name, mobile, email string) bool {
 	if email != "" {
 		t.Email = email
 	}
-	_, err := orm.NewOrm().Update(t)
+	_, err = orm.NewOrm().Update(t)
 	if err != nil {
-		return false
+		return err
 	}
-	return true
+	return nil
+}
+
+func GetAllTeachers() ([]*Teacher, error) {
+	var teachers []*Teacher
+	_, err := orm.NewOrm().QueryTable("teacher").All(&teachers)
+	if err != nil {
+		return nil, err
+	}
+	return teachers, nil
 }
