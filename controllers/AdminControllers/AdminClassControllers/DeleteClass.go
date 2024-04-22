@@ -18,7 +18,7 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
-	courseTeacherName := c.GetString("CourseTeacherName")
+	courseTeacherName := c.GetString("courseTeacherName")
 	courseSemester := c.GetString("courseSemester")
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
@@ -30,9 +30,9 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 
 func (c *AdminClassControllerDelete) Post() {
 	c.TplName = "AdminViews/AdminClassViews/DeleteClass.tpl"
-	courseCode := c.GetString("CourseCode")
-	courseTeacherId := c.GetString("CourseTeacherId")
-	courseSemester := c.GetString("CourseSemester")
+	courseCode := c.GetString("courseCode")
+	courseTeacherId := c.GetString("courseTeacherId")
+	courseSemester := c.GetString("courseSemester")
 	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
 	c.Data["Semesters"] = semesters
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester)

@@ -3,7 +3,6 @@ package AdminClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type AdminClassControllerRetrieve struct {
@@ -20,12 +19,11 @@ func (c *AdminClassControllerRetrieve) Post() {
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
-	courseTeacherName := c.GetString("CourseTeacherName")
+	courseTeacherName := c.GetString("courseTeacherName")
 	courseSemester := c.GetString("courseSemester")
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
-	fmt.Println(c.Input())
 	c.Data["Semesters"] = semesters
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 
