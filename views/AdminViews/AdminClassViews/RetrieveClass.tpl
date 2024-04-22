@@ -99,7 +99,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
@@ -115,20 +114,29 @@
                     <div class="field-label is-normal">
                         <label class="label" for="courseTeacherName">教师名：</label>
                     </div>
-                    <div class="field-body">
+                    <div class ="field-body">
                         <div class="field">
                             <div class="control">
                                 <input class="input is-small" type="text" id="courseTeacherName" name="courseTeacherName">
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label" for="courseSemester">开课学期：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseSemester" name="courseSemester">
+                                <div class="select is-small">
+                                    <select name="CourseSemester" required>
+                                        <option value="">请选择学期</option>
+                                        {{range .Semesters}}
+                                        <option value="{{.}}">{{.}}</option>
+                                        {{end}}
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -140,6 +148,7 @@
                     </div>
                 </div>
             </form>
+
             
             <!-- 表格 -->
             <table class="table is-fullwidth is-hoverable">
