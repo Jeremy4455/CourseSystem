@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management</title>
+    <title>删除学生</title>
     <!-- 引入Bulma CSS文件 -->
     <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>

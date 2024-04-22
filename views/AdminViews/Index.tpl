@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management</title>
+    <title>管理员</title>
     <!-- 引入Bulma CSS文件 -->
     <link rel="stylesheet" href="../../static/css/bulma.css">
     <style>
@@ -58,6 +58,7 @@
                 <li><a href="/admin/course">课程管理</a></li>
                 <li><a href="/admin/teacher">教师管理</a></li>
                 <li><a href="/admin/student">学生管理</a></li>
+                <li><a href="/admin/class">开课管理</a></li>
             </ul>
             <!-- 登出按钮 -->
             <div class="container-button">

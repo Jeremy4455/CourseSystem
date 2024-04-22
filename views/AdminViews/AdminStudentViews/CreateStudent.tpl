@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Course Management</title>
+    <title>增加学生</title>
     <!-- 引入Bulma CSS文件 -->
     <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
@@ -74,7 +74,7 @@
         </aside>
         <!-- 右侧内容 -->
         <main class="column is-four-fifths">
-            <h1 class="title">添加学生</h1>
+            <h1 class="title">增加学生</h1>
             <!-- 表单 -->
             <form action="/admin/student/create" method="post">
                 <!-- 表单项 -->
