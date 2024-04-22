@@ -10,7 +10,21 @@ type AdminClassControllerDelete struct {
 }
 
 func (c *AdminClassControllerDelete) Get() {
+	c.SearchClasses()
 	c.TplName = "AdminViews/AdminClassViews/DeleteClass.tpl"
+}
+
+func (c *AdminClassControllerDelete) SearchClasses() {
+	courseCode := c.GetString("courseCode")
+	courseName := c.GetString("courseName")
+	courseTeacherId := c.GetString("courseTeacherId")
+	courseTeacherName := c.GetString("CourseTeacherName")
+	courseSemester := c.GetString("courseSemester")
+	courseTime := c.GetString("courseTime")
+	classroom := c.GetString("classroom")
+
+	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	c.Data["Classes"] = classes
 }
 
 func (c *AdminClassControllerDelete) Post() {

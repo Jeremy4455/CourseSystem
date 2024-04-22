@@ -85,7 +85,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseCode" name="courseCode" pattern="[0-9]{5}">
+                                <input class="input is-small" type="text" id="courseCode" name="courseCode" pattern="[0-9]{6}">
                             </div>
                         </div>
                     </div>
@@ -99,6 +99,9 @@
                             </div>
                         </div>
                     </div>
+
+                </div>
+                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label" for="courseTeacherId">教师号：</label>
                     </div>
@@ -119,8 +122,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label" for="courseSemester">开课学期：</label>
                     </div>
@@ -128,26 +129,6 @@
                         <div class="field">
                             <div class="control">
                                 <input class="input is-small" type="text" id="courseSemester" name="courseSemester">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field-label is-normal">
-                        <label class="label" for="courseTime">时间：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-small" type="text" id="courseTime" name="courseTime">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field-label is-normal">
-                        <label class="label" for="classroom">教室：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input is-small" type="text" id="classroom" name="classroom">
                             </div>
                         </div>
                     </div>
@@ -170,6 +151,7 @@
                         <th class="has-text-centered has-text-left">教师名</th>
                         <th class="has-text-centered has-text-left">开课学期</th>
                         <th class="has-text-centered has-text-left">时间</th>
+                        <th class="has-text-centered has-text-left">容量</th>
                         <th class="has-text-centered has-text-left">教室</th>
                         <th class="has-text-centered has-text-left">操作</th>
                     </tr>
@@ -179,19 +161,21 @@
                     <!-- 使用range指令遍历所有课程 -->
                     {{range .Classes}}
                     <tr>
-                        <td>{{.courseCode}}</td>
-                        <td>{{.courseName}}</td>
-                        <!-- 添加教师号、教师名、开课学期、时间和教室 -->
-                        <td>{{.courseTeacherId}}</td>
-                        <td>{{.courseTeacherName}}</td>
-                        <td>{{.courseSemester}}</td>
-                        <td>{{.courseTime}}</td>
-                        <td>{{.classroom}}</td>
+                        <td>{{.Course.CourseCode}}</td>
+                        <td>{{.Course.Name}}</td>
+                        <td>{{.Teacher.TeacherId}}</td>
+                        <td>{{.Teacher.Name}}</td>
+                        <td>{{.semester}}</td>
+                        <td>{{.classTime}}</td>
+                        <td>{{.capacity}}</td>
+                        <td>{{.location}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
                                     <form action="/admin/class/update" method="get">
-                                        <input type="hidden" name="courseCode" value="{{.courseCode}}">
+                                        <input type="hidden" name="courseCode" value="{{.Course.CourseCode}}">
+                                        <input type="hidden" name="TeacherId" value="{{.Teacher.TeacherId}}">
+                                        <input type="hidden" name="semester" value="{{.semester}}">
                                         <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>
