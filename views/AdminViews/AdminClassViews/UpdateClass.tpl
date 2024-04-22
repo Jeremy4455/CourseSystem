@@ -95,22 +95,22 @@
                         {{range .Classes}}
                         <tr>
                             <td>
-                                <input type="hidden" name="courseCode" value="{{.Course.CourseCode}}">
-                                {{.Course.Name}}"
+                                <input type="hidden" name="CourseCode" value="{{.Course.CourseCode}}">
+                                {{.Course.Name}}
                             </td>
                             <td>
-                                <input type="hidden" name="courseTeacherId" value="{{.Teacher.TeacherId}}">
+                                <input type="hidden" name="CourseTeacherId" value="{{.Teacher.TeacherId}}">
                                 {{.Teacher.Name}}
                             </td>
                             <td>{{.Semester}}</td>
                             <td>
-                                <input class="input is-small" type="text" name="courseTime" value="{{.ClassTime}}">
+                                <input class="input is-small" type="text" name="CourseTime" value="{{.ClassTime}}">
                             </td>
                             <td>
                                 <input class="input is-small" type="text" name="Capacity" value="{{.Capacity}}">
                             </td>
                             <td>
-                                <input class="input is-small" type="text" name="classroom" value="{{.Location}}">
+                                <input class="input is-small" type="text" name="Classroom" value="{{.Location}}">
                             </td>
                             <td>
                                 <div class="field is-grouped">

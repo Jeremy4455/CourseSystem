@@ -33,16 +33,17 @@ func (c *AdminClassControllerUpdate) Get() {
 
 func (c *AdminClassControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
-	courseCode := c.GetString("courseCode")
-	courseName := c.GetString("courseName")
-	courseTeacherId := c.GetString("courseTeacherId")
+	courseCode := c.GetString("CourseCode")
+	courseName := c.GetString("CourseName")
+	courseTeacherId := c.GetString("CourseTeacherId")
 	courseTeacherName := c.GetString("CourseTeacherName")
-	courseSemester := c.GetString("courseSemester")
-	classTime := c.GetString("courseTime")
+	courseSemester := c.GetString("CourseSemester")
+	classTime := c.GetString("CourseTime")
 	capacity := c.GetString("Capacity")
-	classroom := c.GetString("classroom")
+	classroom := c.GetString("Classroom")
 	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
 	c.Data["Semesters"] = semesters
+
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom)
 	if len(class) != 1 {
 		return

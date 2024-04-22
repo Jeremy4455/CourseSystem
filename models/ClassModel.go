@@ -35,7 +35,7 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	}
 
 	o := orm.NewOrm()
-	q := o.QueryTable("class").Filter("Semester", courseSemester)
+	q := o.QueryTable("class").RelatedSel().Filter("Semester", courseSemester)
 
 	if courseCode != "" || courseName != "" {
 		courses, err := GetCourses(courseCode, courseName)
@@ -62,7 +62,7 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	}
 
 	var classes []*Class
-	_, err := q.All(classes)
+	_, err := q.All(&classes)
 
 	if err != nil {
 		// 处理错误
@@ -77,6 +77,9 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	}
 
 	course, err := GetCourses(courseCode, courseName)
+	if err != nil {
+		return err
+	}
 	if len(course) != 1 {
 		return errors.New("选定课程不唯一")
 	}
@@ -86,7 +89,7 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		return errors.New("不存在该教师")
 	}
 
-	if ExistClass(course[0], teacher[0], courseSemester) == true {
+	if ExistClass(course[0], teacher[0], courseSemester) {
 		return errors.New("该教师本学期已授该课")
 	}
 
@@ -94,7 +97,12 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
+	id, err := GetId("class")
+	if err != nil {
+		return err
+	}
 	class := &Class{
+		Id:        id + 1,
 		Course:    course[0],
 		Teacher:   teacher[0],
 		Semester:  courseSemester,
@@ -121,7 +129,6 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 
 	_, err = o.Insert(class)
 	if err != nil {
-		fmt.Println(123)
 		return err
 	}
 	return nil
@@ -131,13 +138,16 @@ func DeleteClass(courseCode, courseTeacherId, courseSemester string) error {
 	if courseCode == "" || courseTeacherId == "" || courseSemester == "" {
 		return errors.New("参数不能为空")
 	}
-	class, _ := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "")
+	class, err := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "")
+	if err != nil {
+		return err
+	}
 	if len(class) == 0 {
 		return errors.New("不存在该课程")
 	}
 
 	o := orm.NewOrm()
-	_, err := o.Delete(class[0])
+	_, err = o.Delete(class[0])
 	if err != nil {
 		return err
 	}

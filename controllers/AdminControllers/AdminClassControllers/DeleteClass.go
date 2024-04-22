@@ -35,6 +35,7 @@ func (c *AdminClassControllerDelete) Post() {
 	courseSemester := c.GetString("courseSemester")
 	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
 	c.Data["Semesters"] = semesters
+
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester)
 	if err != nil {
 		return
