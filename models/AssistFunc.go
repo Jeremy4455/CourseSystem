@@ -123,6 +123,7 @@ func Syncronize() {
 		AddUser(teacher.TeacherId, teacher.Name, "teacher123", "teacher")
 	}
 }
+
 func GetId(table_name string) (int, error) {
 	var idv int
 	o := orm.NewOrm()
@@ -144,4 +145,11 @@ func GetId(table_name string) (int, error) {
 		}
 	}
 	return idv, nil
+}
+
+func ExistClass(c *Course, t *Teacher, s string) bool {
+	o := orm.NewOrm()
+	q := o.QueryTable("class")
+	exist := q.Filter("Course", c).Filter("Teacher", t).Filter("Semester", s).Exist()
+	return exist
 }

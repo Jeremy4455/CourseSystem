@@ -29,13 +29,6 @@ func (c *Class) TableUnique() [][]string {
 	}
 }
 
-func ExistClass(c *Course, t *Teacher, s string) bool {
-	o := orm.NewOrm()
-	q := o.QueryTable("class")
-	exist := q.Filter("Course", c).Filter("Teacher", t).Filter("Semester", s).Exist()
-	return exist
-}
-
 func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, nil
