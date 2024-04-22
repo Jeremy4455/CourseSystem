@@ -22,7 +22,8 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 	courseSemester := c.GetString("courseSemester")
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
-
+	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+	c.Data["Semesters"] = semesters
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	c.Data["Classes"] = classes
 }
@@ -32,7 +33,8 @@ func (c *AdminClassControllerDelete) Post() {
 	courseCode := c.GetString("CourseCode")
 	courseTeacherId := c.GetString("CourseTeacherId")
 	courseSemester := c.GetString("CourseSemester")
-
+	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+	c.Data["Semesters"] = semesters
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester)
 	if err != nil {
 		return

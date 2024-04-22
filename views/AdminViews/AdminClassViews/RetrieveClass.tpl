@@ -107,7 +107,7 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseTeacherId" name="courseTeacherId">
+                                <input class="input is-small" type="text" id="courseTeacherId" name="courseTeacherId" pattern="[0-9]{6}">
                             </div>
                         </div>
                     </div>
