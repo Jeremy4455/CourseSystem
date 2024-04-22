@@ -41,8 +41,8 @@ func (c *AdminClassControllerUpdate) Post() {
 	classTime := c.GetString("CourseTime")
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
-	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
-	c.Data["Semesters"] = semesters
+
+	c.Data["Semesters"] = models.Semesters
 
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom)
 	if len(class) != 1 {

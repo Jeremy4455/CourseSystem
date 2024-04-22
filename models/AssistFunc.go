@@ -153,3 +153,5 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	exist := q.Filter("Course", c).Filter("Teacher", t).Filter("Semester", s).Exist()
 	return exist
 }
+
+var Semesters = []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
