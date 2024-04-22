@@ -10,11 +10,11 @@ type AdminClassControllerDelete struct {
 }
 
 func (c *AdminClassControllerDelete) Get() {
-	c.TplName = "AdminViews/AdminCourseViews/DeleteCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/DeleteClass.tpl"
 }
 
 func (c *AdminClassControllerDelete) Post() {
-	c.TplName = "AdminViews/AdminCourseViews/DeleteCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/DeleteClass.tpl"
 
 	courseCode := c.GetString("CourseCode")
 	courseTeacherId := c.GetString("CourseTeacherId")

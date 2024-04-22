@@ -10,11 +10,18 @@ type AdminClassControllerCreate struct {
 }
 
 func (c *AdminClassControllerCreate) Get() {
-	c.TplName = "AdminViews/AdminCourseViews/CreateCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
+	courseCode := c.GetString("courseCode")
+	courseName := c.GetString("courseName")
+	courses, _ := models.GetCourses(courseCode, courseName)
+	if courses == nil {
+		return
+	}
+	c.Data["Courses"] = courses
 }
 
 func (c *AdminClassControllerCreate) Post() {
-	c.TplName = "AdminViews/AdminCourseViews/CreateCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
 
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")

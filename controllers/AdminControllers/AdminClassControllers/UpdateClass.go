@@ -7,14 +7,13 @@ import (
 
 type AdminClassControllerUpdate struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminClassControllerUpdate) Get() {
-	c.TplName = "AdminViews/AdminCourseViews/UpdateCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
 }
 func (c *AdminClassControllerUpdate) Post() {
-	c.TplName = "AdminViews/AdminCourseViews/UpdateCourse.tpl"
+	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
 
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
