@@ -11,6 +11,16 @@ type AdminClassControllerUpdate struct {
 
 func (c *AdminClassControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
+	courseCode := c.GetString("courseCode")
+	TeacherId := c.GetString("TeacherId")
+	semester := c.GetString("semester")
+	if courseCode == "" || TeacherId == "" || semester == "" {
+		classes := models.GetAllClasses()
+		c.Data["Classes"] = classes
+	} else {
+		classes, _ := models.GetClasses(courseCode, "", TeacherId, "", semester, "", "")
+		c.Data["Classes"] = classes
+	}
 }
 func (c *AdminClassControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"

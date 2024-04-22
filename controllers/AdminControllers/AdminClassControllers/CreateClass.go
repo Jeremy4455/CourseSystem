@@ -11,13 +11,12 @@ type AdminClassControllerCreate struct {
 
 func (c *AdminClassControllerCreate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
-	courseCode := c.GetString("courseCode")
-	courseName := c.GetString("courseName")
-	courses, _ := models.GetCourses(courseCode, courseName)
-	if courses == nil {
-		return
-	}
-	c.Data["Courses"] = courses
+	classes := models.GetAllClasses()
+	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季"}
+
+	// 将班级和学期列表传递到模板中
+	c.Data["Classes"] = classes
+	c.Data["Semesters"] = semesters
 }
 
 func (c *AdminClassControllerCreate) Post() {

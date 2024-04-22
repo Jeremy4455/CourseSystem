@@ -8,7 +8,6 @@ import (
 
 type AdminCourseControllerDelete struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminCourseControllerDelete) Get() {

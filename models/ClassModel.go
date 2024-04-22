@@ -35,6 +35,17 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	return exist
 }
 
+func GetAllClasses() []*Class {
+	o := orm.NewOrm()
+	q := o.QueryTable("class")
+	var classes []*Class
+	_, err := q.All(&classes)
+	if err != nil {
+		return nil
+	}
+	return classes
+}
+
 func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, nil
