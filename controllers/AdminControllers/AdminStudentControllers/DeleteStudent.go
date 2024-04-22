@@ -10,8 +10,8 @@ type AdminStudentControllerDelete struct {
 }
 
 func (c *AdminStudentControllerDelete) Get() {
-	c.searchStudent()
 	c.TplName = "AdminViews/AdminStudentViews/DeleteStudent.tpl"
+	c.searchStudent()
 }
 func (c *AdminStudentControllerDelete) searchStudent() {
 	studentId := c.GetString("StudentId")

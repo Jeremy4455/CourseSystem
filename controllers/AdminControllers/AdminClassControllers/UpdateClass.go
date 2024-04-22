@@ -15,10 +15,16 @@ func (c *AdminClassControllerUpdate) Get() {
 	TeacherId := c.GetString("TeacherId")
 	semester := c.GetString("semester")
 	if courseCode == "" || TeacherId == "" || semester == "" {
-		classes := models.GetAllClasses()
+		classes, err := models.GetAllClasses()
+		if err != nil {
+			return
+		}
 		c.Data["Classes"] = classes
 	} else {
-		classes, _ := models.GetClasses(courseCode, "", TeacherId, "", semester, "", "")
+		classes, err := models.GetClasses(courseCode, "", TeacherId, "", semester, "", "")
+		if err != nil {
+			return
+		}
 		c.Data["Classes"] = classes
 	}
 }

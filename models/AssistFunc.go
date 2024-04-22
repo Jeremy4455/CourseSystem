@@ -123,3 +123,22 @@ func Syncronize() {
 		AddUser(teacher.TeacherId, teacher.Name, "teacher123", "teacher")
 	}
 }
+func ClassId() (int, error) {
+	var idv int
+	o := orm.NewOrm()
+	count, err := o.QueryTable("class").Count()
+	if count == 0 {
+		return 0, nil
+	} else {
+		var results []orm.Params
+
+		_, err = o.QueryTable("class").OrderBy("-id").Limit(1).Values(&results)
+		if err != nil {
+			return -1, err
+		}
+		if len(results) > 0 {
+			idv = results[0]["Id"].(int)
+		}
+	}
+	return idv, nil
+}

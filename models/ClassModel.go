@@ -36,17 +36,6 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	return exist
 }
 
-func GetAllClasses() []*Class {
-	o := orm.NewOrm()
-	q := o.QueryTable("class")
-	var classes []*Class
-	_, err := q.All(&classes)
-	if err != nil {
-		return nil
-	}
-	return classes
-}
-
 func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, nil
@@ -90,11 +79,11 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 }
 
 func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom string) error {
-	if courseCode == "" || courseTeacherId == "" || courseSemester == "" || classTime == "" || classroom == "" || capacity == "" {
+	if courseCode == "" && courseName == "" || courseTeacherId == "" || courseSemester == "" || classTime == "" || classroom == "" || capacity == "" {
 		return errors.New("参数不能为空")
 	}
-
 	course, err := GetCourses(courseCode, courseName)
+	fmt.Println(len(course))
 	if len(course) != 1 {
 		return errors.New("选定课程不唯一")
 	}
@@ -103,16 +92,20 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if len(teacher) == 0 {
 		return errors.New("不存在该教师")
 	}
-
 	if ExistClass(course[0], teacher[0], courseSemester) == true {
 		return errors.New("该教师本学期已授该课")
 	}
-
 	cap, err := strconv.Atoi(capacity)
 	if err != nil {
 		return err
 	}
+
+	idv, err := ClassId()
+	if err != nil {
+		return err
+	}
 	class := &Class{
+		Id:        idv + 1,
 		Course:    course[0],
 		Teacher:   teacher[0],
 		Semester:  courseSemester,
@@ -120,9 +113,8 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		Capacity:  cap,
 		Location:  classroom,
 	}
-
 	o := orm.NewOrm()
-
+	_, err = o.Insert(class)
 	var existedClass []*Class
 	_, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
 	if err != nil {
@@ -136,8 +128,10 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if TeacherTimeConflict(teacher[0], class) == false {
 		return errors.New("该教师存在时间冲突")
 	}
-
-	o.Insert(class)
+	if err != nil {
+		fmt.Println(123)
+		return err
+	}
 	return nil
 }
 
