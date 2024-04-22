@@ -130,7 +130,7 @@
                         <div class="field">
                             <div class="control">
                                 <div class="select is-small">
-                                    <select name="CourseSemester" required>
+                                    <select name="CourseSemester">
                                         <option value="">请选择学期</option>
                                         {{range .Semesters}}
                                         <option value="{{.}}">{{.}}</option>
@@ -174,10 +174,10 @@
                         <td>{{.Course.Name}}</td>
                         <td>{{.Teacher.TeacherId}}</td>
                         <td>{{.Teacher.Name}}</td>
-                        <td>{{.semester}}</td>
-                        <td>{{.classTime}}</td>
-                        <td>{{.capacity}}</td>
-                        <td>{{.location}}</td>
+                        <td>{{.Semester}}</td>
+                        <td>{{.ClassTime}}</td>
+                        <td>{{.Capacity}}</td>
+                        <td>{{.Location}}</td>
                         <td>
                             <div class="field is-grouped">
                                 <div class="control">
