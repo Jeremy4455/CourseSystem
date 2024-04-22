@@ -82,8 +82,11 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if courseCode == "" && courseName == "" || courseTeacherId == "" || courseSemester == "" || classTime == "" || classroom == "" || capacity == "" {
 		return errors.New("参数不能为空")
 	}
+
 	course, err := GetCourses(courseCode, courseName)
-	fmt.Println(len(course))
+	if err != nil {
+		return err
+	}
 	if len(course) != 1 {
 		return errors.New("选定课程不唯一")
 	}
@@ -92,7 +95,7 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if len(teacher) == 0 {
 		return errors.New("不存在该教师")
 	}
-	if ExistClass(course[0], teacher[0], courseSemester) == true {
+	if ExistClass(course[0], teacher[0], courseSemester) {
 		return errors.New("该教师本学期已授该课")
 	}
 	cap, err := strconv.Atoi(capacity)
@@ -100,7 +103,7 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		return err
 	}
 
-	idv, err := ClassId()
+	idv, err := GetId("class")
 	if err != nil {
 		return err
 	}
@@ -113,21 +116,23 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		Capacity:  cap,
 		Location:  classroom,
 	}
+
 	o := orm.NewOrm()
-	_, err = o.Insert(class)
+
 	var existedClass []*Class
 	_, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
 	if err != nil {
 		return err
 	}
 	for _, c := range existedClass {
-		if ClassConflict(class, c) == false {
+		if !ClassConflict(class, c) {
 			return errors.New("课程存在时间冲突")
 		}
 	}
-	if TeacherTimeConflict(teacher[0], class) == false {
+	if !TeacherTimeConflict(teacher[0], class) {
 		return errors.New("该教师存在时间冲突")
 	}
+	_, err = o.Insert(class)
 	if err != nil {
 		fmt.Println(123)
 		return err

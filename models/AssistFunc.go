@@ -65,7 +65,7 @@ func StudentTimeConflict(s *Student, c *Class) bool {
 	}
 	classes := s.Classes
 	for _, class := range classes {
-		if CheckTime(class.Class.ClassTime, c.ClassTime) == false {
+		if !CheckTime(class.Class.ClassTime, c.ClassTime) {
 			return false
 		}
 	}
@@ -78,7 +78,7 @@ func TeacherTimeConflict(t *Teacher, c *Class) bool {
 	}
 	classes := t.Classes
 	for _, class := range classes {
-		if CheckTime(class.ClassTime, c.ClassTime) == false {
+		if !CheckTime(class.ClassTime, c.ClassTime) {
 			return false
 		}
 	}
@@ -123,16 +123,19 @@ func Syncronize() {
 		AddUser(teacher.TeacherId, teacher.Name, "teacher123", "teacher")
 	}
 }
-func ClassId() (int, error) {
+func GetId(table_name string) (int, error) {
 	var idv int
 	o := orm.NewOrm()
-	count, err := o.QueryTable("class").Count()
+	count, err := o.QueryTable(table_name).Count()
+	if err != nil {
+		return -1, err
+	}
 	if count == 0 {
 		return 0, nil
 	} else {
 		var results []orm.Params
 
-		_, err = o.QueryTable("class").OrderBy("-id").Limit(1).Values(&results)
+		_, err = o.QueryTable(table_name).OrderBy("-id").Limit(1).Values(&results)
 		if err != nil {
 			return -1, err
 		}
