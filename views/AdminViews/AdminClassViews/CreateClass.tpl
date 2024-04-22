@@ -95,10 +95,10 @@
                         <!-- 表行 -->
                         <!-- 使用range指令遍历所有课程 -->
                         <tr>
-                            <td><input class="input is-small" type="text" id="CourseNode" name="CourseNode" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="CourseName" name="CourseName" required></td>
+                            <td><input class="input is-small" type="text" id="CourseCode" name="CourseCode" required pattern="[0-9]{6}"></td>
+                            <td><input class="input is-small" type="text" id="CourseName" name="CourseName"></td>
                             <td><input class="input is-small" type="text" id="CourseTeacherId" name="CourseTeacherId" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="CourseTeacherName" name="CourseTeacherName" required></td>
+                            <td><input class="input is-small" type="text" id="CourseTeacherName" name="CourseTeacherName"></td>
                             <td>
                                 <select name="CourseSemester" required>
                                     <option value="">请选择学期</option>

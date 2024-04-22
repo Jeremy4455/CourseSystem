@@ -29,7 +29,6 @@ func (c *AdminClassControllerCreate) Post() {
 	classTime := c.GetString("ClassTime")
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
-
 	err := models.AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
 	if err == false {
 		return

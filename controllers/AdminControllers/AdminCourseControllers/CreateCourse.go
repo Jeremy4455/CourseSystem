@@ -7,7 +7,6 @@ import (
 
 type AdminCourseControllerCreate struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminCourseControllerCreate) Get() {

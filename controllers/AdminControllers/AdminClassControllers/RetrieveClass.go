@@ -24,5 +24,6 @@ func (c *AdminClassControllerRetrieve) Post() {
 	classroom := c.GetString("classroom")
 
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+
 	c.Data["Classes"] = classes
 }
