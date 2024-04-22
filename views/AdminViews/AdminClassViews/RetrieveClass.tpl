@@ -128,7 +128,12 @@
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input is-small" type="text" id="courseSemester" name="courseSemester">
+                                <select name="CourseSemester" required>
+                                    <option value="">请选择学期</option>
+                                    {{range .Semesters}}
+                                    <option value="{{.}}">{{.}}</option>
+                                    {{end}}
+                                </select>
                             </div>
                         </div>
                     </div>
