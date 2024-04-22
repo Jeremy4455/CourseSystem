@@ -117,14 +117,14 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
-	// for _, c := range existedClass {
-	// 	if ClassConflict(class, c) == false {
-	// 		return errors.New("课程存在时间冲突")
-	// 	}
-	// }
-	// if TeacherTimeConflict(teacher[0], class) == false {
-	// 	return errors.New("该教师存在时间冲突")
-	// }
+	for _, c := range existedClass {
+		if ClassConflict(class, c) == false {
+			return errors.New("课程存在时间冲突")
+		}
+	}
+	if TeacherTimeConflict(teacher[0], class) == false {
+		return errors.New("该教师存在时间冲突")
+	}
 
 	o.Insert(class)
 	return nil
