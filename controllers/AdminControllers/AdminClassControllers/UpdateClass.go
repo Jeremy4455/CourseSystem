@@ -22,9 +22,9 @@ func (c *AdminClassControllerUpdate) Get() {
 		c.Data["Classes"] = classes
 	}
 }
+
 func (c *AdminClassControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
-
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
@@ -39,7 +39,7 @@ func (c *AdminClassControllerUpdate) Post() {
 		return
 	}
 	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
-	if err == false {
+	if err != nil {
 		return
 	}
 }

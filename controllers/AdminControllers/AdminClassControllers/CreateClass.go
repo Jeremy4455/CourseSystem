@@ -21,7 +21,6 @@ func (c *AdminClassControllerCreate) Get() {
 
 func (c *AdminClassControllerCreate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
-
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")
 	courseTeacherId := c.GetString("CourseTeacherId")
@@ -29,8 +28,9 @@ func (c *AdminClassControllerCreate) Post() {
 	classTime := c.GetString("ClassTime")
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
-	err := models.AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
-	if err == false {
+
+	err := models.CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
+	if err != nil {
 		return
 	}
 }

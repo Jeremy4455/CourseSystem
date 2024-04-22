@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 
@@ -63,7 +64,7 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	}
 
 	if courseTeacherId != "" || courseTeacherName != "" {
-		teacher, err := GetTeacher(courseTeacherId, courseTeacherName, "", "")
+		teacher, err := GetTeachers(courseTeacherId, courseTeacherName, "", "")
 		if err != nil {
 			return nil, nil
 		}
@@ -88,28 +89,28 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	return classes, nil
 }
 
-func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom string) bool {
+func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom string) error {
 	if courseCode == "" || courseTeacherId == "" || courseSemester == "" || classTime == "" || classroom == "" || capacity == "" {
-		return false
+		return errors.New("参数不能为空")
 	}
 
-	course, _ := GetCourses(courseCode, courseName)
+	course, err := GetCourses(courseCode, courseName)
 	if len(course) != 1 {
-		return false
+		return errors.New("选定课程不唯一")
 	}
 
-	teacher, _ := GetTeacher(courseTeacherId, "", "", "")
-	if teacher == nil {
-		return false
+	teacher, _ := GetTeachers(courseTeacherId, "", "", "")
+	if len(teacher) == 0 {
+		return errors.New("不存在该教师")
 	}
 
 	if ExistClass(course[0], teacher[0], courseSemester) == true {
-		return false
+		return errors.New("该教师本学期已授该课")
 	}
 
 	cap, err := strconv.Atoi(capacity)
 	if err != nil {
-		return false
+		return err
 	}
 	class := &Class{
 		Course:    course[0],
@@ -125,45 +126,43 @@ func AddClass(courseCode, courseName, courseTeacherId, courseSemester, classTime
 	var existedClass []*Class
 	_, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
 	if err != nil {
-		return false
+		return err
 	}
 	for _, c := range existedClass {
 		if ClassConflict(class, c) == false {
-			return false
+			return errors.New("课程存在时间冲突")
 		}
 	}
 	if TeacherTimeConflict(teacher[0], class) == false {
-		return false
+		return errors.New("该教师存在时间冲突")
 	}
 
 	o.Insert(class)
-	return true
+	return nil
 }
 
-func DeleteClass(courseCode, courseTeacherId, courseSemester string) bool {
+func DeleteClass(courseCode, courseTeacherId, courseSemester string) error {
 	if courseCode == "" || courseTeacherId == "" || courseSemester == "" {
-		return false
+		return errors.New("参数不能为空")
 	}
 	class, _ := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "")
-	if class == nil {
-		return false
+	if len(class) == 0 {
+		return errors.New("不存在该课程")
 	}
+
 	o := orm.NewOrm()
 	_, err := o.Delete(class[0])
 	if err != nil {
-		return false
+		return err
 	}
-	return true
+	return nil
 }
 
-func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom string) bool {
-	if c == nil {
-		return false
-	}
+func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom string) error {
 	if courseTeacherId != "" {
-		teacher, err := GetTeacher(courseTeacherId, "", "", "")
+		teacher, err := GetTeachers(courseTeacherId, "", "", "")
 		if err != nil {
-			return false
+			return err
 		}
 		c.Teacher = teacher[0]
 	}
@@ -173,7 +172,7 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 	if capacity != "" {
 		cap, err := strconv.Atoi(capacity)
 		if err != nil {
-			return false
+			return err
 		}
 		c.Capacity = cap
 	}
@@ -183,7 +182,16 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 
 	_, err := orm.NewOrm().Update(c)
 	if err != nil {
-		return false
+		return err
 	}
-	return true
+	return nil
+}
+
+func GetAllClasses() ([]*Class, error) {
+	var classes []*Class
+	_, err := orm.NewOrm().QueryTable("class").All(&classes)
+	if err != nil {
+		return nil, err
+	}
+	return classes, nil
 }

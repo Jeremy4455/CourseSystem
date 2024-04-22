@@ -28,23 +28,30 @@ func GetUser(id string) bool {
 	return true
 }
 
-func AddUser(id, username, password, role string) bool {
+func AddUser(id, username, password, role string) error {
 	o := orm.NewOrm()
 
 	user := &User{Id: id, Username: username, Password: password, Role: role}
-	o.Insert(user)
-	return true
+	_, err := o.Insert(user)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
-func DeleteUser(id string) bool {
+func DeleteUser(id string) error {
 	o := orm.NewOrm()
 	user := &User{Id: id}
 	err := o.Read(user)
 	if err != nil {
-		return false
+		return err
 	}
-	o.Delete(user)
-	return true
+
+	_, err = o.Delete(user)
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 func ReviseUser(u *User, username, password string) bool {

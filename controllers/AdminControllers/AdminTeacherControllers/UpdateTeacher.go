@@ -3,7 +3,6 @@ package AdminTeacherControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"github.com/astaxie/beego/orm"
 )
 
 type AdminTeacherControllerUpdate struct {
@@ -12,6 +11,10 @@ type AdminTeacherControllerUpdate struct {
 
 func (c *AdminTeacherControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminTeacherViews/UpdateTeacher.tpl"
+	c.searchTeacher()
+}
+
+func (c *AdminTeacherControllerUpdate) searchTeacher() {
 	teacherId := c.GetString("TeacherId")
 	if teacherId == "" {
 		teachers, _ := models.GetAllTeachers()
@@ -24,29 +27,15 @@ func (c *AdminTeacherControllerUpdate) Get() {
 
 func (c *AdminTeacherControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminTeacherViews/UpdateTeacher.tpl"
-
 	teacherId := c.GetString("TeacherId")
 	name := c.GetString("Name")
 	mobile := c.GetString("Mobile")
 	email := c.GetString("Email")
 
-	// 查询要更新的课程
-	teacher := models.Teacher{TeacherId: teacherId}
-	err := orm.NewOrm().Read(&teacher, "TeacherId")
+	err := models.ReviseTeacher(teacherId, name, mobile, email)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "教师更新成功"}
 	}
-
-	// 判断表单字段是否为空，如果为空则保持原来的数据
-	if name != "" {
-		teacher.Name = name
-	}
-	if mobile != "" {
-		teacher.Mobile = mobile
-	}
-	if email != "" {
-		teacher.Email = email
-	}
-
-	_, err = orm.NewOrm().Update(&teacher)
 }

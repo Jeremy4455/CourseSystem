@@ -19,9 +19,11 @@ func (c *AdminCourseControllerCreate) Post() {
 	name := c.GetString("Name")
 	college := c.GetString("College")
 	creditStr := c.GetString("Credit")
-	// 添加课程到数据库
+
 	err := models.CreateCourse(courseCode, name, college, creditStr)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "课程添加成功"}
 	}
 }

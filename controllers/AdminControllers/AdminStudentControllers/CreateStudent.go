@@ -7,7 +7,6 @@ import (
 
 type AdminStudentControllerCreate struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminStudentControllerCreate) Get() {
@@ -23,6 +22,8 @@ func (c *AdminStudentControllerCreate) Post() {
 
 	err := models.CreateStudent(studentId, name, class, grade)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "学生添加成功"}
 	}
 }

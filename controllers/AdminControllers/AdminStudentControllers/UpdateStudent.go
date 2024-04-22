@@ -27,9 +27,11 @@ func (c *AdminStudentControllerUpdate) Post() {
 	studentId := c.GetString("StudentId")
 	name := c.GetString("Name")
 	class := c.GetString("Class")
-	s, err := models.GetStudent(studentId)
+
+	err := models.ReviseStudent(studentId, name, class)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "学生更新成功"}
 	}
-	models.ReviseStudent(s, name, class)
 }
