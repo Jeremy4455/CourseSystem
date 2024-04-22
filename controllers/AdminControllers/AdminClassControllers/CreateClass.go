@@ -1,4 +1,4 @@
-package AdminCourseControllers
+package AdminClassControllers
 
 import (
 	"CourseSystem/controllers"

@@ -1,4 +1,4 @@
-package AdminCourseControllers
+package AdminClassControllers
 
 import (
 	"CourseSystem/controllers"
@@ -7,15 +7,13 @@ import (
 
 type AdminClassControllerRetrieve struct {
 	controllers.BaseController
-	viewpath string
 }
 
 func (c *AdminClassControllerRetrieve) Get() {
-	c.viewpath = "AdminViews/AdminCourseViews/RetrieveCourse.tpl"
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminClassViews/RetrieveClass.tpl"
 }
 func (c *AdminClassControllerRetrieve) Post() {
-	c.TplName = c.viewpath
+	c.TplName = "AdminViews/AdminClassViews/RetrieveClass.tpl"
 
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
