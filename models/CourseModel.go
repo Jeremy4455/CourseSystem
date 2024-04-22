@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/astaxie/beego/orm"
@@ -71,6 +72,7 @@ func ReviseCourse(courseCode, name, college, credit string) error {
 	}
 
 	course := courses[0]
+	fmt.Println(course.Name)
 	if name != "" {
 		course.Name = name
 	}

@@ -124,8 +124,8 @@ func Syncronize() {
 	}
 }
 
-func GetId(table_name string) (int, error) {
-	var idv int
+func GetId(table_name string) (int64, error) {
+	var idv int64
 	o := orm.NewOrm()
 	count, err := o.QueryTable(table_name).Count()
 	if err != nil {
@@ -141,7 +141,7 @@ func GetId(table_name string) (int, error) {
 			return -1, err
 		}
 		if len(results) > 0 {
-			idv = results[0]["Id"].(int)
+			idv = results[0]["Id"].(int64)
 		}
 	}
 	return idv, nil

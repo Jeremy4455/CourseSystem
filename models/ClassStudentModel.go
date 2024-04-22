@@ -8,7 +8,7 @@ import (
 )
 
 type ClassStudent struct {
-	Id          int
+	Id          int64
 	Class       *Class   `orm:"rel(fk);on_delete(cascade)"`
 	Student     *Student `orm:"rel(fk)"`
 	Performance float64

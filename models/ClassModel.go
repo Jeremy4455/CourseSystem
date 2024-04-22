@@ -9,7 +9,7 @@ import (
 )
 
 type Class struct {
-	Id        int
+	Id        int64
 	Course    *Course  `orm:"rel(fk)"` // Course作为外键
 	Teacher   *Teacher `orm:"rel(fk)"` // Teacher作为外键
 	Semester  string
@@ -112,19 +112,20 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 
 	o := orm.NewOrm()
 
-	var existedClass []*Class
-	_, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
-	if err != nil {
-		return err
-	}
-	for _, c := range existedClass {
-		if !ClassConflict(class, c) {
-			return errors.New("课程存在时间冲突")
-		}
-	}
-	if !TeacherTimeConflict(teacher[0], class) {
-		return errors.New("该教师存在时间冲突")
-	}
+	// var existedClass []*Class
+	// _, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
+	// if err != nil {
+	// 	return err
+	// }
+	// for _, c := range existedClass {
+	// 	if !ClassConflict(class, c) {
+	// 		return errors.New("课程存在时间冲突")
+	// 	}
+	// }
+	// if !TeacherTimeConflict(teacher[0], class) {
+	// 	return errors.New("该教师存在时间冲突")
+	// }
+
 	_, err = o.Insert(class)
 	if err != nil {
 		fmt.Println(123)
@@ -181,7 +182,7 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 
 func GetAllClasses() ([]*Class, error) {
 	var classes []*Class
-	_, err := orm.NewOrm().QueryTable("class").All(&classes)
+	_, err := orm.NewOrm().QueryTable("class").RelatedSel().All(&classes)
 	if err != nil {
 		return nil, err
 	}
