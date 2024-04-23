@@ -17,6 +17,7 @@ func (c *AdminCourseControllerDelete) Get() {
 func (c *AdminCourseControllerDelete) searchCourse() {
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
+
 	courses, _ := models.GetCourses(courseCode, name)
 	if courses == nil {
 		return

@@ -23,6 +23,7 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 	c.Data["Semesters"] = models.Semesters
+
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	c.Data["Classes"] = classes
 }

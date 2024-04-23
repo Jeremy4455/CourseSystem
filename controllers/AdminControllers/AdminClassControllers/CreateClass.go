@@ -15,11 +15,10 @@ func (c *AdminClassControllerCreate) Get() {
 	if err != nil {
 		return
 	}
-	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
 
 	// 将班级和学期列表传递到模板中
 	c.Data["Classes"] = classes
-	c.Data["Semesters"] = semesters
+	c.Data["Semesters"] = models.Semesters
 }
 func (c *AdminClassControllerCreate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
