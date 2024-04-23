@@ -76,7 +76,7 @@
         <main class="column is-four-fifths">
             <h1 class="title">更改学生</h1>
             <!-- 表格 -->
-            <form action="/admin/student/update" method="post">
+
                 <table class="table is-fullwidth is-hoverable">
                     <thead style="position: sticky; top: 0; z-index: 1;">
                         <tr>
@@ -91,6 +91,7 @@
                         <!-- 表行 -->
                         <!-- 使用range指令遍历所有课程 -->
                         {{range .Students}}
+                        <form action="/admin/student/update" method="post">
                         <tr>
                             <td>{{.StudentId}}</td>
                             <td>
@@ -109,10 +110,11 @@
                                 </div>
                             </td>
                         </tr>
+                        </form>
                         {{end}}
                     </tbody>
                 </table>
-            </form>
+
             <!-- 分页按钮 -->
             <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
                 <div class="field is-grouped">

@@ -7,5 +7,5 @@ type AdminController struct {
 }
 
 func (c *AdminController) Get() {
-	c.TplName = "AdminViews/SemesterSelection.tpl"
+	c.TplName = "AdminViews/Index.tpl"
 }

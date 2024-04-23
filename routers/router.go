@@ -76,6 +76,6 @@ func init() {
 	beego.Router("/admin/class/delete", &AdminClassControllers.AdminClassControllerDelete{})
 
 	beego.Router("/student", &StudentControllers.StudentController{})
-	beego.Router("/student/:studentid", &StudentControllers.StudentController{})
+	//beego.Router("/student/:studentid", &StudentControllers.StudentController{})
 	beego.Router("/teacher", &TeacherControllers.TeacherController{})
 }

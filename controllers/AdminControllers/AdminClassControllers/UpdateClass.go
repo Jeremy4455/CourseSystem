@@ -42,7 +42,6 @@ func (c *AdminClassControllerUpdate) Post() {
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
 	c.Data["Semesters"] = models.Semesters
-
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom)
 	if len(class) != 1 {
 		return
