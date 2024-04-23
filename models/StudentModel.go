@@ -12,7 +12,7 @@ type Student struct {
 	Name      string          `orm:"size(100)"`
 	Class     string          `orm:"size(50)"`
 	Grade     float64         `orm:"size(20)"`
-	Classes   []*ClassStudent `orm:"rel(many);on_delete(cascade)"`
+	Classes   []*ClassStudent `orm:"reverse(many);on_delete(cascade)"`
 }
 
 func GetStudent(studentId string) (*Student, error) {
