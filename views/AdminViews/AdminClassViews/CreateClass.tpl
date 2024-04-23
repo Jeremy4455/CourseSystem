@@ -93,23 +93,22 @@
                     </thead>
                     <tbody>
                         <!-- 表行 -->
-                        <!-- 使用range指令遍历所有课程 -->
                         <tr>
-                            <td><input class="input is-small" type="text" id="CourseCode" name="CourseCode" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="CourseName" name="CourseName"></td>
-                            <td><input class="input is-small" type="text" id="CourseTeacherId" name="CourseTeacherId" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="CourseTeacherName" name="CourseTeacherName"></td>
+                            <td><input class="input is-small" type="text" id="courseCode" name="courseCode" required pattern="[0-9]{6}"></td>
+                            <td><input class="input is-small" type="text" id="courseName" name="courseName"></td>
+                            <td><input class="input is-small" type="text" id="courseTeacherId" name="courseTeacherId" required pattern="[0-9]{6}"></td>
+                            <td><input class="input is-small" type="text" id="courseTeacherName" name="courseTeacherName"></td>
                             <td>
-                                <select name="CourseSemester" required>
+                                <select name="courseSemester" required>
                                     <option value="">请选择学期</option>
                                     {{range .Semesters}}
                                     <option value="{{.}}">{{.}}</option>
                                     {{end}}
                                 </select>
                             </td>
-                            <td><input class="input is-small" type="text" id="ClassTime" name="ClassTime" required></td>
-                            <td><input class="input is-small" type="text" id="Capacity" name="Capacity" required></td>
-                            <td><input class="input is-small" type="text" id="Classroom" name="Classroom" required></td>
+                            <td><input class="input is-small" type="text" id="classTime" name="classTime" required></td>
+                            <td><input class="input is-small" type="text" id="capacity" name="capacity" required></td>
+                            <td><input class="input is-small" type="text" id="classroom" name="classroom" required></td>
                         </tr>
                     </tbody>
                 </table>
@@ -165,7 +164,7 @@
                 </div>
             </div>
             <!-- 翻页功能 -->
-            <script src="../../../static/js/RetrievePage.js"></script>
+            <script src="../../../static/js/UpdatePage.js"></script>
         </main>
     </div>
 </body>

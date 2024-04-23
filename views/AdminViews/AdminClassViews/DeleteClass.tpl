@@ -130,7 +130,7 @@
                         <div class="field">
                             <div class="control">
                                 <div class="select is-small">
-                                    <select name="courseSemester">
+                                    <select name="courseSemester" required>
                                         <option value="">请选择学期</option>
                                         {{range .Semesters}}
                                         <option value="{{.}}">{{.}}</option>
@@ -183,7 +183,7 @@
                                     <form action="/admin/class/delete" method="post">
                                         <input type="hidden" name="courseCode" value="{{.Course.CourseCode}}">
                                         <input type="hidden" name="courseTeacherId" value="{{.Teacher.TeacherId}}">
-                                        <input type="hidden" name="courseSemester" value="{{.semester}}">
+                                        <input type="hidden" name="courseSemester" value="{{.Semester}}">
                                         <button class="button is-danger" type="submit">删除</button>
                                     </form>
                                 </div>

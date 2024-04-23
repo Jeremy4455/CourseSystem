@@ -13,17 +13,17 @@ func (c *AdminClassControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/UpdateClass.tpl"
 	courseCode := c.GetString("courseCode")
 	TeacherId := c.GetString("TeacherId")
-	semester := c.GetString("semester")
-	semesters := []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+	courseSemester := c.GetString("courseSemester")
+	semesters := models.Semesters
 	c.Data["Semesters"] = semesters
-	if courseCode == "" || TeacherId == "" || semester == "" {
+	if courseCode == "" || TeacherId == "" || courseSemester == "" {
 		classes, err := models.GetAllClasses()
 		if err != nil {
 			return
 		}
 		c.Data["Classes"] = classes
 	} else {
-		classes, err := models.GetClasses(courseCode, "", TeacherId, "", semester, "", "")
+		classes, err := models.GetClasses(courseCode, "", TeacherId, "", courseSemester, "", "")
 		if err != nil {
 			return
 		}
