@@ -3,7 +3,7 @@ package models
 import (
 	"strconv"
 
-	"github.com/beego/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 )
 
 // Student 学生模型

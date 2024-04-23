@@ -2,10 +2,9 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 
-	"github.com/beego/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 )
 
 type Class struct {
@@ -129,12 +128,17 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
-	fmt.Println(teacher[0].Classes)
-	teacher[0].Classes = append(teacher[0].Classes, class)
-	_, err = o.Update(teacher[0])
-	if err != nil {
-		return err
-	}
+
+	// teacher[0].Classes = append(teacher[0].Classes, class)
+	// _, err = o.Update(teacher[0])
+	// if err != nil {
+	// 	return err
+	// }
+	// course[0].Classes = append(course[0].Classes, class)
+	// _, err = o.Update(course[0])
+	// if err != nil {
+	// 	return err
+	// }
 	return nil
 }
 

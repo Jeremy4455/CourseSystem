@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/beego/beego/orm"
+	"github.com/beego/beego/v2/client/orm"
 )
 
 type ClassStudent struct {
