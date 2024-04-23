@@ -17,12 +17,12 @@ type ClassStudent struct {
 
 func (c *ClassStudent) TableIndex() [][]string {
 	return [][]string{
-		[]string{"Class", "Student"},
+		{"Class", "Student"},
 	}
 }
 func (c *ClassStudent) TableUnique() [][]string {
 	return [][]string{
-		[]string{"Class", "Student"},
+		{"Class", "Student"},
 	}
 }
 func (c *ClassStudent) TableName() string {

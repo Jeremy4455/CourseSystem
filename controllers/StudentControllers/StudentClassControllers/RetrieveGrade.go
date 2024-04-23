@@ -27,7 +27,7 @@ func (c *StudentClassControllerRetrieveGrade) Post() {
 	}
 	var classes []map[string]interface{}
 	for _, class := range cs {
-		var t map[string]interface{}
+		t := make(map[string]interface{})
 		t["CourseCode"] = class.Class.Course.CourseCode
 		t["CourseName"] = class.Class.Course.Name
 		t["Teacher"] = class.Class.Teacher.Name

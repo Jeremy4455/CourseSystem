@@ -41,7 +41,7 @@ func (c *TeacherClassControllerSet) Post() {
 
 	var information []map[string]interface{}
 	for _, cs := range class_student {
-		var x map[string]interface{}
+		x := make(map[string]interface{})
 		x["StudentId"] = cs.Student.StudentId
 		x["StudentName"] = cs.Student.Name
 		x["StudentClass"] = cs.Student.Class
