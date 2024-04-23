@@ -59,24 +59,22 @@ func CheckTime(busytime, classtime string) bool {
 	return true
 }
 
-func StudentTimeConflict(s *Student, c *Class) bool {
-	if s == nil || c == nil {
+func StudentTimeConflict(classes []*Class, c *Class) bool {
+	if classes == nil || c == nil {
 		return false
 	}
-	classes := s.Classes
 	for _, class := range classes {
-		if !CheckTime(class.Class.ClassTime, c.ClassTime) {
+		if !CheckTime(class.ClassTime, c.ClassTime) {
 			return false
 		}
 	}
 	return true
 }
 
-func TeacherTimeConflict(t *Teacher, c *Class) bool {
-	if t == nil || c == nil {
+func TeacherTimeConflict(classes []*Class, c *Class) bool {
+	if classes == nil || c == nil {
 		return false
 	}
-	classes := t.Classes
 
 	for _, class := range classes {
 		if !CheckTime(class.ClassTime, c.ClassTime) {
@@ -86,11 +84,16 @@ func TeacherTimeConflict(t *Teacher, c *Class) bool {
 	return true
 }
 
-func ClassConflict(c1, c2 *Class) bool {
-	if c1.Semester != c2.Semester || c1.Location != c2.Location {
-		return true
+func ClassConflict(classes []*Class, c *Class) bool {
+	if classes == nil || c == nil {
+		return false
 	}
-	return CheckTime(c1.ClassTime, c2.ClassTime)
+	for _, class := range classes {
+		if !CheckTime(class.ClassTime, c.ClassTime) {
+			return false
+		}
+	}
+	return true
 }
 
 func Syncronize() {

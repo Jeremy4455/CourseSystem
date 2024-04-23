@@ -115,12 +115,15 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
-	for _, c := range existedClass {
-		if !ClassConflict(class, c) {
-			return errors.New("课程存在时间冲突")
-		}
+	if !ClassConflict(existedClass, class) {
+		return errors.New("课程存在时间冲突")
 	}
-	if !TeacherTimeConflict(teacher[0], class) {
+
+	_, err = o.QueryTable("Class").Filter("Semester", courseSemester).Filter("Teacher", teacher[0]).All(&existedClass)
+	if err != nil {
+		return err
+	}
+	if !TeacherTimeConflict(existedClass, class) {
 		return errors.New("该教师存在时间冲突")
 	}
 
@@ -128,17 +131,6 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
-
-	// teacher[0].Classes = append(teacher[0].Classes, class)
-	// _, err = o.Update(teacher[0])
-	// if err != nil {
-	// 	return err
-	// }
-	// course[0].Classes = append(course[0].Classes, class)
-	// _, err = o.Update(course[0])
-	// if err != nil {
-	// 	return err
-	// }
 	return nil
 }
 
