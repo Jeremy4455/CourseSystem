@@ -67,9 +67,9 @@ func PickClass(s *Student, c *Class) error {
 	if len(classstuent) >= c.Capacity {
 		return errors.New("该课程人数已满")
 	}
-	if !StudentTimeConflict(s, c) {
-		return errors.New("该课程与已选课程冲突")
-	}
+	// if !StudentTimeConflict(s, c) {
+	// 	return errors.New("该课程与已选课程冲突")
+	// }
 
 	id, err := GetId("ClassStudent")
 	if err != nil {

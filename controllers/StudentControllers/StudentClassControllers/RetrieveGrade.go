@@ -14,7 +14,6 @@ func (c *StudentClassControllerRetrieveGrade) Get() {
 }
 func (c *StudentClassControllerRetrieveGrade) Post() {
 	c.TplName = ""
-
 	studentId := c.GetSession("userId").(string)[1:]
 	semester := c.GetString("Semester")
 
@@ -22,12 +21,10 @@ func (c *StudentClassControllerRetrieveGrade) Post() {
 	if err != nil {
 		return
 	}
-
 	cs, err := models.GetClassStudent(student, semester, nil)
 	if err != nil {
 		return
 	}
-
 	var classes []map[string]interface{}
 	for _, class := range cs {
 		var t map[string]interface{}
@@ -38,6 +35,5 @@ func (c *StudentClassControllerRetrieveGrade) Post() {
 		t["Score"] = class.Score
 		t["Grade"] = 0.5*class.Performance + 0.5*class.Score
 	}
-
 	c.Data["Classes"] = classes
 }

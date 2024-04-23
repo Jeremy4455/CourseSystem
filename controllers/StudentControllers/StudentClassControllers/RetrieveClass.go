@@ -14,7 +14,6 @@ func (c *StudentClassControllerRetrieve) Get() {
 }
 func (c *StudentClassControllerRetrieve) Post() {
 	c.TplName = ""
-
 	studentId := c.GetSession("userId").(string)[1:]
 	semester := c.GetString("Semester")
 
@@ -22,7 +21,6 @@ func (c *StudentClassControllerRetrieve) Post() {
 	if err != nil {
 		return
 	}
-
 	cs, err := models.GetClassStudent(student, semester, nil)
 	if err != nil {
 		return
@@ -31,6 +29,5 @@ func (c *StudentClassControllerRetrieve) Post() {
 	for _, class := range cs {
 		classes = append(classes, class.Class)
 	}
-
 	c.Data["Classes"] = classes
 }
