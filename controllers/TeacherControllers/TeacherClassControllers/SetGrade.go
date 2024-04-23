@@ -25,6 +25,7 @@ func (c *TeacherClassControllerSet) SearchClass() {
 	c.Data["Classes"] = classes
 }
 
+// 复杂的控制器，前端先不要写
 func (c *TeacherClassControllerSet) Post() {
 	courseCode := c.GetString("CourseCode")
 	semester := c.GetString("Semester")
