@@ -94,21 +94,21 @@
                     <tbody>
                         <!-- 表行 -->
                         <tr>
-                            <td><input class="input is-small" type="text" id="courseCode" name="courseCode" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="courseName" name="courseName"></td>
-                            <td><input class="input is-small" type="text" id="courseTeacherId" name="courseTeacherId" required pattern="[0-9]{6}"></td>
-                            <td><input class="input is-small" type="text" id="courseTeacherName" name="courseTeacherName"></td>
+                            <td><input class="input is-small" type="text" id="CourseCode" name="CourseCode" required pattern="[0-9]{6}"></td>
+                            <td><input class="input is-small" type="text" id="CourseName" name="CourseName"></td>
+                            <td><input class="input is-small" type="text" id="CourseTeacherId" name="CourseTeacherId" required pattern="[0-9]{6}"></td>
+                            <td><input class="input is-small" type="text" id="CourseTeacherName" name="CourseTeacherName"></td>
                             <td>
-                                <select name="courseSemester" required>
+                                <select name="CourseSemester" required>
                                     <option value="">请选择学期</option>
                                     {{range .Semesters}}
                                     <option value="{{.}}">{{.}}</option>
                                     {{end}}
                                 </select>
                             </td>
-                            <td><input class="input is-small" type="text" id="classTime" name="classTime" required></td>
-                            <td><input class="input is-small" type="text" id="capacity" name="capacity" required></td>
-                            <td><input class="input is-small" type="text" id="classroom" name="classroom" required></td>
+                            <td><input class="input is-small" type="text" id="ClassTime" name="ClassTime" required></td>
+                            <td><input class="input is-small" type="text" id="Capacity" name="Capacity" required></td>
+                            <td><input class="input is-small" type="text" id="Classroom" name="Classroom" required></td>
                         </tr>
                     </tbody>
                 </table>

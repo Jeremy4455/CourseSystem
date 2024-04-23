@@ -3,6 +3,7 @@ package AdminClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
+	"fmt"
 )
 
 type AdminClassControllerUpdate struct {
@@ -19,12 +20,14 @@ func (c *AdminClassControllerUpdate) Get() {
 	if courseCode == "" || TeacherId == "" || courseSemester == "" {
 		classes, err := models.GetAllClasses()
 		if err != nil {
+			fmt.Println(err.Error())
 			return
 		}
 		c.Data["Classes"] = classes
 	} else {
 		classes, err := models.GetClasses(courseCode, "", TeacherId, "", courseSemester, "", "")
 		if err != nil {
+			fmt.Println(err.Error())
 			return
 		}
 		c.Data["Classes"] = classes
@@ -48,6 +51,7 @@ func (c *AdminClassControllerUpdate) Post() {
 	}
 	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
 	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 }

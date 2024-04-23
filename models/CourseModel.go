@@ -1,9 +1,10 @@
 package models
 
 import (
+	"errors"
 	"strconv"
 
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/orm"
 )
 
 // Course 课程模型
@@ -17,7 +18,7 @@ type Course struct {
 
 func GetCourses(courseCode, name string) ([]*Course, error) {
 	if courseCode == "" && name == "" {
-		return nil, nil
+		return nil, errors.New("参数不能为空")
 	}
 
 	o := orm.NewOrm()

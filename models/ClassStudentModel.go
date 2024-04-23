@@ -4,11 +4,11 @@ import (
 	"errors"
 	"strconv"
 
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/orm"
 )
 
 type ClassStudent struct {
-	Id          int64
+	Id          int64    `orm:"pk;auto"`
 	Class       *Class   `orm:"rel(fk);on_delete(cascade)"`
 	Student     *Student `orm:"rel(fk)"`
 	Performance float64
@@ -67,16 +67,8 @@ func PickClass(s *Student, c *Class) error {
 	if len(classstuent) >= c.Capacity {
 		return errors.New("该课程人数已满")
 	}
-	// if !StudentTimeConflict(s, c) {
-	// 	return errors.New("该课程与已选课程冲突")
-	// }
 
-	id, err := GetId("ClassStudent")
-	if err != nil {
-		return err
-	}
 	newclassstudent := &ClassStudent{
-		Id:          id + 1,
 		Class:       c,
 		Student:     s,
 		Performance: 0,

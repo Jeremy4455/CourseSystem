@@ -3,7 +3,7 @@ package models
 import (
 	"strconv"
 
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/orm"
 )
 
 func CheckTime(busytime, classtime string) bool {
@@ -77,6 +77,7 @@ func TeacherTimeConflict(t *Teacher, c *Class) bool {
 		return false
 	}
 	classes := t.Classes
+
 	for _, class := range classes {
 		if !CheckTime(class.ClassTime, c.ClassTime) {
 			return false
@@ -86,7 +87,7 @@ func TeacherTimeConflict(t *Teacher, c *Class) bool {
 }
 
 func ClassConflict(c1, c2 *Class) bool {
-	if c1.Location != c2.Location {
+	if c1.Semester != c2.Semester || c1.Location != c2.Location {
 		return true
 	}
 	return CheckTime(c1.ClassTime, c2.ClassTime)

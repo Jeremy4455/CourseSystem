@@ -3,6 +3,7 @@ package AdminClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
+	"fmt"
 )
 
 type AdminClassControllerDelete struct {
@@ -24,7 +25,11 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 	classroom := c.GetString("classroom")
 	c.Data["Semesters"] = models.Semesters
 
-	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
 	c.Data["Classes"] = classes
 }
 
@@ -37,6 +42,7 @@ func (c *AdminClassControllerDelete) Post() {
 
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester)
 	if err != nil {
+		fmt.Println(err.Error())
 		return
 	}
 }

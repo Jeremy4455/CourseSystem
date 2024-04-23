@@ -5,13 +5,13 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/astaxie/beego/orm"
+	"github.com/beego/beego/orm"
 )
 
 type Class struct {
-	Id        int64
-	Course    *Course  `orm:"rel(fk)"` // Course作为外键
-	Teacher   *Teacher `orm:"rel(fk)"` // Teacher作为外键
+	Id        int64    `orm:"pk;auto"`
+	Course    *Course  `orm:"rel(fk);on_delete(cascade)"` // Course作为外键
+	Teacher   *Teacher `orm:"rel(fk);on_delete(cascade)"` // Teacher作为外键
 	Semester  string
 	ClassTime string
 	Capacity  int
@@ -31,7 +31,7 @@ func (c *Class) TableUnique() [][]string {
 
 func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
 	if courseSemester == "" {
-		return nil, nil
+		return nil, errors.New("必须选择一个学期")
 	}
 
 	o := orm.NewOrm()
@@ -40,17 +40,17 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	if courseCode != "" || courseName != "" {
 		courses, err := GetCourses(courseCode, courseName)
 		if err != nil {
-			return nil, nil
+			return nil, err
 		}
-		q = q.Filter("Course", courses)
+		q = q.Filter("Course__in", courses)
 	}
 
 	if courseTeacherId != "" || courseTeacherName != "" {
-		teacher, err := GetTeachers(courseTeacherId, courseTeacherName, "", "")
+		teachers, err := GetTeachers(courseTeacherId, courseTeacherName, "", "")
 		if err != nil {
-			return nil, nil
+			return nil, err
 		}
-		q = q.Filter("Teacher", teacher)
+		q = q.Filter("Teacher__in", teachers)
 	}
 
 	if classTime != "" {
@@ -65,8 +65,7 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	_, err := q.All(&classes)
 
 	if err != nil {
-		// 处理错误
-		fmt.Println("Error querying courses from database:", err)
+		return nil, err
 	}
 	return classes, nil
 }
@@ -84,7 +83,10 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		return errors.New("选定课程不唯一")
 	}
 
-	teacher, _ := GetTeachers(courseTeacherId, "", "", "")
+	teacher, err := GetTeachers(courseTeacherId, "", "", "")
+	if err != nil {
+		return err
+	}
 	if len(teacher) == 0 {
 		return errors.New("不存在该教师")
 	}
@@ -97,12 +99,8 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	if err != nil {
 		return err
 	}
-	id, err := GetId("class")
-	if err != nil {
-		return err
-	}
+
 	class := &Class{
-		Id:        id + 1,
 		Course:    course[0],
 		Teacher:   teacher[0],
 		Semester:  courseSemester,
@@ -113,21 +111,27 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 
 	o := orm.NewOrm()
 
-	// var existedClass []*Class
-	// _, err = o.QueryTable("Class").Filter("Location", classroom).All(&existedClass)
-	// if err != nil {
-	// 	return err
-	// }
-	// for _, c := range existedClass {
-	// 	if !ClassConflict(class, c) {
-	// 		return errors.New("课程存在时间冲突")
-	// 	}
-	// }
-	// if !TeacherTimeConflict(teacher[0], class) {
-	// 	return errors.New("该教师存在时间冲突")
-	// }
+	var existedClass []*Class
+	_, err = o.QueryTable("Class").Filter("Semester", courseSemester).Filter("Location", classroom).All(&existedClass)
+	if err != nil {
+		return err
+	}
+	for _, c := range existedClass {
+		if !ClassConflict(class, c) {
+			return errors.New("课程存在时间冲突")
+		}
+	}
+	if !TeacherTimeConflict(teacher[0], class) {
+		return errors.New("该教师存在时间冲突")
+	}
 
 	_, err = o.Insert(class)
+	if err != nil {
+		return err
+	}
+	fmt.Println(teacher[0].Classes)
+	teacher[0].Classes = append(teacher[0].Classes, class)
+	_, err = o.Update(teacher[0])
 	if err != nil {
 		return err
 	}

@@ -3,7 +3,6 @@ module CourseSystem
 go 1.22
 
 require (
-	github.com/astaxie/beego v1.12.3
 	github.com/beego/beego/v2 v2.2.0
 )
 
@@ -16,6 +15,7 @@ require (
 
 require (
 	filippo.io/edwards25519 v1.1.0 // indirect
+	github.com/beego/beego v1.12.12
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc // indirect
