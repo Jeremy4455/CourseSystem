@@ -74,6 +74,7 @@ func PickClass(s *Student, c *Class) error {
 		Student:     s,
 		Performance: 0,
 		Score:       0,
+		Level:       0,
 	}
 	o.Insert(newclassstudent)
 	return nil
@@ -96,11 +97,14 @@ func DropClass(s *Student, c *Class) error {
 
 func UpdateClass(s *Student, c *Class, performance, score string) error {
 	if c == nil || s == nil || performance == "" && score == "" {
-		return errors.New("")
+		return errors.New("输入有误")
 	}
+
 	o := orm.NewOrm()
 	classstudent := &ClassStudent{Class: c, Student: s}
-	o.Read(classstudent)
+	if err := o.Read(classstudent); err != nil {
+		return err
+	}
 
 	if performance != "" {
 		perform, err := strconv.ParseFloat(performance, 64)
@@ -117,6 +121,8 @@ func UpdateClass(s *Student, c *Class, performance, score string) error {
 		}
 		classstudent.Score = sco
 	}
-
+	if _, err := o.Update(classstudent); err != nil {
+		return err
+	}
 	return nil
 }

@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -95,13 +96,29 @@ func ClassConflict(classes []*Class, c *Class) bool {
 	}
 	return true
 }
+func UpgradeLevel(c *Class) error {
+	if c == nil {
+		return errors.New("不存在该课程")
+	}
+	o := orm.NewOrm()
+	var cs []*ClassStudent
+	if _, err := o.QueryTable("ClassStudent").Filter("Class", c).All(&cs); err != nil {
+		return err
+	}
+	for _, classStudent := range cs {
+		classStudent.Level++
+	}
+	if _, err := o.Update(cs); err != nil {
+		return err
+	}
+	return nil
+}
 
 func Syncronize() {
 	o := orm.NewOrm()
 
 	var students []*Student
-	_, err := o.QueryTable("student").All(&students)
-	if err != nil {
+	if _, err := o.QueryTable("student").All(&students); err != nil {
 		return
 	}
 
@@ -114,41 +131,16 @@ func Syncronize() {
 	}
 
 	var teachers []*Teacher
-	_, err = o.QueryTable("teacher").All(&teachers)
-	if err == nil {
+	if _, err := o.QueryTable("teacher").All(&teachers); err == nil {
 		return
 	}
 
 	for _, teacher := range teachers {
-		err := o.Read(&User{Id: teacher.TeacherId})
-		if err != nil {
+		if err := o.Read(&User{Id: teacher.TeacherId}); err != nil {
 			continue
 		}
 		AddUser(teacher.TeacherId, teacher.Name, "teacher123", "teacher")
 	}
-}
-
-func GetId(table_name string) (int64, error) {
-	var idv int64
-	o := orm.NewOrm()
-	count, err := o.QueryTable(table_name).Count()
-	if err != nil {
-		return -1, err
-	}
-	if count == 0 {
-		return 0, nil
-	} else {
-		var results []orm.Params
-
-		_, err = o.QueryTable(table_name).OrderBy("-id").Limit(1).Values(&results)
-		if err != nil {
-			return -1, err
-		}
-		if len(results) > 0 {
-			idv = results[0]["Id"].(int64)
-		}
-	}
-	return idv, nil
 }
 
 func ExistClass(c *Course, t *Teacher, s string) bool {
