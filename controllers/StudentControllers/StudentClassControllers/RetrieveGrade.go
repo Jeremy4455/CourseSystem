@@ -33,7 +33,8 @@ func (c *StudentClassControllerRetrieveGrade) Post() {
 		t["Teacher"] = class.Class.Teacher.Name
 		t["Performance"] = class.Performance
 		t["Score"] = class.Score
-		t["Grade"] = 0.5*class.Performance + 0.5*class.Score
+		proportion := class.Class.Course.Proportion
+		t["Grade"] = proportion*class.Performance + (1-proportion)*class.Score
 	}
 	c.Data["Classes"] = classes
 }

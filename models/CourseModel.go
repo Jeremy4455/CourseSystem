@@ -9,10 +9,11 @@ import (
 
 // Course 课程模型
 type Course struct {
-	CourseCode string   `orm:"unique;size(20);pk"`
-	Name       string   `orm:"size(100)"`
-	College    string   `orm:"size(100)"`
-	Credit     int      // 学分
+	CourseCode string `orm:"unique;size(20);pk"`
+	Name       string `orm:"size(100)"`
+	College    string `orm:"size(100)"`
+	Credit     int    // 学分
+	Proportion float64
 	Classes    []*Class `orm:"reverse(many)"`
 }
 
@@ -35,7 +36,7 @@ func GetCourses(courseCode, name string) ([]*Course, error) {
 	return courses, err
 }
 
-func CreateCourse(courseCode, name, college, credit string) error {
+func CreateCourse(courseCode, name, college, credit, proportion string) error {
 	course, err := GetCourses(courseCode, "")
 	if len(course) != 0 {
 		return err
@@ -44,8 +45,18 @@ func CreateCourse(courseCode, name, college, credit string) error {
 	if err != nil {
 		return err
 	}
+	p, err := strconv.ParseFloat(proportion, 64)
+	if err != nil {
+		return err
+	}
 	o := orm.NewOrm()
-	newcourse := &Course{CourseCode: courseCode, Name: name, College: college, Credit: c}
+	newcourse := &Course{
+		CourseCode: courseCode,
+		Name:       name,
+		College:    college,
+		Credit:     c,
+		Proportion: p,
+	}
 	_, err = o.Insert(newcourse)
 	if err != nil {
 		return err
@@ -65,7 +76,7 @@ func DeleteCourse(courseCode string) error {
 	return nil
 }
 
-func ReviseCourse(courseCode, name, college, credit string) error {
+func ReviseCourse(courseCode, name, college, credit, proportion string) error {
 	courses, err := GetCourses(courseCode, "")
 	if err != nil {
 		return err
@@ -84,6 +95,13 @@ func ReviseCourse(courseCode, name, college, credit string) error {
 			return err
 		}
 		course.Credit = c
+	}
+	if proportion != "" {
+		p, err := strconv.ParseFloat(proportion, 64)
+		if err != nil {
+			return err
+		}
+		course.Proportion = p
 	}
 
 	_, err = orm.NewOrm().Update(course)

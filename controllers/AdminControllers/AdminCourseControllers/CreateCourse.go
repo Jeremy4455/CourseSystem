@@ -18,9 +18,13 @@ func (c *AdminCourseControllerCreate) Post() {
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 	college := c.GetString("College")
-	creditStr := c.GetString("Credit")
+	credit := c.GetString("Credit")
+	proportion := c.GetString("Proportion")
+	if proportion == "" {
+		proportion = "0.3"
+	}
 
-	err := models.CreateCourse(courseCode, name, college, creditStr)
+	err := models.CreateCourse(courseCode, name, college, credit, proportion)
 	if err != nil {
 		c.Data["json"] = map[string]interface{}{"error": err.Error()}
 	} else {

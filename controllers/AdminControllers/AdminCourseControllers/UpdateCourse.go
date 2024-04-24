@@ -31,8 +31,12 @@ func (c *AdminCourseControllerUpdate) Post() {
 	name := c.GetString("Name")
 	college := c.GetString("College")
 	credit := c.GetString("Credit")
+	proportion := c.GetString("Proportion")
+	if proportion == "" {
+		proportion = "0.3"
+	}
 
-	err := models.ReviseCourse(courseCode, name, college, credit)
+	err := models.ReviseCourse(courseCode, name, college, credit, proportion)
 	if err != nil {
 		c.Data["json"] = map[string]interface{}{"error": err.Error()}
 	} else {

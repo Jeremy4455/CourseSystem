@@ -13,6 +13,7 @@ type ClassStudent struct {
 	Student     *Student `orm:"rel(fk)"`
 	Performance float64
 	Score       float64
+	Level       int
 }
 
 func (c *ClassStudent) TableIndex() [][]string {
