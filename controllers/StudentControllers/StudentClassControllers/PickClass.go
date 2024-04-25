@@ -22,8 +22,25 @@ func (c *StudentClassControllerPick) searchClass() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
+	var result []map[string]interface{}
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
-	c.Data["Classes"] = classes
+	for _, class := range classes {
+		cnt, err := models.GetPickedCount(class)
+		if err != nil {
+			return
+		}
+		t := make(map[string]interface{})
+		t["CourseCode"] = class.Course.CourseCode
+		t["CourseName"] = class.Course.Name
+		t["TeacherId"] = class.Teacher.TeacherId
+		t["Teacher"] = class.Teacher.Name
+		t["Time"] = class.ClassTime
+		t["Classroom"] = class.Location
+		t["PickedCount"] = cnt
+		t["Capacity"] = class.Capacity
+		result = append(result, t)
+	}
+	c.Data["Classes"] = result
 }
 
 func (c *StudentClassControllerPick) Post() {
@@ -42,5 +59,5 @@ func (c *StudentClassControllerPick) Post() {
 	if err != nil {
 		return
 	}
-	models.PickClass(student, class[0])
+	models.PickClass(student, class[0], models.STUDENT_PICK_DROP_CLASS)
 }

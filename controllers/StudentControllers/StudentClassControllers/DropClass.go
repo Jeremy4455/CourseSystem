@@ -15,14 +15,15 @@ func (c *StudentClassControllerDrop) Get() {
 }
 func (c *StudentClassControllerDrop) showClass() {
 	studentId := c.GetSession("userId").(string)[1:]
+	semester := c.GetString("Semester")
 
 	student, err := models.GetStudent(studentId)
 	if err != nil {
 		return
 	}
-	var classes []*models.Class
-	for _, class := range student.Classes {
-		classes = append(classes, class.Class)
+	classes, err := models.GetClassStudent(student, semester, nil)
+	if err != nil {
+		return
 	}
 	c.Data["Classes"] = classes
 }
@@ -42,5 +43,5 @@ func (c *StudentClassControllerDrop) Post() {
 	if err != nil {
 		return
 	}
-	models.DropClass(student, class[0])
+	models.DropClass(student, class[0], models.STUDENT_PICK_DROP_CLASS)
 }

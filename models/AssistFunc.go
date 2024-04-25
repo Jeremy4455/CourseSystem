@@ -96,6 +96,7 @@ func ClassConflict(classes []*Class, c *Class) bool {
 	}
 	return true
 }
+
 func UpgradeLevel(c *Class) error {
 	if c == nil {
 		return errors.New("不存在该课程")
@@ -107,6 +108,24 @@ func UpgradeLevel(c *Class) error {
 	}
 	for _, classStudent := range cs {
 		classStudent.Level++
+	}
+	if _, err := o.Update(cs); err != nil {
+		return err
+	}
+	return nil
+}
+
+func Upgrade2Level(c *Class, level int) error {
+	if c == nil {
+		return errors.New("不存在该课程")
+	}
+	o := orm.NewOrm()
+	var cs []*ClassStudent
+	if _, err := o.QueryTable("ClassStudent").Filter("Class", c).All(&cs); err != nil {
+		return err
+	}
+	for _, classStudent := range cs {
+		classStudent.Level = level
 	}
 	if _, err := o.Update(cs); err != nil {
 		return err
@@ -150,4 +169,22 @@ func ExistClass(c *Course, t *Teacher, s string) bool {
 	return exist
 }
 
-var Semesters = []string{"23春季", "23夏季", "23秋季", "23冬季", "24春季", "24夏季"}
+func GetPickedCount(c *Class) (int, error) {
+	o := orm.NewOrm()
+	q := o.QueryTable("ClassStudent").Filter("Class", c)
+	count, err := q.Count()
+	if err != nil {
+		return -1, err
+	}
+	return int(count), nil
+}
+
+func GetClassLevel(c *Class) (int, error) {
+	o := orm.NewOrm()
+	var cs ClassStudent
+	err := o.QueryTable("ClassStudent").Filter("Class", c).One(&cs)
+	if err != nil {
+		return -1, err
+	}
+	return cs.Level, nil
+}

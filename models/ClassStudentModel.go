@@ -33,15 +33,24 @@ func (c *ClassStudent) TableName() string {
 func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStudent, error) {
 	var class_student []*ClassStudent
 	o := orm.NewOrm()
-	if s == nil {
-		_, err := o.QueryTable("class_student").Filter("class_id", c.Id).All(&class_student)
+	if s != nil && c != nil {
+		_, err := o.QueryTable("ClassStudent").Filter("Class", c).Filter("Student", s).All(&class_student)
 		if err != nil {
 			return nil, err
 		}
+		return class_student, nil
+	}
+
+	if s == nil {
+		_, err := o.QueryTable("ClassStudent").Filter("Class", c).Count()
+		if err != nil {
+			return nil, err
+		}
+		return class_student, nil
 	}
 	if c == nil {
 		var temp []*ClassStudent
-		_, err := o.QueryTable("class_student").Filter("student_id", s.StudentId).All(&temp)
+		_, err := o.QueryTable("ClassStudent").Filter("Student", s).All(&temp)
 		if err != nil {
 			return nil, err
 		}
@@ -51,22 +60,28 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 			}
 			class_student = append(class_student, t)
 		}
+		return class_student, nil
 	}
-	return class_student, nil
+	return nil, errors.New("参数错误")
 }
 
-func PickClass(s *Student, c *Class) error {
+func PickClass(s *Student, c *Class, level int) error {
 	if s == nil || c == nil {
 		return errors.New("不存在该课程")
 	}
-	o := orm.NewOrm()
-	var classstuent []*ClassStudent
-	_, err := o.QueryTable("class_student").All(&classstuent)
+	cnt, err := GetPickedCount(c)
 	if err != nil {
 		return err
 	}
-	if len(classstuent) >= c.Capacity {
+	if cnt >= c.Capacity {
 		return errors.New("该课程人数已满")
+	}
+	l, err := GetClassLevel(c)
+	if err != nil {
+		return err
+	}
+	if l > level {
+		return errors.New("权限不足")
 	}
 
 	newclassstudent := &ClassStudent{
@@ -74,13 +89,16 @@ func PickClass(s *Student, c *Class) error {
 		Student:     s,
 		Performance: 0,
 		Score:       0,
-		Level:       0,
+		Level:       level,
 	}
-	o.Insert(newclassstudent)
+	_, err = orm.NewOrm().Insert(newclassstudent)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func DropClass(s *Student, c *Class) error {
+func DropClass(s *Student, c *Class, level int) error {
 	if s == nil || c == nil {
 		return errors.New("不存在该课程")
 	}
@@ -91,11 +109,17 @@ func DropClass(s *Student, c *Class) error {
 	if err != nil {
 		return err
 	}
-	o.Delete(classstudent)
+	if level < classstudent.Level {
+		return errors.New("权限不足")
+	}
+	_, err = o.Delete(classstudent)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 
-func UpdateClass(s *Student, c *Class, performance, score string) error {
+func UpdateClass(s *Student, c *Class, performance, score string, level int) error {
 	if c == nil || s == nil || performance == "" && score == "" {
 		return errors.New("输入有误")
 	}
@@ -104,6 +128,9 @@ func UpdateClass(s *Student, c *Class, performance, score string) error {
 	classstudent := &ClassStudent{Class: c, Student: s}
 	if err := o.Read(classstudent); err != nil {
 		return err
+	}
+	if level < classstudent.Level {
+		return errors.New("权限不足")
 	}
 
 	if performance != "" {

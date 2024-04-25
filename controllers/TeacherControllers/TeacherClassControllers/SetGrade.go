@@ -63,5 +63,5 @@ func (c *TeacherClassControllerSet) Post() {
 		return
 	}
 
-	models.UpdateClass(student, class[0], performance, score)
+	models.UpdateClass(student, class[0], performance, score, models.TEACHER_UPDATE_GRADE)
 }
