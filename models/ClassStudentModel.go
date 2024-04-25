@@ -13,7 +13,6 @@ type ClassStudent struct {
 	Student     *Student `orm:"rel(fk)"`
 	Performance float64
 	Score       float64
-	Level       int
 }
 
 func (c *ClassStudent) TableIndex() [][]string {
@@ -76,11 +75,10 @@ func PickClass(s *Student, c *Class, level int) error {
 	if cnt >= c.Capacity {
 		return errors.New("该课程人数已满")
 	}
-	l, err := GetClassLevel(c)
 	if err != nil {
 		return err
 	}
-	if l > level {
+	if c.Level > level {
 		return errors.New("权限不足")
 	}
 
@@ -89,7 +87,6 @@ func PickClass(s *Student, c *Class, level int) error {
 		Student:     s,
 		Performance: 0,
 		Score:       0,
-		Level:       level,
 	}
 	_, err = orm.NewOrm().Insert(newclassstudent)
 	if err != nil {
@@ -109,7 +106,7 @@ func DropClass(s *Student, c *Class, level int) error {
 	if err != nil {
 		return err
 	}
-	if level < classstudent.Level {
+	if level < c.Level {
 		return errors.New("权限不足")
 	}
 	_, err = o.Delete(classstudent)
@@ -129,7 +126,7 @@ func UpdateClass(s *Student, c *Class, performance, score string, level int) err
 	if err := o.Read(classstudent); err != nil {
 		return err
 	}
-	if level < classstudent.Level {
+	if level < c.Level {
 		return errors.New("权限不足")
 	}
 

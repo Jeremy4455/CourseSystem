@@ -102,14 +102,8 @@ func UpgradeLevel(c *Class) error {
 		return errors.New("不存在该课程")
 	}
 	o := orm.NewOrm()
-	var cs []*ClassStudent
-	if _, err := o.QueryTable("ClassStudent").Filter("Class", c).All(&cs); err != nil {
-		return err
-	}
-	for _, classStudent := range cs {
-		classStudent.Level++
-	}
-	if _, err := o.Update(cs); err != nil {
+	c.Level++
+	if _, err := o.Update(c); err != nil {
 		return err
 	}
 	return nil
@@ -120,14 +114,8 @@ func Upgrade2Level(c *Class, level int) error {
 		return errors.New("不存在该课程")
 	}
 	o := orm.NewOrm()
-	var cs []*ClassStudent
-	if _, err := o.QueryTable("ClassStudent").Filter("Class", c).All(&cs); err != nil {
-		return err
-	}
-	for _, classStudent := range cs {
-		classStudent.Level = level
-	}
-	if _, err := o.Update(cs); err != nil {
+	c.Level = level
+	if _, err := o.Update(c); err != nil {
 		return err
 	}
 	return nil
@@ -177,14 +165,4 @@ func GetPickedCount(c *Class) (int, error) {
 		return -1, err
 	}
 	return int(count), nil
-}
-
-func GetClassLevel(c *Class) (int, error) {
-	o := orm.NewOrm()
-	var cs ClassStudent
-	err := o.QueryTable("ClassStudent").Filter("Class", c).One(&cs)
-	if err != nil {
-		return -1, err
-	}
-	return cs.Level, nil
 }

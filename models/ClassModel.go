@@ -15,6 +15,7 @@ type Class struct {
 	ClassTime string
 	Capacity  int
 	Location  string
+	Level     int
 }
 
 func (c *Class) TableIndex() [][]string {
