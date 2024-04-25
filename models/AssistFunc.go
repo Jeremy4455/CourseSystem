@@ -166,3 +166,36 @@ func GetPickedCount(c *Class) (int, error) {
 	}
 	return int(count), nil
 }
+func CalculateGrade(grade float64) (float64, error) {
+	if grade < 60 {
+		return 0.0, nil
+	}
+	if grade < 63.9 {
+		return 1.0, nil
+	}
+	if grade < 65.9 {
+		return 1.5, nil
+	}
+	if grade < 67.9 {
+		return 1.7, nil
+	}
+	if grade < 71.9 {
+		return 2.0, nil
+	}
+	if grade < 74.9 {
+		return 2.3, nil
+	}
+	if grade < 77.9 {
+		return 2.7, nil
+	}
+	if grade < 81.9 {
+		return 3.0, nil
+	}
+	if grade < 84.9 {
+		return 3.3, nil
+	}
+	if grade < 89.9 {
+		return 3.7, nil
+	}
+	return 4.0, nil
+}
