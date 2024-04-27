@@ -12,6 +12,9 @@ type TeacherClassControllerSet struct {
 func (c *TeacherClassControllerSet) Get() {
 	c.TplName = ""
 	c.SearchClass()
+
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }
 
 func (c *TeacherClassControllerSet) SearchClass() {

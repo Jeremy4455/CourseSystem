@@ -11,6 +11,9 @@ type StudentClassControllerRetrieveGrade struct {
 
 func (c *StudentClassControllerRetrieveGrade) Get() {
 	c.TplName = ""
+
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }
 func (c *StudentClassControllerRetrieveGrade) Post() {
 	c.TplName = ""

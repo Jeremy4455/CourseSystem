@@ -10,7 +10,7 @@ import (
 type ClassStudent struct {
 	Id          int64    `orm:"pk;auto"`
 	Class       *Class   `orm:"rel(fk);on_delete(cascade)"`
-	Student     *Student `orm:"rel(fk)"`
+	Student     *Student `orm:"rel(fk);on_delete(do_nothing)"`
 	Performance float64
 	Score       float64
 }

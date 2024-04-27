@@ -11,6 +11,9 @@ type TeacherClassControllerRetrieve struct {
 
 func (c *TeacherClassControllerRetrieve) Get() {
 	c.TplName = ""
+
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }
 
 func (c *TeacherClassControllerRetrieve) Post() {

@@ -130,8 +130,7 @@ func Syncronize() {
 	}
 
 	for _, student := range students {
-		err := o.Read(&User{Id: student.StudentId})
-		if err == nil {
+		if err := o.Read(&User{Id: student.StudentId}); err != nil {
 			continue
 		}
 		AddUser(student.StudentId, student.Name, "123456", "student")

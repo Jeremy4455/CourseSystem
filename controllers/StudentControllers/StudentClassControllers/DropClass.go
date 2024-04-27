@@ -12,10 +12,13 @@ type StudentClassControllerDrop struct {
 func (c *StudentClassControllerDrop) Get() {
 	c.TplName = "StudentViews/StudentClassViews/DropClass.tpl"
 	c.showClass()
+
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }
 func (c *StudentClassControllerDrop) showClass() {
 	studentId := c.GetSession("userId").(string)[1:]
-	semester := c.GetString("Semester")
+	semester := c.GetSession("semester").(string)
 
 	student, err := models.GetStudent(studentId)
 	if err != nil {
@@ -33,7 +36,7 @@ func (c *StudentClassControllerDrop) Post() {
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
 	courseTeacherName := c.GetString("CourseTeacherName")
-	courseSemester := c.GetString("courseSemester")
+	courseSemester := c.GetSession("semester").(string)
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 

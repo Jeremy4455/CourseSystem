@@ -7,7 +7,6 @@ import (
 
 type StudentController struct {
 	controllers.BaseController
-	Semester string
 }
 
 func (StudentController *StudentController) Get() {
@@ -15,8 +14,20 @@ func (StudentController *StudentController) Get() {
 	StudentController.Data["Semesters"] = models.Semesters
 }
 
-func (StudentController *StudentController) Post() {
-	semester := StudentController.GetString("semester")
-	StudentController.Semester = semester //这里要保存下选择的学期
-	StudentController.Redirect("/student/index", 302)
+func (c *StudentController) Post() {
+	semester := c.GetString("semester")
+	c.SetSession("semester", semester)
+	c.Redirect("/student/index", 302)
+}
+func (c *StudentController) GetUserInfo() map[string]interface{} {
+	name := c.GetSession("name").(string)
+	studentId := c.GetSession("userId").(string)[1:]
+	semester := c.GetSession("semester").(string)
+
+	userInfo := map[string]interface{}{
+		"name":      name,
+		"studentID": studentId,
+		"semester":  semester,
+	}
+	return userInfo
 }

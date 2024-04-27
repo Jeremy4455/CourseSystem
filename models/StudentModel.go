@@ -8,10 +8,11 @@ import (
 
 // Student 学生模型
 type Student struct {
-	StudentId string          `orm:"unique;size(20);pk"`
-	Name      string          `orm:"size(100)"`
-	Class     string          `orm:"size(50)"`
-	Grade     float64         `orm:"size(20)"`
+	StudentId string  `orm:"unique;size(20);pk"`
+	Name      string  `orm:"size(100)"`
+	Class     string  `orm:"size(50)"`
+	Grade     float64 `orm:"size(20)"`
+	Credit    int
 	Classes   []*ClassStudent `orm:"reverse(many);on_delete(cascade)"`
 }
 
@@ -41,7 +42,13 @@ func CreateStudent(studentId, name, class, grade string) error {
 	}
 
 	o := orm.NewOrm()
-	student = &Student{StudentId: studentId, Name: name, Class: class, Grade: g}
+	student = &Student{
+		StudentId: studentId,
+		Name:      name,
+		Class:     class,
+		Grade:     g,
+		Credit:    0,
+	}
 	_, err = o.Insert(student)
 	if err != nil {
 		return err

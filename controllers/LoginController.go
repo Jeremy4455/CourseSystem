@@ -24,6 +24,7 @@ func (c *LoginController) Post() {
 	}
 
 	role := user.Role
+	c.SetSession("name", user.Username)
 
 	switch role {
 	case "admin":

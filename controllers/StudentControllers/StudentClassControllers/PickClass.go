@@ -12,13 +12,16 @@ type StudentClassControllerPick struct {
 func (c *StudentClassControllerPick) Get() {
 	c.TplName = "StudentViews/StudentClassViews/PickClass.tpl"
 	c.searchClass()
+
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }
 func (c *StudentClassControllerPick) searchClass() {
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
 	courseTeacherName := c.GetString("CourseTeacherName")
-	courseSemester := c.GetString("courseSemester")
+	courseSemester := c.GetSession("semester").(string)
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
@@ -49,7 +52,7 @@ func (c *StudentClassControllerPick) Post() {
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
 	courseTeacherName := c.GetString("CourseTeacherName")
-	courseSemester := c.GetString("courseSemester")
+	courseSemester := c.GetSession("semester").(string)
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
