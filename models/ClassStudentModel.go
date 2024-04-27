@@ -33,7 +33,7 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 	var class_student []*ClassStudent
 	o := orm.NewOrm()
 	if s != nil && c != nil {
-		_, err := o.QueryTable("ClassStudent").Filter("Class", c).Filter("Student", s).All(&class_student)
+		_, err := o.QueryTable("ClassStudent").RelatedSel().Filter("Class", c).Filter("Student", s).All(&class_student)
 		if err != nil {
 			return nil, err
 		}
@@ -41,7 +41,7 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 	}
 
 	if s == nil {
-		_, err := o.QueryTable("ClassStudent").Filter("Class", c).Count()
+		_, err := o.QueryTable("ClassStudent").RelatedSel().Filter("Class", c).All(&class_student)
 		if err != nil {
 			return nil, err
 		}
@@ -49,7 +49,7 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 	}
 	if c == nil {
 		var temp []*ClassStudent
-		_, err := o.QueryTable("ClassStudent").Filter("Student", s).All(&temp)
+		_, err := o.QueryTable("ClassStudent").RelatedSel().Filter("Student", s).All(&temp)
 		if err != nil {
 			return nil, err
 		}
@@ -68,27 +68,20 @@ func PickClass(s *Student, c *Class, level int) error {
 	if s == nil || c == nil {
 		return errors.New("不存在该课程")
 	}
-	cnt, err := GetPickedCount(c)
-	if err != nil {
-		return err
-	}
-	if cnt >= c.Capacity {
+	if c.Count >= c.Capacity {
 		return errors.New("该课程人数已满")
-	}
-	if err != nil {
-		return err
 	}
 	if c.Level > level {
 		return errors.New("权限不足")
 	}
-
+	o := orm.NewOrm()
 	newclassstudent := &ClassStudent{
 		Class:       c,
 		Student:     s,
 		Performance: 0,
 		Score:       0,
 	}
-	_, err = orm.NewOrm().Insert(newclassstudent)
+	_, err := o.Insert(newclassstudent)
 	if err != nil {
 		return err
 	}
@@ -102,7 +95,7 @@ func DropClass(s *Student, c *Class, level int) error {
 	o := orm.NewOrm()
 
 	classstudent := &ClassStudent{Class: c, Student: s}
-	err := o.Read(classstudent)
+	err := o.Read(classstudent, "Class", "Student")
 	if err != nil {
 		return err
 	}
@@ -123,7 +116,7 @@ func UpdateClass(s *Student, c *Class, performance, score string, level int) err
 
 	o := orm.NewOrm()
 	classstudent := &ClassStudent{Class: c, Student: s}
-	if err := o.Read(classstudent); err != nil {
+	if err := o.Read(classstudent, "Class", "Student"); err != nil {
 		return err
 	}
 	if level < c.Level {

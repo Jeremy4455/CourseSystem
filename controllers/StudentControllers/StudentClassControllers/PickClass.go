@@ -3,7 +3,6 @@ package StudentClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type StudentClassControllerPick struct {
@@ -29,10 +28,6 @@ func (c *StudentClassControllerPick) searchClass() {
 	var result []map[string]interface{}
 	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	for _, class := range classes {
-		cnt, err := models.GetPickedCount(class)
-		if err != nil {
-			return
-		}
 		t := make(map[string]interface{})
 		t["CourseCode"] = class.Course.CourseCode
 		t["CourseName"] = class.Course.Name
@@ -40,7 +35,7 @@ func (c *StudentClassControllerPick) searchClass() {
 		t["Teacher"] = class.Teacher.Name
 		t["Time"] = class.ClassTime
 		t["Classroom"] = class.Location
-		t["PickedCount"] = cnt
+		t["PickedCount"] = class.Count
 		t["Capacity"] = class.Capacity
 		result = append(result, t)
 	}
@@ -57,7 +52,6 @@ func (c *StudentClassControllerPick) Post() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
-	fmt.Println(c.Ctx.Input)
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)

@@ -13,6 +13,7 @@ type Class struct {
 	Teacher   *Teacher `orm:"rel(fk);on_delete(cascade)"` // Teacher作为外键
 	Semester  string
 	ClassTime string
+	Count     int
 	Capacity  int
 	Location  string
 	Level     int
