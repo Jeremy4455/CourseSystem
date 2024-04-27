@@ -76,7 +76,7 @@
         <main class="column is-four-fifths">
             <h1 class="title">学生退课</h1>
             <!-- 输入表单 -->
-            <form action="/admin/transaction/drop" method="post">
+            <form action="/admin/trans/drop" method="post">
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">学生号</label>

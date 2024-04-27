@@ -38,6 +38,7 @@ func (c *StudentClassControllerDrop) showClass() {
 }
 func (c *StudentClassControllerDrop) Post() {
 	c.TplName = "StudentViews/StudentClassViews/DropClass.tpl"
+
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
@@ -45,13 +46,12 @@ func (c *StudentClassControllerDrop) Post() {
 	courseSemester := c.GetSession("semester").(string)
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
+
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)
 	if err != nil {
 		return
 	}
-	fmt.Println(student)
-	fmt.Println(class[0])
 	models.DropClass(student, class[0], models.STUDENT_PICK_DROP_CLASS)
 }
