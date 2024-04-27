@@ -10,7 +10,8 @@ type AdminTransactionControllerDrop struct {
 }
 
 func (c *AdminTransactionControllerDrop) Get() {
-	c.TplName = ""
+	c.TplName = "AdminViews/AdminTransViews/DropClass.tpl"
+	c.Data["Semesters"] = models.Semesters
 	c.searchClassStudent()
 }
 func (c *AdminTransactionControllerDrop) searchClassStudent() {
@@ -49,7 +50,8 @@ func (c *AdminTransactionControllerDrop) searchClassStudent() {
 }
 
 func (c *AdminTransactionControllerDrop) Post() {
-	c.TplName = ""
+	c.TplName = "AdminViews/AdminTransViews/DropClass.tpl"
+	c.Data["Semesters"] = models.Semesters
 	studentId := c.GetString("StudentId")
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")

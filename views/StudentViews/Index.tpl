@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>增加教师</title>
+    <title>选课</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="../../static/css/bulma.css">
+    <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -56,15 +56,15 @@
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
             <ul class="menu-list" style="text-align: center; padding: 5px">
-                <li><a href="/admin/teacher/retrieve">查询教师</a></li>
-                <li><a href="/admin/teacher/create">增加教师</a></li>
-                <li><a href="/admin/teacher/update">更改教师</a></li>
-                <li><a href="/admin/teacher/delete">删除教师</a></li>
+                <li><a href="/student/pick">学生选课</a></li>
+                <li><a href="/student/drop">学生退课</a></li>
+                <li><a href="/student/class">成绩更新</a></li>
+                <li><a href="/student/grade">课程更新</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/student/index">返回</a>
+                    <a class="button is-info is-small"  href="/admin">返回</a>
                 </div>
                 <div></div>
                 <div class="control" style="padding: 8px">

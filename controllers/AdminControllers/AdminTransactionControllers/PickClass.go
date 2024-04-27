@@ -10,7 +10,8 @@ type AdminTransactionControllerPick struct {
 }
 
 func (c *AdminTransactionControllerPick) Get() {
-	c.TplName = ""
+	c.TplName = "AdminViews/AdminTransViews/PickClass.tpl"
+	c.Data["Semesters"] = models.Semesters
 	c.searchClass()
 }
 func (c *AdminTransactionControllerPick) searchClass() {
@@ -35,6 +36,8 @@ func (c *AdminTransactionControllerPick) searchClass() {
 }
 
 func (c *AdminTransactionControllerPick) Post() {
+	c.TplName = "AdminViews/AdminTransViews/PickClass.tpl"
+	c.Data["Semesters"] = models.Semesters
 	studentId := c.GetString("StudentId")
 	courseCode := c.GetString("CourseCode")
 	courseName := c.GetString("CourseName")

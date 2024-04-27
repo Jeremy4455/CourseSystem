@@ -10,7 +10,7 @@ type StudentClassControllerPick struct {
 }
 
 func (c *StudentClassControllerPick) Get() {
-	c.TplName = "StudentViews/StudentClassViews/"
+	c.TplName = "StudentViews/StudentClassViews/PickClass.tpl"
 	c.searchClass()
 }
 func (c *StudentClassControllerPick) searchClass() {
@@ -44,7 +44,7 @@ func (c *StudentClassControllerPick) searchClass() {
 }
 
 func (c *StudentClassControllerPick) Post() {
-	c.TplName = "StudentViews/StudentClassViews/"
+	c.TplName = "StudentViews/StudentClassViews/PickClass.tpl"
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")

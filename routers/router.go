@@ -7,7 +7,9 @@ import (
 	AdminCourseControllers "CourseSystem/controllers/AdminControllers/AdminCourseControllers"
 	AdminStudentControllers "CourseSystem/controllers/AdminControllers/AdminStudentControllers"
 	AdminTeacherControllers "CourseSystem/controllers/AdminControllers/AdminTeacherControllers"
+	"CourseSystem/controllers/AdminControllers/AdminTransactionControllers"
 	"CourseSystem/controllers/StudentControllers"
+	"CourseSystem/controllers/StudentControllers/StudentClassControllers"
 	"CourseSystem/controllers/TeacherControllers"
 	"strings"
 
@@ -75,7 +77,18 @@ func init() {
 	beego.Router("/admin/class/update", &AdminClassControllers.AdminClassControllerUpdate{})
 	beego.Router("/admin/class/delete", &AdminClassControllers.AdminClassControllerDelete{})
 
+	beego.Router("/admin/trans", &AdminTransactionControllers.AdminTransactionControllerPick{})
+	beego.Router("/admin/trans/drop", &AdminTransactionControllers.AdminTransactionControllerDrop{})
+	beego.Router("/admin/trans/pick", &AdminTransactionControllers.AdminTransactionControllerPick{})
+	beego.Router("/admin/trans/update", &AdminTransactionControllers.AdminTransactionControllerUpdate{})
+	beego.Router("/admin/trans/upgrade", &AdminTransactionControllers.AdminTransactionControllerUpgrade{})
+
 	beego.Router("/student", &StudentControllers.StudentController{})
-	//beego.Router("/student/:studentid", &StudentControllers.StudentController{})
+	beego.Router("/student/index", &StudentControllers.StudentIndexController{})
+	beego.Router("/student/pick", &StudentClassControllers.StudentClassControllerPick{})
+	beego.Router("/student/drop", &StudentClassControllers.StudentClassControllerDrop{})
+	beego.Router("/student/class", &StudentClassControllers.StudentClassControllerRetrieve{})
+	beego.Router("/student/grade", &StudentClassControllers.StudentClassControllerRetrieveGrade{})
+
 	beego.Router("/teacher", &TeacherControllers.TeacherController{})
 }

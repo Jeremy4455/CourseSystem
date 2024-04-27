@@ -10,7 +10,7 @@ type StudentClassControllerDrop struct {
 }
 
 func (c *StudentClassControllerDrop) Get() {
-	c.TplName = "StudentViews/StudentClassViews/"
+	c.TplName = "StudentViews/StudentClassViews/DropClass.tpl"
 	c.showClass()
 }
 func (c *StudentClassControllerDrop) showClass() {
@@ -28,7 +28,7 @@ func (c *StudentClassControllerDrop) showClass() {
 	c.Data["Classes"] = classes
 }
 func (c *StudentClassControllerDrop) Post() {
-	c.TplName = "StudentViews/StudentClassViews/"
+	c.TplName = "StudentViews/StudentClassViews/DropClass.tpl"
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")

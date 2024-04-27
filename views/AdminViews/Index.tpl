@@ -59,6 +59,7 @@
                 <li><a href="/admin/teacher">教师管理</a></li>
                 <li><a href="/admin/student">学生管理</a></li>
                 <li><a href="/admin/class">开课管理</a></li>
+                <li><a href="/admin/trans">事务管理</a></li>
             </ul>
             <!-- 登出按钮 -->
             <div class="container-button">
