@@ -7,6 +7,12 @@ import (
 	"github.com/beego/beego/v2/client/orm"
 )
 
+func Max(a, b int) int {
+	if a < b {
+		return b
+	}
+	return a
+}
 func CheckTime(busytime, classtime string) bool {
 	var split = func(str string) ([]string, [][2]int) {
 		var day []string

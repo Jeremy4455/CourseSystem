@@ -36,7 +36,7 @@ func (c *StudentClassControllerPick) searchClass() {
 		t["Time"] = class.ClassTime
 		t["Classroom"] = class.Location
 		t["PickedCount"] = class.Count
-		t["Capacity"] = class.Capacity
+		t["Capacity"] = models.Max(class.Capacity, class.Count)
 		result = append(result, t)
 	}
 	c.Data["Classes"] = result
