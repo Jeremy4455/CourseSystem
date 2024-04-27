@@ -166,7 +166,7 @@
                         <td>{{.PickedCount}}</td>
                         <td>{{.Capacity}}</td>
                         <td>
-                            <form action="/stu/pick" method="post">
+                            <form action="/student/pick" method="post">
                                 <input type="hidden" name="courseCode" value="{{.CourseCode}}">
                                 <input type="hidden" name="courseName" value="{{.CourseName}}">
                                 <input type="hidden" name="courseTeacherId" value="{{.TeacherId}}">

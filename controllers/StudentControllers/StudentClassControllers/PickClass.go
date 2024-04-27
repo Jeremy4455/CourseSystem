@@ -3,6 +3,7 @@ package StudentClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
+	"fmt"
 )
 
 type StudentClassControllerPick struct {
@@ -56,6 +57,7 @@ func (c *StudentClassControllerPick) Post() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
+	fmt.Println(c.Ctx.Input)
 	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)
