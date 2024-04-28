@@ -68,12 +68,13 @@ func PickClass(s *Student, c *Class, level int) error {
 	if s == nil || c == nil {
 		return errors.New("不存在该课程")
 	}
-	if c.Count >= c.Capacity {
-		return errors.New("该课程人数已满")
-	}
 	if c.Level > level {
 		return errors.New("权限不足")
 	}
+	if level == STUDENT_PICK_DROP_CLASS && c.Count >= c.Capacity {
+		return errors.New("该课程人数已满")
+	}
+
 	o := orm.NewOrm()
 	newclassstudent := &ClassStudent{
 		Class:       c,
