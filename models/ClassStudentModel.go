@@ -13,6 +13,7 @@ type ClassStudent struct {
 	Student     *Student `orm:"rel(fk);on_delete(do_nothing)"`
 	Performance float64
 	Score       float64
+	Fscore      float64
 }
 
 func (c *ClassStudent) TableIndex() [][]string {
@@ -139,6 +140,7 @@ func UpdateClass(s *Student, c *Class, performance, score string, level int) err
 		}
 		classstudent.Score = sco
 	}
+	classstudent.Fscore = c.Course.Proportion*classstudent.Performance + (1-c.Course.Proportion)*classstudent.Score
 	if _, err := o.Update(classstudent); err != nil {
 		return err
 	}

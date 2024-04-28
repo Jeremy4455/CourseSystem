@@ -7,3 +7,6 @@ var ADMIN_PICK_DROP_CLASS int = 1
 var TEACHER_UPDATE_GRADE int = 2
 var ADMIN_UPDATE_GRADE int = 3
 var RECORD_ONLY_READ int = 4
+var PER_CLASS int = 100
+
+var MAX_GRADE float64 = 4.0

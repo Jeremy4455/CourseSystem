@@ -115,14 +115,57 @@ func UpgradeLevel(c *Class) error {
 	return nil
 }
 
-func Upgrade2Level(c *Class, level int) error {
-	if c == nil {
-		return errors.New("不存在该课程")
-	}
+func UpgradeFromLevel(level int) error {
+	var classes []*Class
 	o := orm.NewOrm()
-	c.Level = level
-	if _, err := o.Update(c); err != nil {
+	if _, err := o.QueryTable("Class").Filter("Level", level).All(&classes); err != nil {
 		return err
+	}
+	for _, class := range classes {
+		class.Level++
+		if _, err := o.Update(class); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+func ChangeLevel(start, end int) error {
+	var classes []*Class
+	o := orm.NewOrm()
+	if _, err := o.QueryTable("Class").Filter("Level", start).All(&classes); err != nil {
+		return err
+	}
+	for _, class := range classes {
+		class.Level = end
+		if _, err := o.Update(class); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+
+func Upgrade2ReadOnly() error {
+	var classes []*Class
+	var cs []*ClassStudent
+	o := orm.NewOrm()
+	if _, err := o.QueryTable("Class").Filter("Level", ADMIN_UPDATE_GRADE).All(&classes); err != nil {
+		return err
+	}
+	if _, err := o.QueryTable("ClassStudent").Filter("Class__in", classes).All(&cs); err != nil {
+		return err
+	}
+	for _, classStudent := range cs {
+		classStudent.Student.Grade = (classStudent.Student.Grade/MAX_GRADE*float64(classStudent.Student.Credit) + classStudent.Fscore/100*float64(classStudent.Class.Course.Credit)) / (float64(classStudent.Student.Credit + classStudent.Class.Course.Credit))
+		classStudent.Student.Credit += classStudent.Class.Course.Credit
+		if _, err := o.Update(classStudent); err != nil {
+			return err
+		}
+	}
+	for _, class := range classes {
+		class.Level++
+		if _, err := o.Update(class); err != nil {
+			return err
+		}
 	}
 	return nil
 }

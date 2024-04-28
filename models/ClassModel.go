@@ -16,7 +16,7 @@ type Class struct {
 	Count     int
 	Capacity  int
 	Location  string
-	Level     int
+	Level     int `orm:"index"`
 }
 
 func (c *Class) TableIndex() [][]string {
@@ -108,6 +108,7 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 		ClassTime: classTime,
 		Capacity:  cap,
 		Location:  classroom,
+		Level:     PER_CLASS,
 	}
 
 	o := orm.NewOrm()

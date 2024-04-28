@@ -31,7 +31,7 @@ func (c *TeacherClassControllerSet) SearchClass() {
 // 复杂的控制器，前端先不要写
 func (c *TeacherClassControllerSet) Post() {
 	courseCode := c.GetString("CourseCode")
-	semester := c.GetString("Semester")
+	semester := c.GetSession("semester").(string)
 
 	teacherId := c.GetSession("userId").(string)[1:]
 	class, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
