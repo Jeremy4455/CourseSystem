@@ -10,7 +10,7 @@ type AdminTransactionControllerCommit struct {
 }
 
 func (c *AdminTransactionControllerCommit) Get() {
-	c.TplName = ""
+	c.TplName = "AdminViews/AdminTransViews/Commit.tpl"
 }
 
 // 做几个按钮
@@ -22,6 +22,7 @@ func (c *AdminTransactionControllerCommit) Get() {
 // 成绩归档返回archive
 
 func (c *AdminTransactionControllerCommit) Post() {
+	c.TplName = "AdminViews/AdminTransViews/Commit.tpl"
 	trans := c.GetString("Trans")
 	newSemester := c.GetString("NewSemester")
 

@@ -19,6 +19,9 @@ import (
 )
 
 func FilterUser(ctx *context.Context) {
+	if ctx.Request.URL.Path == "/" {
+		return
+	}
 	userId := ctx.Input.Session("userId")
 	if userId == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
@@ -82,12 +85,14 @@ func init() {
 	beego.Router("/admin/trans/pick", &AdminTransactionControllers.AdminTransactionControllerPick{})
 	beego.Router("/admin/trans/update", &AdminTransactionControllers.AdminTransactionControllerUpdate{})
 	beego.Router("/admin/trans/upgrade", &AdminTransactionControllers.AdminTransactionControllerUpgrade{})
+	beego.Router("/admin/trans/commit", &AdminTransactionControllers.AdminTransactionControllerCommit{})
 
 	beego.Router("/student", &StudentControllers.StudentController{})
 	beego.Router("/student/index", &StudentControllers.StudentIndexController{})
 	beego.Router("/student/pick", &StudentClassControllers.StudentClassControllerPick{})
 	beego.Router("/student/drop", &StudentClassControllers.StudentClassControllerDrop{})
 	beego.Router("/student/grade", &StudentClassControllers.StudentClassControllerRetrieveGrade{})
+	beego.Router("/student/class", &StudentClassControllers.StudentClassControllerSelectedClass{})
 
 	beego.Router("/teacher", &TeacherControllers.TeacherController{})
 }

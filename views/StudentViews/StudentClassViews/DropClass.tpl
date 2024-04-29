@@ -48,6 +48,12 @@
             justify-content: center;
             padding: 20px;
         }
+        .user-info {
+            background-color: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -55,16 +61,22 @@
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
+            <!-- 用户信息 -->
+            <div class="user-info">
+                <p>姓名: {{.UserInfo.name}}</p>
+                <p>学号: {{.UserInfo.studentID}}</p>
+                <p>当前学期: {{.UserInfo.semester}}</p>
+            </div>
             <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/student/pick">学生选课</a></li>
                 <li><a href="/student/drop">学生退课</a></li>
-                <li><a href="/student/class">成绩更新</a></li>
-                <li><a href="/student/grade">课程更新</a></li>
+                <li><a href="/student/class">已选课程</a></li>
+                <li><a href="/student/grade">成绩查询</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/admin">返回</a>
+                    <a class="button is-info is-small"  href="/student/index">返回</a>
                 </div>
                 <div></div>
                 <div class="control" style="padding: 8px">
@@ -85,7 +97,6 @@
                             <th>课程号</th>
                             <th>课程名</th>
                             <th>教师名</th>
-                            <th>开课学期</th>
                             <th>上课时间</th>
                             <th>教室</th>
                             <th>操作</th>
@@ -97,7 +108,6 @@
                             <td>{{.Course.CourseCode}}</td>
                             <td>{{.Course.Name}}</td>
                             <td>{{.Teacher.Name}}</td>
-                            <td>{{.Semester}}</td>
                             <td>{{.ClassTime}}</td>
                             <td>{{.Location}}</td>
                             <td>

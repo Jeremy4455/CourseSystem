@@ -48,6 +48,12 @@
             justify-content: center;
             padding: 20px;
         }
+        .user-info {
+            background-color: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -55,16 +61,22 @@
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
+            <!-- 用户信息 -->
+            <div class="user-info">
+                <p>姓名: {{.UserInfo.name}}</p>
+                <p>学号: {{.UserInfo.studentID}}</p>
+                <p>当前学期: {{.UserInfo.semester}}</p>
+            </div>
             <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/student/pick">学生选课</a></li>
                 <li><a href="/student/drop">学生退课</a></li>
-                <li><a href="/student/class">成绩更新</a></li>
-                <li><a href="/student/grade">课程更新</a></li>
+                <li><a href="/student/class">已选课程</a></li>
+                <li><a href="/student/grade">成绩查询</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/admin">返回</a>
+                    <a class="button is-info is-small"  href="/student/index">返回</a>
                 </div>
                 <div></div>
                 <div class="control" style="padding: 8px">
@@ -77,7 +89,7 @@
             <h1 class="title">学生选课</h1>
 
             <!-- 搜索表单 -->
-            <form action="/stu/pick" method="get" style="margin-bottom: 20px;">
+            <form action="/student/pick" method="get" style="margin-bottom: 20px;">
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">课程号</label>
@@ -174,7 +186,9 @@
                                 <input type="hidden" name="courseSemester" value="{{.Semester}}">
                                 <input type="hidden" name="courseTime" value="{{.Time}}">
                                 <input type="hidden" name="classroom" value="{{.Classroom}}">
-                                <button class="button is-primary" type="submit">选课</button>
+                                <div class="buttons">
+                                    <button class="button is-primary" type="submit">选课</button>
+                                </div>
                             </form>
                         </td>
                     </tr>
