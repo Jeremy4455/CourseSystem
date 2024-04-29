@@ -21,7 +21,7 @@ func (c *TeacherClassControllerRetrieve) searchClass() {
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 
-	classes, err := models.GetClasses("", "", teacherId, "", semester, "", "")
+	classes, err := models.GetClasses("", "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
 	if err != nil {
 		return
 	}
@@ -35,7 +35,7 @@ func (c *TeacherClassControllerRetrieve) Post() {
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")
 
-	_, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
+	_, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
 	if err != nil {
 		return
 	}

@@ -30,13 +30,13 @@ func (c *Class) TableUnique() [][]string {
 	}
 }
 
-func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string) ([]*Class, error) {
+func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom string, level int) ([]*Class, error) {
 	if courseSemester == "" {
 		return nil, errors.New("必须选择一个学期")
 	}
 
 	o := orm.NewOrm()
-	q := o.QueryTable("class").RelatedSel().Filter("Semester", courseSemester)
+	q := o.QueryTable("class").RelatedSel().Filter("Level__lte", level).Filter("Semester", courseSemester)
 
 	if courseCode != "" || courseName != "" {
 		courses, err := GetCourses(courseCode, courseName)
@@ -137,11 +137,11 @@ func CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classT
 	return nil
 }
 
-func DeleteClass(courseCode, courseTeacherId, courseSemester string) error {
+func DeleteClass(courseCode, courseTeacherId, courseSemester string, level int) error {
 	if courseCode == "" || courseTeacherId == "" || courseSemester == "" {
 		return errors.New("参数不能为空")
 	}
-	class, err := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "")
+	class, err := GetClasses(courseCode, "", courseTeacherId, "", courseSemester, "", "", level)
 	if err != nil {
 		return err
 	}

@@ -25,7 +25,7 @@ func (c *AdminClassControllerUpdate) Get() {
 		}
 		c.Data["Classes"] = classes
 	} else {
-		classes, err := models.GetClasses(courseCode, "", TeacherId, "", courseSemester, "", "")
+		classes, err := models.GetClasses(courseCode, "", TeacherId, "", courseSemester, "", "", models.PER_CLASS)
 		if err != nil {
 			fmt.Println(err.Error())
 			return
@@ -45,7 +45,7 @@ func (c *AdminClassControllerUpdate) Post() {
 	capacity := c.GetString("Capacity")
 	classroom := c.GetString("Classroom")
 	c.Data["Semesters"] = models.Semesters
-	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom)
+	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, classTime, classroom, models.PER_CLASS)
 	if len(class) != 1 {
 		return
 	}

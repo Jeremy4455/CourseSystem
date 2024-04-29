@@ -26,7 +26,7 @@ func (c *StudentClassControllerPick) searchClass() {
 	classroom := c.GetString("classroom")
 
 	var result []map[string]interface{}
-	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	classes, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.STUDENT_PICK_DROP_CLASS)
 	for _, class := range classes {
 		t := make(map[string]interface{})
 		t["CourseCode"] = class.Course.CourseCode
@@ -52,7 +52,7 @@ func (c *StudentClassControllerPick) Post() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
-	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.STUDENT_PICK_DROP_CLASS)
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)
 	if err != nil {

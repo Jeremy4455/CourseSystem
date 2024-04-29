@@ -23,7 +23,7 @@ func (c *TeacherClassControllerSet) searchCS() {
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")
 
-	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
+	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
 	if err != nil {
 		return
 	}
@@ -54,7 +54,7 @@ func (c *TeacherClassControllerSet) Post() {
 	performance := c.GetString("Performance")
 	score := c.GetString("Score")
 
-	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
+	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
 	if err != nil {
 		return
 	}

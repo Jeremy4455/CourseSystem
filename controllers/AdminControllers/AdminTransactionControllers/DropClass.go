@@ -26,7 +26,7 @@ func (c *AdminTransactionControllerDrop) searchClassStudent() {
 	if err != nil {
 		return
 	}
-	class, err := models.GetClasses(courseCode, courseName, teacherId, teacherName, semester, "", "")
+	class, err := models.GetClasses(courseCode, courseName, teacherId, teacherName, semester, "", "", models.ADMIN_PICK_DROP_CLASS)
 	if err != nil {
 		return
 	}
@@ -63,7 +63,7 @@ func (c *AdminTransactionControllerDrop) Post() {
 	if err != nil {
 		return
 	}
-	class, err := models.GetClasses(courseCode, courseName, teacherId, teacherName, semester, "", "")
+	class, err := models.GetClasses(courseCode, courseName, teacherId, teacherName, semester, "", "", models.ADMIN_PICK_DROP_CLASS)
 	if err != nil {
 		return
 	}

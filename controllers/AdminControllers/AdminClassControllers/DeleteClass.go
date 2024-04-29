@@ -25,7 +25,7 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 	classroom := c.GetString("classroom")
 	c.Data["Semesters"] = models.Semesters
 
-	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.PER_CLASS)
 	if err != nil {
 		fmt.Println(err.Error())
 		return
@@ -40,7 +40,7 @@ func (c *AdminClassControllerDelete) Post() {
 	courseSemester := c.GetString("courseSemester")
 	c.Data["Semesters"] = models.Semesters
 
-	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester)
+	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester, models.PER_CLASS)
 	if err != nil {
 		fmt.Println(err.Error())
 		return

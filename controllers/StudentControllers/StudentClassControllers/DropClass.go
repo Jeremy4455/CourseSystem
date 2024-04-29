@@ -47,7 +47,7 @@ func (c *StudentClassControllerDrop) Post() {
 	courseTime := c.GetString("courseTime")
 	classroom := c.GetString("classroom")
 
-	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom)
+	class, _ := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.STUDENT_PICK_DROP_CLASS)
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)
 	if err != nil {
