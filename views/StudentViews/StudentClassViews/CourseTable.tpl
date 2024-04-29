@@ -172,10 +172,19 @@
                         for (var j = 0; j < classTimes.length; j++) {
                             var classTime = classTimes[j].split(""); // 再次分割每个时间段
                             var dayStart = classTime[0]; // 时间段开始的周几
-                            var timeRange = classTime.slice(1); // 时间段的具体时间范围
+                            var timeRange = classTime.slice(1).join(""); // 时间段的具体时间范围，将数组合并为字符串
                             if (dayStart === dayOfWeek) {
-                                var start = parseInt(timeRange[0]); // 时间段开始时间
-                                var end = parseInt(timeRange[timeRange.length - 1]); // 时间段结束时间
+                                // 检查时间范围是否包含连字符
+                                if (timeRange.includes("-")) {
+                                    // 如果包含连字符，解析开始和结束时间
+                                    var rangeParts = timeRange.split("-");
+                                    var start = parseInt(rangeParts[0]);
+                                    var end = parseInt(rangeParts[1]);
+                                } else {
+                                    // 如果不包含连字符，开始和结束时间相同
+                                    var start = parseInt(timeRange);
+                                    var end = start;
+                                }
                                 if (time >= start && time <= end) {
                                     return classes[i].Course;
                                 }
@@ -184,6 +193,7 @@
                     }
                     return null;
                 }
+
 
             </script>
 

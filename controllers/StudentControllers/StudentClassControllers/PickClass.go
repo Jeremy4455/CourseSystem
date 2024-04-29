@@ -3,7 +3,6 @@ package StudentClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type StudentClassControllerPick struct {
@@ -12,9 +11,7 @@ type StudentClassControllerPick struct {
 
 func (c *StudentClassControllerPick) Get() {
 	c.TplName = "StudentViews/StudentClassViews/PickClass.tpl"
-	fmt.Println(c.Input())
 	c.searchClass()
-	fmt.Println(c.Data["Classes"])
 	userInfo := c.GetUserInfo()
 	c.Data["UserInfo"] = userInfo
 }
