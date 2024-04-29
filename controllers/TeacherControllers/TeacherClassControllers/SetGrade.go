@@ -11,60 +11,57 @@ type TeacherClassControllerSet struct {
 
 func (c *TeacherClassControllerSet) Get() {
 	c.TplName = ""
-	c.SearchClass()
+	c.searchCS()
 
 	userInfo := c.GetUserInfo()
 	c.Data["UserInfo"] = userInfo
 }
 
-func (c *TeacherClassControllerSet) SearchClass() {
-	semester := c.GetString("Semester")
-
+func (c *TeacherClassControllerSet) searchCS() {
+	c.TplName = ""
 	teacherId := c.GetSession("userId").(string)[1:]
-	classes, err := models.GetClasses("", "", teacherId, "", semester, "", "")
+	semester := c.GetSession("semester").(string)
+	courseCode := c.GetString("CourseCode")
+
+	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
 	if err != nil {
 		return
 	}
-	c.Data["Classes"] = classes
+	cs, err := models.GetClassStudent(nil, "", classes[0])
+	if err != nil {
+		return
+	}
+
+	var info []map[string]interface{}
+	for _, t := range cs {
+		tinfo := make(map[string]interface{})
+		tinfo["StudentId"] = t.Student.StudentId
+		tinfo["Name"] = t.Student.Name
+		tinfo["Class"] = t.Student.Class
+		tinfo["Performance"] = t.Performance
+		tinfo["Score"] = t.Score
+		info = append(info, tinfo)
+	}
+
+	c.Data["Info"] = info
 }
 
-// 复杂的控制器，前端先不要写
 func (c *TeacherClassControllerSet) Post() {
-	courseCode := c.GetString("CourseCode")
-	semester := c.GetSession("semester").(string)
-
 	teacherId := c.GetSession("userId").(string)[1:]
-	class, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
-	if err != nil {
-		return
-	}
-	class_student, err := models.GetClassStudent(nil, "", class[0])
-	if err != nil {
-		return
-	}
-
-	var information []map[string]interface{}
-	for _, cs := range class_student {
-		x := make(map[string]interface{})
-		x["StudentId"] = cs.Student.StudentId
-		x["StudentName"] = cs.Student.Name
-		x["StudentClass"] = cs.Student.Class
-		x["Performance"] = cs.Performance
-		x["Score"] = cs.Score
-
-		information = append(information, x)
-	}
-
-	c.Data["Students"] = information
-
+	semester := c.GetSession("semester").(string)
+	courseCode := c.GetString("CourseCode")
 	studentId := c.GetString("StudentId")
 	performance := c.GetString("Performance")
 	score := c.GetString("Score")
 
+	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "")
+	if err != nil {
+		return
+	}
 	student, err := models.GetStudent(studentId)
 	if err != nil {
 		return
 	}
 
-	models.UpdateClass(student, class[0], performance, score, models.TEACHER_UPDATE_GRADE)
+	models.UpdateClass(student, classes[0], performance, score, models.TEACHER_UPDATE_GRADE)
 }

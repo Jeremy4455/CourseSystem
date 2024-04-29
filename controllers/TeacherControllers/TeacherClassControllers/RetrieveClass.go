@@ -28,7 +28,7 @@ func (c *TeacherClassControllerRetrieve) searchClass() {
 	c.Data["Classes"] = classes
 }
 
-// 复杂的控制器，前端先不要写
+// 转SetGrade
 func (c *TeacherClassControllerRetrieve) Post() {
 	c.TplName = ""
 	teacherId := c.GetSession("userId").(string)[1:]
