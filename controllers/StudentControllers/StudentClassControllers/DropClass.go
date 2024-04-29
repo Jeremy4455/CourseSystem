@@ -29,9 +29,11 @@ func (c *StudentClassControllerDrop) showClass() {
 	if err != nil {
 		return
 	}
-	var classes []models.Class
+	var classes []*models.Class
 	for _, v := range cs {
-		classes = append(classes, *v.Class)
+		if v.Class.Level <= models.STUDENT_PICK_DROP_CLASS {
+			classes = append(classes, v.Class)
+		}
 	}
 
 	c.Data["Classes"] = classes
