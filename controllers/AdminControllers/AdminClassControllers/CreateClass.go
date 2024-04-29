@@ -37,4 +37,12 @@ func (c *AdminClassControllerCreate) Post() {
 		fmt.Println(err.Error())
 		return
 	}
+	classes, err := models.GetAllClasses()
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	// 将班级和学期列表传递到模板中
+	c.Data["Classes"] = classes
 }

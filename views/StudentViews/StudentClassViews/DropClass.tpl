@@ -71,6 +71,7 @@
                 <li><a href="/student/pick">学生选课</a></li>
                 <li><a href="/student/drop">学生退课</a></li>
                 <li><a href="/student/class">已选课程</a></li>
+                <li><a href="/student/table">查看课表</a></li>
                 <li><a href="/student/grade">成绩查询</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->

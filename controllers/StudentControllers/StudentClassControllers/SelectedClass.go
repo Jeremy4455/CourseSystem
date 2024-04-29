@@ -32,5 +32,5 @@ func (c *StudentClassControllerSelectedClass) searchClass() {
 	for _, v := range classes {
 		class = append(class, v.Class)
 	}
-	c.Data["Class"] = class
+	c.Data["Classes"] = class
 }

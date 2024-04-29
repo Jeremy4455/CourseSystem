@@ -80,6 +80,9 @@
             <!-- 按钮组 -->
             <div class="buttons are-medium is-flex is-justify-content-space-between">
                 <form action="/admin/trans/commit" method="post">
+                    <button class="button is-info is-rounded" type="submit" name="Trans" value="newSemester">新增学期</button>
+                </form>
+                <form action="/admin/trans/commit" method="post">
                     <button class="button is-info is-rounded" type="submit" name="Trans" value="begin">开始选课</button>
                 </form>
                 <form action="/admin/trans/commit" method="post">

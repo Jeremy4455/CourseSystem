@@ -71,6 +71,7 @@
                 <li><a href="/student/pick">学生选课</a></li>
                 <li><a href="/student/drop">学生退课</a></li>
                 <li><a href="/student/class">已选课程</a></li>
+                <li><a href="/student/table">查看课表</a></li>
                 <li><a href="/student/grade">成绩查询</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
@@ -89,7 +90,7 @@
             <h1 class="title">已选课程</h1>
 
             <!-- 已选课程列表 -->
-            <div class="course-list">
+            <div class="selected-courses">
                 <h2 class="subtitle">已选课程</h2>
                 <table class="table is-fullwidth is-hoverable">
                     <thead>
@@ -97,6 +98,7 @@
                             <th>课程号</th>
                             <th>课程名</th>
                             <th>教师名</th>
+                            <th>开课学期</th>
                             <th>上课时间</th>
                             <th>教室</th>
                         </tr>
@@ -107,6 +109,7 @@
                             <td>{{.Course.CourseCode}}</td>
                             <td>{{.Course.Name}}</td>
                             <td>{{.Teacher.Name}}</td>
+                            <td>{{.Semester}}</td>
                             <td>{{.ClassTime}}</td>
                             <td>{{.Location}}</td>
                         </tr>
@@ -114,10 +117,7 @@
                     </tbody>
                 </table>
             </div>
-            <!-- 课程表 -->
-            <div class="course-table">
-                <h2 class="subtitle">课程表</h2>
-            </div>
+
         </main>
     </div>
 </body>
