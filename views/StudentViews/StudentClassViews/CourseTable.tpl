@@ -34,10 +34,8 @@
             margin-bottom: 30px;
             font-size: 36px;
         }
-        .course-list {
-            margin-bottom: 30px;
-        }
         .course-table {
+            display: grid;
             margin-top: 30px;
         }
         .container-button {
@@ -57,15 +55,17 @@
         .time-column {
             width: 10%; /* 设置左侧节次信息列的宽度 */
         }
-
         .course-cell {
             width: 12%; /* 设置课程单元格的宽度 */
         }
-        .course-table-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100%; /* 如果需要撑开父容器，可以设置高度为100% */
+        .table {
+        text-align: center;
+        }
+        .table th{
+            text-align: center;
+        }
+        .table td {
+            text-align: center;
         }
     </style>
 </head>
@@ -105,6 +105,7 @@
             <!-- 课程表部分 -->
 
             <div class="course-table" id="timetable"></div>
+
             <!-- JavaScript 渲染课程表 -->
             <script>
                 // 获取已选课程数据
@@ -167,14 +168,23 @@
                 function getCourseForTime(time, day) {
                     var dayOfWeek = ["一", "二", "三", "四", "五", "六", "日"][day]; // 映射到周几
                     for (var i = 0; i < classes.length; i++) {
-                        var classTime = classes[i].ClassTime.split(""); // 分割时间
-                        console.log(classTime)
-                        if (classTime[0] === dayOfWeek && (parseInt(classTime[1]) === time || parseInt(classTime[3]) === time)) {
-                            return classes[i].Course;
+                        var classTimes = classes[i].ClassTime.split(" "); // 根据空格分割不同的时间段
+                        for (var j = 0; j < classTimes.length; j++) {
+                            var classTime = classTimes[j].split(""); // 再次分割每个时间段
+                            var dayStart = classTime[0]; // 时间段开始的周几
+                            var timeRange = classTime.slice(1); // 时间段的具体时间范围
+                            if (dayStart === dayOfWeek) {
+                                var start = parseInt(timeRange[0]); // 时间段开始时间
+                                var end = parseInt(timeRange[timeRange.length - 1]); // 时间段结束时间
+                                if (time >= start && time <= end) {
+                                    return classes[i].Course;
+                                }
+                            }
                         }
                     }
                     return null;
                 }
+
             </script>
 
         </main>
