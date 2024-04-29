@@ -10,15 +10,21 @@ type StudentClassControllerRetrieveGrade struct {
 }
 
 func (c *StudentClassControllerRetrieveGrade) Get() {
-	c.TplName = ""
+	c.TplName = "StudentViews/StudentClassViews/RetrieveGrade.tpl"
 
 	userInfo := c.GetUserInfo()
 	c.Data["UserInfo"] = userInfo
-}
-func (c *StudentClassControllerRetrieveGrade) Post() {
-	c.TplName = ""
-	studentId := c.GetSession("userId").(string)[1:]
-	semester := c.GetString("Semester")
+	studentIdInterface, ok := userInfo["studentID"].(string)
+	if !ok {
+		return
+	}
+	studentId := studentIdInterface
+
+	semesterInterface, ok := userInfo["semester"].(string)
+	if !ok {
+		return
+	}
+	semester := semesterInterface
 
 	student, err := models.GetStudent(studentId)
 	if err != nil {

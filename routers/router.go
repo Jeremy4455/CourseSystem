@@ -89,6 +89,7 @@ func init() {
 	beego.Router("/student/pick", &StudentClassControllers.StudentClassControllerPick{})
 	beego.Router("/student/drop", &StudentClassControllers.StudentClassControllerDrop{})
 	beego.Router("/student/grade", &StudentClassControllers.StudentClassControllerRetrieveGrade{})
+	beego.Router("/student/class", &StudentClassControllers.StudentClassControllerSelectedClass{})
 
 	beego.Router("/teacher", &TeacherControllers.TeacherController{})
 }

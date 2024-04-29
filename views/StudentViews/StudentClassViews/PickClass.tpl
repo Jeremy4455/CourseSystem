@@ -76,7 +76,7 @@
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/student">返回</a>
+                    <a class="button is-info is-small"  href="/student/index">返回</a>
                 </div>
                 <div></div>
                 <div class="control" style="padding: 8px">
@@ -186,7 +186,9 @@
                                 <input type="hidden" name="courseSemester" value="{{.Semester}}">
                                 <input type="hidden" name="courseTime" value="{{.Time}}">
                                 <input type="hidden" name="classroom" value="{{.Classroom}}">
-                                <button class="button is-primary" type="submit">选课</button>
+                                <div class="buttons">
+                                    <button class="button is-primary" type="submit">选课</button>
+                                </div>
                             </form>
                         </td>
                     </tr>

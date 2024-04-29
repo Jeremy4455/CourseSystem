@@ -76,7 +76,7 @@
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/student">返回</a>
+                    <a class="button is-info is-small"  href="/student/index">返回</a>
                 </div>
                 <div></div>
                 <div class="control" style="padding: 8px">
@@ -97,7 +97,6 @@
                             <th>课程号</th>
                             <th>课程名</th>
                             <th>教师名</th>
-                            <th>开课学期</th>
                             <th>上课时间</th>
                             <th>教室</th>
                             <th>操作</th>
@@ -109,7 +108,6 @@
                             <td>{{.Course.CourseCode}}</td>
                             <td>{{.Course.Name}}</td>
                             <td>{{.Teacher.Name}}</td>
-                            <td>{{.Semester}}</td>
                             <td>{{.ClassTime}}</td>
                             <td>{{.Location}}</td>
                             <td>
