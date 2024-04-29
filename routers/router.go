@@ -19,6 +19,9 @@ import (
 )
 
 func FilterUser(ctx *context.Context) {
+	if ctx.Request.URL.Path == "/" {
+		return
+	}
 	userId := ctx.Input.Session("userId")
 	if userId == nil && ctx.Request.RequestURI != "/login" {
 		ctx.Redirect(302, "/login")
