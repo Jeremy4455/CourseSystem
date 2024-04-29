@@ -247,3 +247,13 @@ func CalculateGrade(grade float64) (float64, error) {
 	}
 	return 4.0, nil
 }
+
+func NewSemester(s string) error {
+	for _, se := range Semesters {
+		if s == se {
+			return errors.New("学期已存在")
+		}
+	}
+	Semesters = append(Semesters, s)
+	return nil
+}

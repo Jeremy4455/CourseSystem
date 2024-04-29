@@ -14,7 +14,8 @@ func (c *AdminTransactionControllerCommit) Get() {
 }
 
 // 做几个按钮
-// | 开始选课 | 结束选课 | 敲定课程 | 成绩归档 |
+// | 添加学期 | 开始选课 | 结束选课 | 敲定课程 | 成绩归档 |
+// 添加学期返回newSemester
 // 开始选课返回begin
 // 结束选课返回end
 // 敲定课程返回done
@@ -22,8 +23,11 @@ func (c *AdminTransactionControllerCommit) Get() {
 
 func (c *AdminTransactionControllerCommit) Post() {
 	trans := c.GetString("Trans")
+	newSemester := c.GetString("NewSemester")
 
 	switch trans {
+	case "newSemester":
+		models.NewSemester(newSemester)
 	case "begin":
 		models.ChangeLevel(models.PER_CLASS, models.STUDENT_PICK_DROP_CLASS)
 	case "end":
