@@ -8,6 +8,8 @@ type StudentIndexController struct {
 	controllers.BaseController
 }
 
-func (C *StudentIndexController) Get() {
-	C.TplName = "StudentViews/Index.tpl"
+func (c *StudentIndexController) Get() {
+	c.TplName = "StudentViews/Index.tpl"
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 }

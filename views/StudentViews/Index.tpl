@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>选课</title>
+    <title>学生</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="../../../static/css/bulma.css">
+    <link rel="stylesheet" href="../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -48,6 +48,12 @@
             justify-content: center;
             padding: 20px;
         }
+        .user-info {
+            background-color: #eaeaea;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -55,18 +61,20 @@
         <!-- 左侧栏 -->
         <aside class="column is-one-fifth sidebar">
             <h6 class="menu-label">菜单</h6>
+            <!-- 用户信息 -->
+            <div class="user-info">
+                <p>姓名: {{.UserInfo.name}}</p>
+                <p>学号: {{.UserInfo.studentID}}</p>
+                <p>当前学期: {{.UserInfo.semester}}</p>
+            </div>
             <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/student/pick">学生选课</a></li>
                 <li><a href="/student/drop">学生退课</a></li>
-                <li><a href="/student/class">成绩更新</a></li>
-                <li><a href="/student/grade">课程更新</a></li>
+                <li><a href="/student/class">已选课程</a></li>
+                <li><a href="/student/grade">成绩查询</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
-                <div class="control" style="padding: 8px">
-                    <a class="button is-info is-small"  href="/admin">返回</a>
-                </div>
-                <div></div>
                 <div class="control" style="padding: 8px">
                     <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
