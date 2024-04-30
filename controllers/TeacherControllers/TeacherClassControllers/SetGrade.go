@@ -1,4 +1,4 @@
-package TeacherClassController
+package TeacherClassControllers
 
 import (
 	"CourseSystem/controllers"
@@ -10,7 +10,7 @@ type TeacherClassControllerSet struct {
 }
 
 func (c *TeacherClassControllerSet) Get() {
-	c.TplName = ""
+	c.TplName = "TeacherViews/TeacherClassViews/SetGrade.tpl"
 	c.searchCS()
 
 	userInfo := c.GetUserInfo()
@@ -47,6 +47,7 @@ func (c *TeacherClassControllerSet) searchCS() {
 }
 
 func (c *TeacherClassControllerSet) Post() {
+	c.TplName = "TeacherViews/TeacherClassViews/SetGrade.tpl"
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")

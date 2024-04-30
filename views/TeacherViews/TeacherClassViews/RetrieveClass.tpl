@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>教师</title>
+    <title>授课查询</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="../../static/css/bulma.css">
+    <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -74,10 +74,41 @@
             <!-- 返回上级目录和登出按钮 -->
             <div class="container-button">
                 <div class="control" style="padding: 8px">
+                    <a class="button is-info is-small"  href="/teacher/index">返回</a>
+                </div>
+                <div class="control" style="padding: 8px">
                     <a class="button is-danger is-small" href="/logout">登出</a>
                 </div>
             </div>
         </aside>
+        <!-- 右侧内容 -->
+        <main class="column is-four-fifths">
+            <h1 class="title">授课查询</h1>
+            <!-- 授课列表 -->
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>课程号</th>
+                        <th>课程名</th>
+                        <th>上课时间</th>
+                        <th>地点</th>
+                        <!-- 添加其他表头 -->
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 使用range指令遍历所有授课课程 -->
+                    {{range .Classes}}
+                    <tr>
+                        <td>{{.Course.CourseCode}}</td>
+                        <td>{{.Course.Name}}</td>
+                        <td>{{.ClassTime}}</td>
+                        <td>{{.Location}}</td>
+                        <!-- 添加其他表格内容 -->
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
+        </main>
     </div>
 </body>
 </html>

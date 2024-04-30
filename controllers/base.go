@@ -14,13 +14,13 @@ func (c *BaseController) Get() {
 
 func (c *BaseController) GetUserInfo() map[string]interface{} {
 	name := c.GetSession("name").(string)
-	studentId := c.GetSession("userId").(string)[1:]
+	userId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 
 	userInfo := map[string]interface{}{
-		"name":      name,
-		"studentID": studentId,
-		"semester":  semester,
+		"name":     name,
+		"userId":   userId,
+		"semester": semester,
 	}
 	return userInfo
 }

@@ -1,4 +1,4 @@
-package TeacherClassController
+package TeacherClassControllers
 
 import (
 	"CourseSystem/controllers"
@@ -10,7 +10,7 @@ type TeacherClassControllerRetrieve struct {
 }
 
 func (c *TeacherClassControllerRetrieve) Get() {
-	c.TplName = ""
+	c.TplName = "TeacherViews/TeacherClassViews/RetrieveClass.tpl"
 	c.searchClass()
 
 	userInfo := c.GetUserInfo()
@@ -30,7 +30,7 @@ func (c *TeacherClassControllerRetrieve) searchClass() {
 
 // 转SetGrade
 func (c *TeacherClassControllerRetrieve) Post() {
-	c.TplName = ""
+	c.TplName = "TeacherViews/TeacherClassViews/RetrieveClass.tpl"
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")

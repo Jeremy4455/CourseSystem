@@ -64,7 +64,7 @@
             <!-- 用户信息 -->
             <div class="user-info">
                 <p>姓名: {{.UserInfo.name}}</p>
-                <p>学号: {{.UserInfo.studentID}}</p>
+                <p>学号: {{.UserInfo.userId}}</p>
                 <p>当前学期: {{.UserInfo.semester}}</p>
             </div>
             <ul class="menu-list" style="text-align: center; padding: 5px">

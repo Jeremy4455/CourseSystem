@@ -11,6 +11,7 @@ import (
 	"CourseSystem/controllers/StudentControllers"
 	"CourseSystem/controllers/StudentControllers/StudentClassControllers"
 	"CourseSystem/controllers/TeacherControllers"
+	"CourseSystem/controllers/TeacherControllers/TeacherClassControllers"
 	"strings"
 
 	"github.com/beego/beego/v2/server/web"
@@ -97,4 +98,6 @@ func init() {
 
 	beego.Router("/teacher", &TeacherControllers.TeacherController{})
 	beego.Router("/teacher/index", &TeacherControllers.TeacherIndexController{})
+	beego.Router("/teacher/class", &TeacherClassControllers.TeacherClassControllerRetrieve{})
+	beego.Router("/teacher/grade", &TeacherClassControllers.TeacherClassControllerSet{})
 }
