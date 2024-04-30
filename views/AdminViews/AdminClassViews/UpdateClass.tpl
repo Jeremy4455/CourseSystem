@@ -103,7 +103,10 @@
                                 <input type="hidden" name="CourseTeacherId" value="{{.Teacher.TeacherId}}">
                                 {{.Teacher.Name}}
                             </td>
-                            <td>{{.Semester}}</td>
+                            <td>
+                                <input type="hidden" name="CourseSemester" value="{{.Semester}}">
+                                {{.Semester}}
+                            </td>
                             <td>
                                 <input class="input is-small" type="text" name="CourseTime" value="{{.ClassTime}}">
                             </td>

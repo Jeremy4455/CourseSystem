@@ -186,7 +186,7 @@ func Syncronize() {
 	}
 
 	var teachers []*Teacher
-	if _, err := o.QueryTable("teacher").All(&teachers); err == nil {
+	if _, err := o.QueryTable("teacher").All(&teachers); err != nil {
 		return
 	}
 
