@@ -179,7 +179,17 @@ func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom strin
 		c.Location = classroom
 	}
 
-	_, err := orm.NewOrm().Update(c)
+	o := orm.NewOrm()
+
+	var existedClass []*Class
+	if _, err := o.QueryTable("Class").Filter("Semester", c.Semester).Filter("Location", c.Location).All(&existedClass); err != nil {
+		return err
+	}
+	if !ClassConflict(existedClass, c) {
+		return errors.New("课时冲突")
+	}
+
+	_, err := o.Update(c)
 	if err != nil {
 		return err
 	}
