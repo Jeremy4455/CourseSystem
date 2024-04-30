@@ -100,4 +100,5 @@ func init() {
 	beego.Router("/teacher/index", &TeacherControllers.TeacherIndexController{})
 	beego.Router("/teacher/class", &TeacherClassControllers.TeacherClassControllerRetrieve{})
 	beego.Router("/teacher/grade", &TeacherClassControllers.TeacherClassControllerSet{})
+	beego.Router("/teacher/table", &TeacherClassControllers.TeacherClassControllerCourseTable{})
 }

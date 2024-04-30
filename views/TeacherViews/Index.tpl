@@ -69,6 +69,7 @@
             </div>
             <ul class="menu-list" style="text-align: center; padding: 5px">
                 <li><a href="/teacher/class">授课查询</a></li>
+                <li><a href="/teacher/table">查看课表</a></li>
                 <li><a href="/teacher/grade">登记成绩</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->

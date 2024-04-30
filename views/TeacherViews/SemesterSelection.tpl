@@ -24,7 +24,7 @@
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">请选择学期：</h1>
-                <form action="/choose_course" method="post">
+                <form action="/teacher" method="post">
                     <div class="field">
                         <div class="control">
                             <ul class="list">

@@ -18,7 +18,6 @@ func (c *TeacherClassControllerSet) Get() {
 }
 
 func (c *TeacherClassControllerSet) searchCS() {
-	c.TplName = ""
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")
