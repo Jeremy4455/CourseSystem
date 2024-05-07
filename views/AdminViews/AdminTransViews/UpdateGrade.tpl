@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>学生退课</title>
+    <title>成绩更新</title>
     <!-- 引入Bulma CSS文件 -->
     <link rel="stylesheet" href="../../../static/css/bulma.css">
     <style>
@@ -74,9 +74,10 @@
         </aside>
         <!-- 右侧内容 -->
         <main class="column is-four-fifths">
-            <h1 class="title">学生退课</h1>
-            <!-- 输入表单 -->
-            <form action="/admin/trans/drop" method="post">
+            <h1 class="title">成绩更新</h1>
+
+            <!-- 查询表单 -->
+            <form action="/admin/trans/update" method="get">
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
                         <label class="label">学生号</label>
@@ -98,16 +99,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="field-label is-normal">
-                        <label class="label">课程名</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <input class="input" type="text" name="CourseName" >
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="field is-horizontal">
                     <div class="field-label is-normal">
@@ -121,22 +112,12 @@
                         </div>
                     </div>
                     <div class="field-label is-normal">
-                        <label class="label">教师名</label>
+                        <label class="label" for="Semester">学期：</label>
                     </div>
                     <div class="field-body">
                         <div class="field">
                             <div class="control">
-                                <input class="input" type="text" name="CourseTeacherName">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="field-label is-normal">
-                        <label class="label" for="Semester">开课学期：</label>
-                    </div>
-                    <div class="field-body">
-                        <div class="field">
-                            <div class="control">
-                                <div class="select">
+                                <div class="select is-small">
                                     <select name="Semester" required>
                                         <option value="">请选择学期</option>
                                         {{range .Semesters}}
@@ -148,26 +129,54 @@
                         </div>
                     </div>
                 </div>
-                <div class="field is-grouped" style="float: right">
+                <div class="field is-grouped" style="float: right; margin-top: 20px">
                     <div class="control">
-                        <button class="button is-danger" type="submit">退课</button>
+                        <button class="button is-primary" type="submit">查询</button>
                     </div>
                 </div>
             </form>
 
-            <!-- 退课信息 -->
-            {{if .ClassStudent}}
-            <div class="notification is-info">
-                <p>退课信息：</p>
-                <p>课程号: {{.ClassStudent.CourseCode}}</p>
-                <p>课程名: {{.ClassStudent.CourseName}}</p>
-                <p>学分: {{.ClassStudent.Credit}}</p>
-                <p>教师号: {{.ClassStudent.TeacherId}}</p>
-                <p>教师名: {{.ClassStudent.TeacherName}}</p>
-            </div>
-            {{end}}
-        </main>
+            <!-- 成绩更新表格 -->
+            {{ if .ClassStudent }}
+            <h2 class="subtitle">学生信息</h2>
+            <table class="table is-fullwidth is-hoverable">
+                <thead>
+                    <tr>
+                        <th>学生号</th>
+                        <th>学生姓名</th>
+                        <th>课程代码</th>
+                        <th>课程名称</th>
+                        <th>平时分</th>
+                        <th>考试分</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                        <tr>
+                            <form action="/admin/trans/update" method="post">
+                            <td>{{ .ClassStudent.StudentId }}</td>
+                            <td>{{ .ClassStudent.StudentName }}</td>
+                            <td>{{ .ClassStudent.CourseCode }}</td>
+                            <td>{{ .ClassStudent.CourseName }}</td>
+                            <td>{{ .ClassStudent.Performance }}</td>
+                            <td>
+                                <input class="input" type="text" name="Score" value="{{ .ClassStudent.Score }}">
+                            </td>
+                            <td>
+                                    <input type="hidden" name="StudentId" value="{{ .ClassStudent.StudentId }}">
+                                    <input type="hidden" name="CourseCode" value="{{ .ClassStudent.CourseCode }}">
+                                    <input type="hidden" name="TeacherId" value="{{ .ClassStudent.TeacherId }}">
+                                    <input type="hidden" name="Semester" value="{{ .ClassStudent.Semester }}">
+                                    <button class="button is-primary is-small" type="submit">更新</button>
+                            </td>
+                            </form>
+                        </tr>
+
+                </tbody>
+            </table>
+            {{ end }}
+        </main>
     </div>
 </body>
 </html>

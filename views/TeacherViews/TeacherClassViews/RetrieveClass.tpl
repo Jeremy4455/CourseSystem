@@ -93,6 +93,7 @@
                         <th>课程名</th>
                         <th>上课时间</th>
                         <th>地点</th>
+                        <th>操作</th>
                         <!-- 添加其他表头 -->
                     </tr>
                 </thead>
@@ -104,7 +105,16 @@
                         <td>{{.Course.Name}}</td>
                         <td>{{.ClassTime}}</td>
                         <td>{{.Location}}</td>
-                        <!-- 添加其他表格内容 -->
+                        <td>
+                            <div class="field is-grouped">
+                                <div class="control">
+                                    <form action="/teacher/grade" method="get">
+                                        <input type="hidden" name="CourseCode" value="{{.Course.CourseCode}}">
+                                        <button class="button is-info" type="submit">登分</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
                     {{end}}
                 </tbody>

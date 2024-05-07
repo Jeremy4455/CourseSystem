@@ -85,6 +85,46 @@
         <!-- 右侧内容 -->
         <main class="column is-four-fifths">
             <h1 class="title">登记成绩</h1>
+            <h2 class="subtitle">{{.Class.Course.Name}}</h2>
+            <!-- 成绩登记表格 -->
+            <form action="/teacher/grade" method="post">
+                <table class="table is-fullwidth is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>学号</th>
+                            <th>姓名</th>
+                            <th>班级</th>
+                            <th>平时分</th>
+                            <th>考试分</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- 使用range指令遍历所有学生 -->
+                        {{range .Info}}
+                        <tr>
+                            <td>
+                                {{.StudentId}}
+                                <input type="hidden" name="StudentId" value="{{.StudentId}}">
+                            </td>
+                            <td>{{.Name}}</td>
+                            <td>{{.Class}}</td>
+                            <td>
+                                <input class="input" type="text" name="Performance" required>
+                            </td>
+                            <td>
+                                <input class="input" type="text" name="Score" required>
+                            </td>
+                        </tr>
+                        {{end}}
+                    </tbody>
+                </table>
+                <div class="field is-grouped" style="float: right">
+                    <div class="control">
+                        <input type="hidden" name="CourseCode" value="{{.Class.Course.CourseCode}}">
+                        <button class="button is-primary" type="submit">提交</button>
+                    </div>
+                </div>
+            </form>
         </main>
     </div>
 </body>

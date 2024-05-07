@@ -84,8 +84,7 @@ func init() {
 	beego.Router("/admin/trans", &AdminTransactionControllers.AdminTransactionControllerPick{})
 	beego.Router("/admin/trans/drop", &AdminTransactionControllers.AdminTransactionControllerDrop{})
 	beego.Router("/admin/trans/pick", &AdminTransactionControllers.AdminTransactionControllerPick{})
-	beego.Router("/admin/trans/update", &AdminTransactionControllers.AdminTransactionControllerUpdate{})
-	beego.Router("/admin/trans/upgrade", &AdminTransactionControllers.AdminTransactionControllerUpgrade{})
+	beego.Router("/admin/trans/update", &AdminTransactionControllers.AdminTransactionControllerUpdateGrade{})
 	beego.Router("/admin/trans/commit", &AdminTransactionControllers.AdminTransactionControllerCommit{})
 
 	beego.Router("/student", &StudentControllers.StudentController{})

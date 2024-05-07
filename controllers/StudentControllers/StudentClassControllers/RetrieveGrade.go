@@ -3,6 +3,7 @@ package StudentClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
+	"fmt"
 )
 
 type StudentClassControllerRetrieveGrade struct {
@@ -46,4 +47,5 @@ func (c *StudentClassControllerRetrieveGrade) Get() {
 		t["Grade"] = proportion*class.Performance + (1-proportion)*class.Score
 	}
 	c.Data["Classes"] = classes
+	fmt.Println(c.Data["Classes"])
 }

@@ -21,8 +21,8 @@ func (c *TeacherClassControllerSet) searchCS() {
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")
-
 	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
+	c.Data["Class"] = classes[0]
 	if err != nil {
 		return
 	}

@@ -59,7 +59,6 @@
                 <li><a href="/admin/trans/pick">学生选课</a></li>
                 <li><a href="/admin/trans/drop">学生退课</a></li>
                 <li><a href="/admin/trans/update">成绩更新</a></li>
-                <li><a href="/admin/trans/upgrade">课程更新</a></li>
                 <li><a href="/admin/trans/commit">事务处理</a></li>
             </ul>
             <!-- 返回上级目录和登出按钮 -->
