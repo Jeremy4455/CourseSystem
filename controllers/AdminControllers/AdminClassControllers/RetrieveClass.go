@@ -3,7 +3,6 @@ package AdminClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type AdminClassControllerRetrieve struct {
@@ -27,7 +26,6 @@ func (c *AdminClassControllerRetrieve) Post() {
 
 	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.PER_CLASS)
 	if err != nil {
-		fmt.Println(err.Error())
 		return
 	}
 	c.Data["Classes"] = classes

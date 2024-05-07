@@ -91,6 +91,9 @@
                     <button class="button is-info is-rounded" type="submit" name="Trans" value="done">敲定课程</button>
                 </form>
                 <form action="/admin/trans/commit" method="post">
+                    <button class="button is-info is-rounded" type="submit" name="Trans" value="sure">敲定成绩</button>
+                </form>
+                <form action="/admin/trans/commit" method="post">
                     <button class="button is-info is-rounded" type="submit" name="Trans" value="archive">成绩归档</button>
                 </form>
             </div>

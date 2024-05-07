@@ -3,7 +3,6 @@ package StudentClassControllers
 import (
 	"CourseSystem/controllers"
 	"CourseSystem/models"
-	"fmt"
 )
 
 type StudentClassControllerDrop struct {
@@ -20,7 +19,6 @@ func (c *StudentClassControllerDrop) Get() {
 func (c *StudentClassControllerDrop) showClass() {
 	studentId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
-	fmt.Println(studentId, semester)
 	student, err := models.GetStudent(studentId)
 	if err != nil {
 		return

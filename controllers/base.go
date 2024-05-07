@@ -24,3 +24,10 @@ func (c *BaseController) GetUserInfo() map[string]interface{} {
 	}
 	return userInfo
 }
+
+func (c *BaseController) Err(err error) {
+	c.Data["json"] = map[string]interface{}{"error": err.Error()}
+}
+func (c *BaseController) Sucess() {
+	c.Data["json"] = map[string]interface{}{"message": "Success!"}
+}

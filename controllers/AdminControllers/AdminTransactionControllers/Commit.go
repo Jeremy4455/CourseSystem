@@ -35,6 +35,8 @@ func (c *AdminTransactionControllerCommit) Post() {
 		models.UpgradeFromLevel(models.STUDENT_PICK_DROP_CLASS)
 	case "done":
 		models.UpgradeFromLevel(models.ADMIN_PICK_DROP_CLASS)
+	case "sure":
+		models.UpgradeFromLevel(models.TEACHER_UPDATE_GRADE)
 	case "archive":
 		models.UpgradeFromLevel(models.ADMIN_UPDATE_GRADE)
 	}
