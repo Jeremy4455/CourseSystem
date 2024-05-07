@@ -50,18 +50,22 @@ func (c *TeacherClassControllerSet) Post() {
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")
-	studentId := c.GetString("StudentId")
-	performance := c.GetString("Performance")
-	score := c.GetString("Score")
+	studentIds := c.GetStrings("StudentId")
+	performances := c.GetStrings("Performance")
+	scores := c.GetStrings("Score")
 
 	classes, err := models.GetClasses(courseCode, "", teacherId, "", semester, "", "", models.TEACHER_UPDATE_GRADE)
 	if err != nil {
 		return
 	}
-	student, err := models.GetStudent(studentId)
-	if err != nil {
-		return
+	for i := range studentIds {
+		student, err := models.GetStudent(studentIds[i])
+		if err != nil {
+			return
+		}
+
+		models.UpdateClass(student, classes[0], performances[i], scores[i], models.TEACHER_UPDATE_GRADE)
 	}
 
-	models.UpdateClass(student, classes[0], performance, score, models.TEACHER_UPDATE_GRADE)
+	models.UpgradeLevel(classes[0])
 }

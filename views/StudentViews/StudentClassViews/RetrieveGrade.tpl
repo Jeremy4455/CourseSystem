@@ -98,6 +98,7 @@
                         <th>平时成绩</th>
                         <th>期末成绩</th>
                         <th>最终成绩</th>
+                        <th>绩点</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -109,6 +110,7 @@
                         <td>{{.Performance}}</td>
                         <td>{{.Score}}</td>
                         <td>{{.Grade}}</td>
+                        <td>{{.Level}}</td>
                     </tr>
                     {{end}}
                 </tbody>
