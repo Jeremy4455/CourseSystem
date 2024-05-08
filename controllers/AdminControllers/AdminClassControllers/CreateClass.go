@@ -39,4 +39,5 @@ func (c *AdminClassControllerCreate) Post() {
 	}
 
 	c.Data["Classes"] = classes
+	c.Data["Semesters"] = models.Semesters
 }

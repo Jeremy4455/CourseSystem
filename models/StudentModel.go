@@ -18,16 +18,14 @@ type Student struct {
 
 func GetStudent(studentId string) (*Student, error) {
 	o := orm.NewOrm()
+	sql := "CALL GetStudentById(?)"
+	var s []*Student
 
-	student := &Student{StudentId: studentId}
-
-	err := o.Read(student)
+	_, err := o.Raw(sql, studentId).QueryRows(&s)
 	if err != nil {
-		// 处理错误
 		return nil, err
 	}
-
-	return student, nil
+	return s[0], nil
 }
 
 func CreateStudent(studentId, name, class, grade string) error {
