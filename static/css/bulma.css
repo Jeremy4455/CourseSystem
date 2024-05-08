@@ -2362,6 +2362,8 @@ div.icon-text {
 }
 
 .notification {
+  width: 100px;
+  height: 50px;
   background-color: whitesmoke;
   border-radius: 4px;
   position: relative;
@@ -11842,6 +11844,11 @@ a.has-text-danger-dark:hover, a.has-text-danger-dark:focus {
   .section.is-large {
     padding: 18rem 6rem;
   }
+}
+.custom-notification {
+  width: 200px; /* 设置通知框宽度 */
+  padding: 10px; /* 设置通知框内边距 */
+  font-size: 14px; /* 设置通知框字体大小 */
 }
 
 .footer {

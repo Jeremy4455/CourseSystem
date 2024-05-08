@@ -40,6 +40,8 @@ func (c *AdminClassControllerDelete) Post() {
 
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester, models.PER_CLASS)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "删除开课成功！"}
 	}
 }

@@ -27,6 +27,7 @@ func (c *AdminCourseControllerUpdate) searchCourse() {
 
 func (c *AdminCourseControllerUpdate) Post() {
 	c.TplName = "AdminViews/AdminCourseViews/UpdateCourse.tpl"
+
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 	college := c.GetString("College")
@@ -42,4 +43,5 @@ func (c *AdminCourseControllerUpdate) Post() {
 	} else {
 		c.Data["json"] = map[string]interface{}{"message": "课程更新成功"}
 	}
+	c.searchCourse()
 }

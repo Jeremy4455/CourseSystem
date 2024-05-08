@@ -49,6 +49,8 @@ func (c *AdminClassControllerUpdate) Post() {
 	}
 	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "更新开课成功！"}
 	}
 }

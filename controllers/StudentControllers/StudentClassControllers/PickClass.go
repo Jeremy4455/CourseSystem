@@ -43,6 +43,8 @@ func (c *StudentClassControllerPick) searchClass() {
 
 func (c *StudentClassControllerPick) Post() {
 	c.TplName = "StudentViews/StudentClassViews/PickClass.tpl"
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")

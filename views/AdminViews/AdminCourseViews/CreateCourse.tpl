@@ -123,6 +123,18 @@
                         </div>
                     </div>
                 </div>
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label" for="Proportion">占比：</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-grouped">
+                            <div class="control">
+                                <input class="input is-small" type="text" id="Proportion" name="Proportion" min="0" max="1" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!-- 按钮 -->
                 <div class="field is-grouped" style="float: right">
                     <div class="control">
@@ -130,6 +142,21 @@
                     </div>
                 </div>
             </form>
+            {{ if .json.message }}
+            <div id="success-notification" class="notification is-success custom-notification">
+              {{ .json.message }}
+              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            </div>
+            {{ end }}
+
+            {{ if .json.error }}
+            <div id="error-notification" class="notification is-danger custom-notification">
+              {{ .json.error }}
+              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            </div>
+            {{ end }}
+            <script src="/static/js/closeNotification.js"></script>
+
         </main>
     </div>
 </body>

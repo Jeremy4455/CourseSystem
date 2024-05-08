@@ -31,7 +31,9 @@ func (c *AdminClassControllerCreate) Post() {
 
 	err := models.CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
 	if err != nil {
-		return
+		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+	} else {
+		c.Data["json"] = map[string]interface{}{"message": "开课成功！"}
 	}
 	classes, err := models.GetAllClasses()
 	if err != nil {

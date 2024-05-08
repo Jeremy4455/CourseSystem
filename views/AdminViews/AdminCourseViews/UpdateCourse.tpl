@@ -84,6 +84,7 @@
                             <th class="has-text-centered has-text-left">课程名</th>
                             <th class="has-text-centered has-text-left">学院</th>
                             <th class="has-text-centered has-text-left">学分</th>
+                            <th class="has-text-centered has-text-left">占比</th>
                             <th class="has-text-centered has-text-left">操作</th>
                         </tr>
                     </thead>
@@ -105,6 +106,9 @@
                                 <input class="input is-small" type="number" name="Credit" value="{{.Credit}}" min="1" max="5" step="1">
                             </td>
                             <td>
+                                <input class="input is-small" type="number" name="Proportion" value="{{.Proportion}}" min="0" max="1" step="0.1">
+                            </td>
+                            <td>
                                 <div class="field is-grouped">
                                     <div class="control">
                                         <button class="button is-info is-small" type="submit">保存更改</button>
@@ -116,7 +120,20 @@
                         {{end}}
                     </tbody>
                 </table>
+            {{ if .json.message }}
+            <div id="success-notification" class="notification is-success custom-notification">
+              {{ .json.message }}
+              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            </div>
+            {{ end }}
 
+            {{ if .json.error }}
+            <div id="error-notification" class="notification is-danger custom-notification">
+              {{ .json.error }}
+              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            </div>
+            {{ end }}
+            <script src="/static/js/closeNotification.js"></script>
             <!-- 分页按钮 -->
             <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
                 <div class="field is-grouped">

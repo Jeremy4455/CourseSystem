@@ -153,6 +153,20 @@
                 {{end}}
                 </tbody>
             </table>
+            {{ if .json.message }}
+            <div id="success-notification" class="notification is-success custom-notification">
+              {{ .json.message }}
+              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            </div>
+            {{ end }}
+
+            {{ if .json.error }}
+            <div id="error-notification" class="notification is-danger custom-notification">
+              {{ .json.error }}
+              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            </div>
+            {{ end }}
+            <script src="/static/js/closeNotification.js"></script>
             <!-- 分页按钮 -->
             <div id="pagination-buttons-container" style="position: fixed; bottom: 20px; right: 20px;">
                 <div class="field is-grouped">

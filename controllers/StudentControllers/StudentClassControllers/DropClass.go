@@ -38,7 +38,10 @@ func (c *StudentClassControllerDrop) showClass() {
 }
 func (c *StudentClassControllerDrop) Post() {
 	c.TplName = "StudentViews/StudentClassViews/DropClass.tpl"
+	c.showClass()
 
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 	courseCode := c.GetString("courseCode")
 	courseName := c.GetString("courseName")
 	courseTeacherId := c.GetString("courseTeacherId")
