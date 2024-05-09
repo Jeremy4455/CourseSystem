@@ -64,8 +64,17 @@ func (c *TeacherClassControllerSet) Post() {
 			return
 		}
 
-		models.UpdateClass(student, classes[0], performances[i], scores[i], models.TEACHER_UPDATE_GRADE)
+		err = models.UpdateClass(student, classes[0], performances[i], scores[i], models.TEACHER_UPDATE_GRADE)
+		if err != nil {
+			c.Err(err)
+			return
+		}
 	}
 
-	models.UpgradeLevel(classes[0])
+	err = models.UpgradeLevel(classes[0])
+	if err != nil {
+		c.Err(err)
+		return
+	}
+	c.Sucess()
 }

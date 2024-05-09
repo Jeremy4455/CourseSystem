@@ -20,7 +20,11 @@ func (c *AdminTeacherControllerUpdate) searchTeacher() {
 		teachers, _ := models.GetAllTeachers()
 		c.Data["Teachers"] = teachers
 	} else {
-		teachers, _ := models.GetTeachers(teacherId, "", "", "")
+		teachers, err := models.GetTeachers(teacherId, "", "", "")
+		if err != nil {
+			c.Err(err)
+			return
+		}
 		c.Data["Teachers"] = teachers
 	}
 }
@@ -34,8 +38,8 @@ func (c *AdminTeacherControllerUpdate) Post() {
 
 	err := models.ReviseTeacher(teacherId, name, mobile, email)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "教师更新成功"}
+		c.Err(err)
+		return
 	}
+	c.Sucess()
 }

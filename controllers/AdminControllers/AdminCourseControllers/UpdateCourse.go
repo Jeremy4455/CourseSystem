@@ -20,7 +20,11 @@ func (c *AdminCourseControllerUpdate) searchCourse() {
 		courses, _ := models.GetAllCourses()
 		c.Data["Courses"] = courses
 	} else {
-		courses, _ := models.GetCourses(courseCode, "")
+		courses, err := models.GetCourses(courseCode, "")
+		if err != nil {
+			c.Err(err)
+			return
+		}
 		c.Data["Courses"] = courses
 	}
 }
@@ -39,9 +43,9 @@ func (c *AdminCourseControllerUpdate) Post() {
 
 	err := models.ReviseCourse(courseCode, name, college, credit, proportion)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "课程更新成功"}
+		c.Err(err)
+		return
 	}
 	c.searchCourse()
+	c.Sucess()
 }

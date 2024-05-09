@@ -54,7 +54,13 @@ func (c *StudentClassControllerDrop) Post() {
 	studentId := c.GetSession("userId").(string)[1:]
 	student, err := models.GetStudent(studentId)
 	if err != nil {
+		c.Err(err)
 		return
 	}
-	models.DropClass(student, class[0], models.STUDENT_PICK_DROP_CLASS)
+	err = models.DropClass(student, class[0], models.STUDENT_PICK_DROP_CLASS)
+	if err != nil {
+		c.Err(err)
+		return
+	}
+	c.Sucess()
 }

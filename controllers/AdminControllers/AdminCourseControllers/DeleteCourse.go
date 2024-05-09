@@ -18,11 +18,13 @@ func (c *AdminCourseControllerDelete) searchCourse() {
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 
-	courses, _ := models.GetCourses(courseCode, name)
-	if courses == nil {
+	courses, err := models.GetCourses(courseCode, name)
+	if err != nil {
+		c.Err(err)
 		return
 	}
 	c.Data["Courses"] = courses
+	c.Sucess()
 }
 
 func (c *AdminCourseControllerDelete) Post() {
@@ -31,8 +33,8 @@ func (c *AdminCourseControllerDelete) Post() {
 
 	err := models.DeleteCourse(courseCode)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "课程删除成功"}
+		c.Err(err)
+		return
 	}
+	c.Sucess()
 }

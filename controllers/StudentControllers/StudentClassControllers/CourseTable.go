@@ -26,11 +26,14 @@ func (c *StudentClassControllerCourseTable) searchClass() {
 	}
 	classes, err := models.GetClassStudent(s, semester, nil)
 	if err != nil {
+		c.Err(err)
 		return
 	}
+
 	var class []*models.Class
 	for _, v := range classes {
 		class = append(class, v.Class)
 	}
 	c.Data["Classes"] = class
+	c.Sucess()
 }

@@ -38,6 +38,9 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 		if err != nil {
 			return nil, err
 		}
+		if len(class_student) == 0 {
+			return nil, errors.New("没有该记录")
+		}
 		return class_student, nil
 	}
 
@@ -45,6 +48,9 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 		_, err := o.QueryTable("ClassStudent").RelatedSel().Filter("Class", c).All(&class_student)
 		if err != nil {
 			return nil, err
+		}
+		if len(class_student) == 0 {
+			return nil, errors.New("没有该记录")
 		}
 		return class_student, nil
 	}
@@ -59,6 +65,9 @@ func GetClassStudent(s *Student, courseSemester string, c *Class) ([]*ClassStude
 				continue
 			}
 			class_student = append(class_student, t)
+		}
+		if len(class_student) == 0 {
+			return nil, errors.New("没有该记录")
 		}
 		return class_student, nil
 	}

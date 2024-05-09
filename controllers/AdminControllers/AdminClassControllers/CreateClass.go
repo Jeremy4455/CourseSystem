@@ -13,11 +13,13 @@ func (c *AdminClassControllerCreate) Get() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
 	classes, err := models.GetAllClasses()
 	if err != nil {
+		c.Err(err)
 		return
 	}
 
 	c.Data["Classes"] = classes
 	c.Data["Semesters"] = models.Semesters
+	c.Sucess()
 }
 func (c *AdminClassControllerCreate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"
@@ -31,15 +33,16 @@ func (c *AdminClassControllerCreate) Post() {
 
 	err := models.CreateClass(courseCode, courseName, courseTeacherId, courseSemester, classTime, capacity, classroom)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "开课成功！"}
+		c.Err(err)
+		return
 	}
 	classes, err := models.GetAllClasses()
 	if err != nil {
+		c.Err(err)
 		return
 	}
 
 	c.Data["Classes"] = classes
 	c.Data["Semesters"] = models.Semesters
+	c.Sucess()
 }

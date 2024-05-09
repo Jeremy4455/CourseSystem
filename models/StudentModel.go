@@ -1,6 +1,7 @@
 package models
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/beego/beego/v2/client/orm"
@@ -24,6 +25,9 @@ func GetStudent(studentId string) (*Student, error) {
 	_, err := o.Raw(sql, studentId).QueryRows(&s)
 	if err != nil {
 		return nil, err
+	}
+	if len(s) == 0 {
+		return nil, errors.New("没有该学生")
 	}
 	return s[0], nil
 }

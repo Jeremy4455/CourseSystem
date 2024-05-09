@@ -19,6 +19,11 @@ func (c *AdminStudentControllerRetrieve) Post() {
 	name := c.GetString("Name")
 	class := c.GetString("Class")
 
-	students, _ := models.GetStudents(studentId, name, class)
+	students, err := models.GetStudents(studentId, name, class)
+	if err != nil {
+		c.Err(err)
+		return
+	}
 	c.Data["Students"] = students
+	c.Sucess()
 }

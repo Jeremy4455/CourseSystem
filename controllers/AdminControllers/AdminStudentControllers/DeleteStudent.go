@@ -17,11 +17,13 @@ func (c *AdminStudentControllerDelete) searchStudent() {
 	studentId := c.GetString("StudentId")
 	name := c.GetString("Name")
 	class := c.GetString("Class")
-	students, _ := models.GetStudents(studentId, name, class)
-	if students == nil {
+	students, err := models.GetStudents(studentId, name, class)
+	if err != nil {
+		c.Err(err)
 		return
 	}
 	c.Data["Students"] = students
+	c.Sucess()
 }
 
 func (c *AdminStudentControllerDelete) Post() {
@@ -30,8 +32,8 @@ func (c *AdminStudentControllerDelete) Post() {
 
 	err := models.DeleteStudent(studentId)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+		c.Err(err)
 	} else {
-		c.Data["json"] = map[string]interface{}{"message": "学生删除成功"}
+		c.Sucess()
 	}
 }

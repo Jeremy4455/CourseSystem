@@ -68,6 +68,9 @@ func GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, cour
 	if err != nil {
 		return nil, err
 	}
+	if len(classes) == 0 {
+		return nil, errors.New("没有开该课")
+	}
 	return classes, nil
 }
 

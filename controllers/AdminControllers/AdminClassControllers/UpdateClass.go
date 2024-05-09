@@ -17,14 +17,12 @@ func (c *AdminClassControllerUpdate) Get() {
 	semesters := models.Semesters
 	c.Data["Semesters"] = semesters
 	if courseCode == "" || TeacherId == "" || courseSemester == "" {
-		classes, err := models.GetAllClasses()
-		if err != nil {
-			return
-		}
+		classes, _ := models.GetAllClasses()
 		c.Data["Classes"] = classes
 	} else {
 		classes, err := models.GetClasses(courseCode, "", TeacherId, "", courseSemester, "", "", models.PER_CLASS)
 		if err != nil {
+			c.Err(err)
 			return
 		}
 		c.Data["Classes"] = classes
@@ -49,8 +47,8 @@ func (c *AdminClassControllerUpdate) Post() {
 	}
 	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "更新开课成功！"}
+		c.Err(err)
+		return
 	}
+	c.Sucess()
 }

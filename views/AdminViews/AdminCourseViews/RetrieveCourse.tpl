@@ -153,6 +153,20 @@
                     </div>
                 </div>
             </div>
+            {{ if .json.message }}
+            <div id="success-notification" class="notification is-success custom-notification">
+              {{ .json.message }}
+              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            </div>
+            {{ end }}
+
+            {{ if .json.error }}
+            <div id="error-notification" class="notification is-danger custom-notification">
+              {{ .json.error }}
+              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            </div>
+            {{ end }}
+            <script src="/static/js/closeNotification.js"></script>
             <!-- 翻页功能 -->
             <script src="../../../static/js/RetrievePage.js"></script>
         </main>

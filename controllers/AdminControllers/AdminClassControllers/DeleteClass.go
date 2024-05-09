@@ -26,6 +26,7 @@ func (c *AdminClassControllerDelete) SearchClasses() {
 
 	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.PER_CLASS)
 	if err != nil {
+		c.Err(err)
 		return
 	}
 	c.Data["Classes"] = classes
@@ -40,8 +41,8 @@ func (c *AdminClassControllerDelete) Post() {
 
 	err := models.DeleteClass(courseCode, courseTeacherId, courseSemester, models.PER_CLASS)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "删除开课成功！"}
+		c.Err(err)
+		return
 	}
+	c.Sucess()
 }

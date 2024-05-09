@@ -18,9 +18,12 @@ func (c *AdminCourseControllerRetrieve) Post() {
 	courseCode := c.GetString("CourseCode")
 	name := c.GetString("Name")
 
-	courses, _ := models.GetCourses(courseCode, name)
-	if courses == nil {
+	courses, err := models.GetCourses(courseCode, name)
+
+	if err != nil {
+		c.Err(err)
 		return
 	}
 	c.Data["Courses"] = courses
+	c.Sucess()
 }

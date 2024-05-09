@@ -22,8 +22,8 @@ func (c *AdminStudentControllerCreate) Post() {
 
 	err := models.CreateStudent(studentId, name, class, grade)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+		c.Err(err)
 	} else {
-		c.Data["json"] = map[string]interface{}{"message": "学生添加成功"}
+		c.Sucess()
 	}
 }

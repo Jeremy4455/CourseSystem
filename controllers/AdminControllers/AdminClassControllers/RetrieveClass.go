@@ -26,7 +26,9 @@ func (c *AdminClassControllerRetrieve) Post() {
 
 	classes, err := models.GetClasses(courseCode, courseName, courseTeacherId, courseTeacherName, courseSemester, courseTime, classroom, models.PER_CLASS)
 	if err != nil {
+		c.Err(err)
 		return
 	}
 	c.Data["Classes"] = classes
+	c.Sucess()
 }

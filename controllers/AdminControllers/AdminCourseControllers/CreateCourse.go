@@ -27,7 +27,7 @@ func (c *AdminCourseControllerCreate) Post() {
 	err := models.CreateCourse(courseCode, name, college, credit, proportion)
 	if err != nil {
 		c.Err(err)
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "课程添加成功"}
+		return
 	}
+	c.Sucess()
 }

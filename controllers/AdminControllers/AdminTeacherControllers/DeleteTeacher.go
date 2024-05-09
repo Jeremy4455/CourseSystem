@@ -29,8 +29,8 @@ func (c *AdminTeacherControllerDelete) Post() {
 
 	err := models.DeleteTeacher(teacherId)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
-	} else {
-		c.Data["json"] = map[string]interface{}{"message": "教师删除成功"}
+		c.Err(err)
+		return
 	}
+	c.Sucess()
 }

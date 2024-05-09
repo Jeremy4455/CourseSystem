@@ -16,7 +16,11 @@ func (c *AdminStudentControllerUpdate) Get() {
 		students, _ := models.GetAllStudents()
 		c.Data["Students"] = students
 	} else {
-		students, _ := models.GetStudents(studentId, "", "")
+		students, err := models.GetStudents(studentId, "", "")
+		if err != nil {
+			c.Err(err)
+			return
+		}
 		c.Data["Students"] = students
 	}
 }
@@ -30,8 +34,8 @@ func (c *AdminStudentControllerUpdate) Post() {
 
 	err := models.ReviseStudent(studentId, name, class)
 	if err != nil {
-		c.Data["json"] = map[string]interface{}{"error": err.Error()}
+		c.Err(err)
 	} else {
-		c.Data["json"] = map[string]interface{}{"message": "学生更新成功"}
+		c.Sucess()
 	}
 }

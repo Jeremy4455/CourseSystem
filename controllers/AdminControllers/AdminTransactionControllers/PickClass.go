@@ -53,13 +53,7 @@ func (c *AdminTransactionControllerPick) Post() {
 	if err != nil {
 		return
 	}
-	cnt, err := models.GetPickedCount(class[0])
-	if err != nil {
-		return
-	}
-	if cnt >= class[0].Capacity {
-		return
-	}
+
 	err = models.PickClass(student, class[0], models.ADMIN_PICK_DROP_CLASS)
 	if err != nil {
 		return

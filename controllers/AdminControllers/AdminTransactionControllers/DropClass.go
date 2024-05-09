@@ -30,9 +30,7 @@ func (c *AdminTransactionControllerDrop) searchClassStudent() {
 	if err != nil {
 		return
 	}
-	if len(class) != 1 {
-		return
-	}
+
 	cs, err := models.GetClassStudent(student, semester, class[0])
 	if err != nil {
 		return

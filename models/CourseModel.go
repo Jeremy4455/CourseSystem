@@ -31,9 +31,16 @@ func GetCourses(courseCode, name string) ([]*Course, error) {
 	} else {
 		q = q.Filter("Name__contains", name)
 	}
-	_, err := q.All(&courses)
 
-	return courses, err
+	_, err := q.All(&courses)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(courses) == 0 {
+		return nil, errors.New("没有该课程")
+	}
+	return courses, nil
 }
 
 func CreateCourse(courseCode, name, college, credit, proportion string) error {

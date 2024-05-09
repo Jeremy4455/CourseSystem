@@ -1,6 +1,10 @@
 package models
 
-import "github.com/beego/beego/v2/client/orm"
+import (
+	"errors"
+
+	"github.com/beego/beego/v2/client/orm"
+)
 
 // Teacher 老师模型
 type Teacher struct {
@@ -41,6 +45,10 @@ func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
 		}
 	}
 
+	if len(teacher) == 0 {
+		return nil, errors.New("没有该教师")
+	}
+
 	return teacher, nil
 }
 
@@ -51,7 +59,12 @@ func CreateTeacher(teacherId, name, mobile, email string) error {
 	}
 
 	o := orm.NewOrm()
-	teacher := &Teacher{TeacherId: teacherId, Name: name, Mobile: mobile, Email: email}
+	teacher := &Teacher{
+		TeacherId: teacherId,
+		Name:      name,
+		Mobile:    mobile,
+		Email:     email,
+	}
 	_, err = o.Insert(teacher)
 	if err != nil {
 		return err
