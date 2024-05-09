@@ -24,6 +24,5 @@ func (c *AdminTeacherControllerRetrieve) Post() {
 		c.Err(err)
 		return
 	}
-	c.Sucess()
 	c.Data["Teachers"] = teachers
 }

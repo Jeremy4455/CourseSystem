@@ -30,5 +30,4 @@ func (c *AdminClassControllerRetrieve) Post() {
 		return
 	}
 	c.Data["Classes"] = classes
-	c.Sucess()
 }

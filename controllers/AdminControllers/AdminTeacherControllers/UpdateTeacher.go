@@ -11,11 +11,11 @@ type AdminTeacherControllerUpdate struct {
 
 func (c *AdminTeacherControllerUpdate) Get() {
 	c.TplName = "AdminViews/AdminTeacherViews/UpdateTeacher.tpl"
-	c.searchTeacher()
+	teacherId := c.GetString("TeacherId")
+	c.searchTeacher(teacherId)
 }
 
-func (c *AdminTeacherControllerUpdate) searchTeacher() {
-	teacherId := c.GetString("TeacherId")
+func (c *AdminTeacherControllerUpdate) searchTeacher(teacherId string) {
 	if teacherId == "" {
 		teachers, _ := models.GetAllTeachers()
 		c.Data["Teachers"] = teachers
@@ -42,4 +42,5 @@ func (c *AdminTeacherControllerUpdate) Post() {
 		return
 	}
 	c.Sucess()
+	c.searchTeacher("")
 }

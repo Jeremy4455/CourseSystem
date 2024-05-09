@@ -44,8 +44,8 @@ func (c *AdminCourseControllerUpdate) Post() {
 	err := models.ReviseCourse(courseCode, name, college, credit, proportion)
 	if err != nil {
 		c.Err(err)
-		return
+	} else {
+		c.Sucess()
+		c.searchCourse("")
 	}
-	c.searchCourse("")
-	c.Sucess()
 }

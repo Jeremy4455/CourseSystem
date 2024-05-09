@@ -185,7 +185,7 @@
                                     <form action="/admin/class/update" method="get">
                                         <input type="hidden" name="courseCode" value="{{.Course.CourseCode}}">
                                         <input type="hidden" name="TeacherId" value="{{.Teacher.TeacherId}}">
-                                        <input type="hidden" name="semester" value="{{.Semester}}">
+                                        <input type="hidden" name="courseSemester" value="{{.Semester}}">
                                         <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>

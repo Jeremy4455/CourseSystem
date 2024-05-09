@@ -46,15 +46,15 @@ func GetCourses(courseCode, name string) ([]*Course, error) {
 func CreateCourse(courseCode, name, college, credit, proportion string) error {
 	course, err := GetCourses(courseCode, "")
 	if len(course) != 0 {
-		return err
+		return errors.New("课程已存在")
 	}
 	c, err := strconv.Atoi(credit)
 	if err != nil {
-		return err
+		return errors.New("学分应为整数")
 	}
 	p, err := strconv.ParseFloat(proportion, 64)
 	if err != nil {
-		return err
+		return errors.New("占比输入错误")
 	}
 	o := orm.NewOrm()
 	newcourse := &Course{

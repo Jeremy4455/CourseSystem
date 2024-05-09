@@ -37,5 +37,7 @@ func (c *AdminStudentControllerUpdate) Post() {
 		c.Err(err)
 	} else {
 		c.Sucess()
+		students, _ := models.GetAllStudents()
+		c.Data["Students"] = students
 	}
 }
