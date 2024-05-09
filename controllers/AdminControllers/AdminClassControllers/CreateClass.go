@@ -19,7 +19,6 @@ func (c *AdminClassControllerCreate) Get() {
 
 	c.Data["Classes"] = classes
 	c.Data["Semesters"] = models.Semesters
-	c.Sucess()
 }
 func (c *AdminClassControllerCreate) Post() {
 	c.TplName = "AdminViews/AdminClassViews/CreateClass.tpl"

@@ -18,9 +18,9 @@ type Course struct {
 }
 
 func GetCourses(courseCode, name string) ([]*Course, error) {
-	if courseCode == "" && name == "" {
-		return nil, errors.New("参数不能为空")
-	}
+	//if courseCode == "" && name == "" {
+	//	return nil, errors.New("参数不能为空")
+	//}
 
 	o := orm.NewOrm()
 	q := o.QueryTable("course")
