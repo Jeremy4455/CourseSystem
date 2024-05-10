@@ -23,7 +23,6 @@ func (c *AdminStudentControllerDelete) searchStudent() {
 		return
 	}
 	c.Data["Students"] = students
-	c.Sucess()
 }
 
 func (c *AdminStudentControllerDelete) Post() {

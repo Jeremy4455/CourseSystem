@@ -1,0 +1,35 @@
+.message-box {
+    position: fixed;
+    top: 40%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+}
+.message-box.is-danger {
+  background-color: #feecf0;
+}
+
+.message-box.is-danger .message-header {
+  background-color: #f14668;
+  color: #fff;
+}
+
+.message-box.is-danger .message-body {
+  border-color: #f14668;
+  color: #cc0f35;
+}
+
+.message-box.is-success {
+  background-color: #effaf5;
+}
+
+.message-box.is-success .message-header {
+  background-color: #48c78e;
+  color: #fff;
+}
+
+.message-box.is-success .message-body {
+  border-color: #48c78e;
+  color: #257953;
+}

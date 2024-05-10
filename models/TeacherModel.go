@@ -55,7 +55,7 @@ func GetTeachers(teacherId, name, mobile, email string) ([]*Teacher, error) {
 func CreateTeacher(teacherId, name, mobile, email string) error {
 	teachers, err := GetTeachers(teacherId, "", "", "")
 	if len(teachers) != 0 {
-		return err
+		return errors.New("该教师已存在")
 	}
 
 	o := orm.NewOrm()

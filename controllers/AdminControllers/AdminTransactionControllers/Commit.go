@@ -24,11 +24,10 @@ func (c *AdminTransactionControllerCommit) Get() {
 func (c *AdminTransactionControllerCommit) Post() {
 	c.TplName = "AdminViews/AdminTransViews/Commit.tpl"
 	trans := c.GetString("Trans")
-	newSemester := c.GetString("NewSemester")
 
 	switch trans {
 	case "newSemester":
-		models.NewSemester(newSemester)
+		models.NewSemester()
 	case "begin":
 		models.ChangeLevel(models.PER_CLASS, models.STUDENT_PICK_DROP_CLASS)
 	case "end":

@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>查询开课</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="../../../static/css/bulma.css">
+    <link rel="stylesheet" href="/static/css/bulma.css">
+    <link rel="stylesheet" href="/static/css/message-box.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -184,7 +185,7 @@
                                     <form action="/admin/class/update" method="get">
                                         <input type="hidden" name="courseCode" value="{{.Course.CourseCode}}">
                                         <input type="hidden" name="TeacherId" value="{{.Teacher.TeacherId}}">
-                                        <input type="hidden" name="semester" value="{{.Semester}}">
+                                        <input type="hidden" name="courseSemester" value="{{.Semester}}">
                                         <button class="button is-info" type="submit">更改</button>
                                     </form>
                                 </div>
@@ -207,16 +208,26 @@
                 </div>
             </div>
             {{ if .json.message }}
-            <div id="success-notification" class="notification is-success custom-notification">
-              {{ .json.message }}
-              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            <div id="success-notification" class="message-box is-success">
+              <div class="message-header">
+                <p>Success</p>
+                <button class="delete" aria-label="delete" onclick="closeNotification('success-notification')"></button>
+              </div>
+              <div class="message-body">
+                  {{.json.message}}
+              </div>
             </div>
             {{ end }}
 
             {{ if .json.error }}
-            <div id="error-notification" class="notification is-danger custom-notification">
-              {{ .json.error }}
-              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            <div id="error-notification" class="message-box is-danger">
+              <div class="message-header">
+                <p>Error</p>
+                <button class="delete" aria-label="delete" onclick="closeNotification('error-notification')"></button>
+              </div>
+              <div class="message-body">
+                  {{.json.error}}
+              </div>
             </div>
             {{ end }}
             <script src="/static/js/closeNotification.js"></script>

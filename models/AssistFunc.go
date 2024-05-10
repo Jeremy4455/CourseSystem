@@ -2,9 +2,9 @@ package models
 
 import (
 	"errors"
-	"strconv"
-
+	"fmt"
 	"github.com/beego/beego/v2/client/orm"
+	"strconv"
 )
 
 func Max(a, b int) int {
@@ -251,7 +251,8 @@ func CalculateGrade(grade float64) float64 {
 	return 4.0
 }
 
-func NewSemester(s string) error {
+func NewSemester() error {
+	s := generateNextSemesterName(Semesters)
 	for _, se := range Semesters {
 		if s == se {
 			return errors.New("学期已存在")
@@ -259,4 +260,41 @@ func NewSemester(s string) error {
 	}
 	Semesters = append(Semesters, s)
 	return nil
+}
+
+// 根据当前最新的学期生成下一个学期的名称
+func generateNextSemesterName(semesters []string) string {
+	// 如果当前没有学期，则默认从 23 春季开始
+	if len(semesters) == 0 {
+		return "23春季"
+	}
+
+	// 获取最新的学期名称
+	latestSemester := semesters[len(semesters)-1]
+
+	// 解析年份和季节
+	year, err := strconv.Atoi(latestSemester[:2])
+	if err != nil {
+		// 如果无法解析年份，则返回空字符串
+		return ""
+	}
+	season := latestSemester[2:]
+
+	// 更新年份和季节
+	if season == "冬季" {
+		year++
+		season = "春季"
+	} else {
+		switch season {
+		case "春季":
+			season = "夏季"
+		case "夏季":
+			season = "秋季"
+		case "秋季":
+			season = "冬季"
+		}
+	}
+
+	// 生成新的学期名称并返回
+	return fmt.Sprintf("%02d%s", year, season)
 }

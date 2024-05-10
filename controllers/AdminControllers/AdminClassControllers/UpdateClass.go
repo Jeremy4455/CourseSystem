@@ -48,7 +48,9 @@ func (c *AdminClassControllerUpdate) Post() {
 	err := models.ReviseClass(class[0], classTime, capacity, classroom)
 	if err != nil {
 		c.Err(err)
-		return
+	} else {
+		c.Sucess()
+		classes, _ := models.GetAllClasses()
+		c.Data["Classes"] = classes
 	}
-	c.Sucess()
 }

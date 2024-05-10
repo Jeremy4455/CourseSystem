@@ -47,6 +47,8 @@ func (c *TeacherClassControllerSet) searchCS() {
 
 func (c *TeacherClassControllerSet) Post() {
 	c.TplName = "TeacherViews/TeacherClassViews/SetGrade.tpl"
+	userInfo := c.GetUserInfo()
+	c.Data["UserInfo"] = userInfo
 	teacherId := c.GetSession("userId").(string)[1:]
 	semester := c.GetSession("semester").(string)
 	courseCode := c.GetString("CourseCode")

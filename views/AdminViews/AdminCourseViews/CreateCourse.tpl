@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>增加课程</title>
     <!-- 引入Bulma CSS文件 -->
-    <link rel="stylesheet" href="../../../static/css/bulma.css">
+    <link rel="stylesheet" href="/static/css/bulma.css">
+    <link rel="stylesheet" href="/static/css/message-box.css">
     <style>
         /* 添加额外的自定义样式 */
         body, html {
@@ -48,6 +49,7 @@
             justify-content: center;
             padding: 20px;
         }
+
     </style>
 </head>
 <body>
@@ -142,21 +144,31 @@
                     </div>
                 </div>
             </form>
+
             {{ if .json.message }}
-            <div id="success-notification" class="notification is-success custom-notification">
-              {{ .json.message }}
-              <button class="delete" onclick="closeNotification('success-notification')"></button>
+            <div id="success-notification" class="message-box is-success">
+              <div class="message-header">
+                <p>Success</p>
+                <button class="delete" aria-label="delete" onclick="closeNotification('success-notification')"></button>
+              </div>
+              <div class="message-body">
+                  {{.json.message}}
+              </div>
             </div>
             {{ end }}
 
             {{ if .json.error }}
-            <div id="error-notification" class="notification is-danger custom-notification">
-              {{ .json.error }}
-              <button class="delete" onclick="closeNotification('error-notification')"></button>
+            <div id="error-notification" class="message-box is-danger">
+              <div class="message-header">
+                <p>Error</p>
+                <button class="delete" aria-label="delete" onclick="closeNotification('error-notification')"></button>
+              </div>
+              <div class="message-body">
+                  {{.json.error}}
+              </div>
             </div>
             {{ end }}
             <script src="/static/js/closeNotification.js"></script>
-
         </main>
     </div>
 </body>

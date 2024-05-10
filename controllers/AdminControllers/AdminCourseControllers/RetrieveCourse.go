@@ -25,5 +25,4 @@ func (c *AdminCourseControllerRetrieve) Post() {
 		return
 	}
 	c.Data["Courses"] = courses
-	c.Sucess()
 }

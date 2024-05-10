@@ -25,5 +25,4 @@ func (c *AdminStudentControllerRetrieve) Post() {
 		return
 	}
 	c.Data["Students"] = students
-	c.Sucess()
 }

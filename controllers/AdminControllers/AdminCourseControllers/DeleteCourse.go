@@ -24,7 +24,6 @@ func (c *AdminCourseControllerDelete) searchCourse() {
 		return
 	}
 	c.Data["Courses"] = courses
-	c.Sucess()
 }
 
 func (c *AdminCourseControllerDelete) Post() {
@@ -37,4 +36,10 @@ func (c *AdminCourseControllerDelete) Post() {
 		return
 	}
 	c.Sucess()
+	courses, err := models.GetCourses("", "")
+	if err != nil {
+		c.Err(err)
+		return
+	}
+	c.Data["Courses"] = courses
 }
