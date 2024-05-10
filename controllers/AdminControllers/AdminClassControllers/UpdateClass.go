@@ -45,7 +45,7 @@ func (c *AdminClassControllerUpdate) Post() {
 	if len(class) != 1 {
 		return
 	}
-	err := models.ReviseClass(class[0], courseTeacherId, classTime, capacity, classroom)
+	err := models.ReviseClass(class[0], classTime, capacity, classroom)
 	if err != nil {
 		c.Err(err)
 		return

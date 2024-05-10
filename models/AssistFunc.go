@@ -96,6 +96,9 @@ func ClassConflict(classes []*Class, c *Class) bool {
 		return false
 	}
 	for _, class := range classes {
+		if class.Id == c.Id {
+			continue
+		}
 		if !CheckTime(class.ClassTime, c.ClassTime) {
 			return false
 		}

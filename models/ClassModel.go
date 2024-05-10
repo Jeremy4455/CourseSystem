@@ -160,14 +160,7 @@ func DeleteClass(courseCode, courseTeacherId, courseSemester string, level int) 
 	return nil
 }
 
-func ReviseClass(c *Class, courseTeacherId, classTime, capacity, classroom string) error {
-	if courseTeacherId != "" {
-		teacher, err := GetTeachers(courseTeacherId, "", "", "")
-		if err != nil {
-			return err
-		}
-		c.Teacher = teacher[0]
-	}
+func ReviseClass(c *Class, classTime, capacity, classroom string) error {
 	if classTime != "" {
 		c.ClassTime = classTime
 	}
